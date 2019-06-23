@@ -1,9 +1,11 @@
 import json
 
+from utils import Logger
+
 
 def loadJSON(file):
     with open(file) as f:
-        print("Load JSON: " + file)
+        Logger.log(Logger.INFO, "Load JSON: " + file)
         d = json.load(f)
         f.close()
     return d

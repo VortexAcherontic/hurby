@@ -1,10 +1,11 @@
 from config.Config import Config
-from utils import JSONLoader, Const
+from utils import JSONLoader, Const, Logger
 
-configPath = Const.CONST.USER_HOME + "/" + Const.CONST.DIR_APP_DATA + "/" + Const.CONST.DIR_CONF
 
-configFileBot = configPath + "/" + Const.CONST.FILE_CONF_HURBY
-configFileTwitch = configPath + "/" + Const.CONST.FILE_CONF_HURBY
+
+Logger.log(Logger.INFO, "Starting Bot...")
+
+configFileBot = Const.CONST.DIR_CONF_ABSOLUTE + "/" + Const.CONST.FILE_CONF_HURBY
 
 jsonBotConfig = JSONLoader.loadJSON(configFileBot)
 
