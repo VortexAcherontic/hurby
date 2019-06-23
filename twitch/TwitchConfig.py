@@ -1,3 +1,4 @@
 class TwitchConfig:
-    def configure(self, json: object) -> object:
-        return "none"
+
+    def __init__(self, json):
+        self.token = json["id"]
