@@ -1,15 +1,9 @@
 import json
 
-from utils import Const
+from utils import Const, JSONLoader
 
 
 class Config:
-    def load_config(self):
-        file = Const.CONST.USER_HOME + "/" + Const.CONST.DIR_APP_DATA + "/" + Const.CONST.DIR_CONF + "/" + \
-               Const.CONST.FILE_CONF_HURBY
-
-        with open(file) as f:
-            d = json.load(f)
-            f.close()
-            print("Load config from: " + file)
-            print(d)
+    def __init__(self, botJSON, tiwtchJSON):
+        self.botname = botJSON["botname"]
+        print("Bot Name: " + self.botname)

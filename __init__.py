@@ -1,4 +1,11 @@
-from config import Config
+from config.Config import Config
+from utils import JSONLoader, Const
 
-conf = Config()
-conf.load_config()
+configPath = Const.CONST.USER_HOME + "/" + Const.CONST.DIR_APP_DATA + "/" + Const.CONST.DIR_CONF
+
+configFileBot = configPath + "/" + Const.CONST.FILE_CONF_HURBY
+configFileTwitch = configPath + "/" + Const.CONST.FILE_CONF_HURBY
+
+jsonBotConfig = JSONLoader.loadJSON(configFileBot)
+
+botConfig = Config(jsonBotConfig, "none")
