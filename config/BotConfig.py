@@ -10,8 +10,8 @@ MODULE_STEAM = 4
 MODULE_TRELLO = 5
 
 
-class Config:
-    def __init__(self, botJSON, twitchJSON):
+class BotConfig:
+    def __init__(self, botJSON):
         self.botname = botJSON["botname"]
         self.modules = [None] * 6
         self.modules[MODULE_TWITCH] = botJSON["modules"]["twitch"]
