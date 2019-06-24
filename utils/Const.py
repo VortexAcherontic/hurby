@@ -1,7 +1,7 @@
 import os
 
 
-class _Const:
+class Const:
     USER_HOME = os.getenv("HOME")
 
     DIR_APP_DATA = ".z-ray/hurby"
@@ -19,4 +19,4 @@ class _Const:
     FILE_LOG = "hurby.log"
 
 
-CONST = _Const()
+CONST = Const()
