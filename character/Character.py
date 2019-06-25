@@ -2,16 +2,22 @@ from utils import HurbyUtils
 
 
 class Character:
+    ID_TYPE_TWITCH = "twitchid"
+    ID_TYPE_DISCORD = "discordid"
+    ID_TYPE_YOUTUBE = "youtubeid"
+    ID_TYPE_TWITTER = "twitterid"
+
     def __init__(self):
         self.credits = None
         self.endurance = None
-        self.endurance_max = 100
+        self.endurance_max = None
         self.inventory = [None]
         self.mails = None
         self.twitchid = None
         self.discordid = None
         self.youtubeid = None
         self.name = None
+        self.can_do_mini_game = True
 
     def init_default_character(self, name):
         self.name = name
@@ -38,3 +44,6 @@ class Character:
                     return True
             return False
         return False
+
+    def parse_json(self, json):
+        pass

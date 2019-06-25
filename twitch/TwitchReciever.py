@@ -1,9 +1,14 @@
+from twitch.TwitchConfig import TwitchConfig
 from twitch.cmd import SimpleResponse
-from utils import Logger
+from utils import Logger, JSONLoader
+from utils.Const import CONST
 
 
 class TwitchReceiver:
-    def __init__(self, twitch_conf):
+    def __init__(self, hurby):
+        configFileTwitch = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_CONF_TWITCH
+        twitch_json = JSONLoader.loadJSON(configFileTwitch)
+        twitch_conf = TwitchConfig(twitch_json, hurby.botConfig)
         self.twitch_conf = twitch_conf
 
     def do_command(self, cmd, parameters, character):
@@ -16,3 +21,6 @@ class TwitchReceiver:
                         Logger.log(Logger.INFO, twitch_cmds[i].respond())
                     else:
                         pass
+
+    def new_viewer(self, viewer_id):
+        pass
