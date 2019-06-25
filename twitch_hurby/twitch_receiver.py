@@ -1,5 +1,5 @@
-import pydle
 from twitch import TwitchHelix
+
 from character.character import Character
 from twitch_hurby.twitch_config import TwitchConfig
 from twitch_hurby.twitch_irc_bot import TwitchIRCBot

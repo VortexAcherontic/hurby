@@ -1,5 +1,6 @@
 from os import listdir
 from os.path import isfile, join
+
 from twitch_hurby.cmd.cmd_loader import CMDLoader
 from utils import logger, json_loader
 from utils.const import CONST

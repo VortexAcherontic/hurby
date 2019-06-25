@@ -1,5 +1,4 @@
 from hurby import Hurby
-from twitch_hurby.twitch_irc_bot import TwitchIRCBot
 from utils import logger
 
 logger.log(logger.INFO, "Starting Bot...")
