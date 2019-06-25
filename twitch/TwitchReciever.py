@@ -6,8 +6,7 @@ from utils.Const import CONST
 class TwitchReceiver:
     def __init__(self, hurby):
         self.hurby = hurby
-        configFileTwitch = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_CONF_TWITCH
-        twitch_json = JSONLoader.loadJSON(configFileTwitch)
+
         twitch_conf = TwitchConfig(twitch_json, self.hurby.botConfig)
         self.twitch_conf = twitch_conf
 

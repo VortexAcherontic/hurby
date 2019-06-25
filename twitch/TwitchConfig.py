@@ -9,12 +9,17 @@ from utils.Const import CONST
 class TwitchConfig:
     CMD_PATH = CONST.USER_HOME + "/" + CONST.DIR_APP_DATA + "/templates/commands/twitch/"
 
-    def __init__(self, json, bot_config):
+    def __init__(self, hurby):
+        self.hurby = hurby
+        config_file = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_CONF_TWITCH
+        twitch_json = JSONLoader.loadJSON(config_file)
         self.onlyfiles = [f for f in listdir(TwitchConfig.CMD_PATH) if isfile(join(TwitchConfig.CMD_PATH, f))]
-        self.token = json["id"]
         self.cmds = [None] * len(self.onlyfiles)
-        self.bot_config = bot_config
         self.load_cmds()
+        self.oauth_token = twitch_json["oauth_token"]
+        self.channel_name = twitch_json["channel_name"]
+        self.client_id = twitch_json["client_id"]
+        self.bot_username = self.hurby.botConfig.botname
 
     def load_cmds(self):
         cmd_loader = CMDLoader()
