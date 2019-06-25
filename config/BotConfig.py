@@ -23,3 +23,4 @@ class BotConfig:
         self.modules[BotConfig.MODULE_STEAM] = bot_json["modules"]["steam"]
         self.modules[BotConfig.MODULE_TRELLO] = bot_json["modules"]["trello"]
         self.modules[BotConfig.MODULE_MINIGAME] = bot_json["modules"]["minigame"]
+        self.bot_name_in_reply = bot_json["bot_name_in_reply"]
