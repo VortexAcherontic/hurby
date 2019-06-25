@@ -15,18 +15,18 @@ class TwitchConfig:
         twitch_json = JSONLoader.loadJSON(config_file)
         self.onlyfiles = [f for f in listdir(TwitchConfig.CMD_PATH) if isfile(join(TwitchConfig.CMD_PATH, f))]
         self.cmds = [None] * len(self.onlyfiles)
-        self.load_cmds()
         self.oauth_token = twitch_json["oauth_token"]
         self.channel_name = twitch_json["channel_name"]
         self.client_id = twitch_json["client_id"]
-        self.bot_username = self.hurby.botConfig.botname
+        self.bot_username = self.hurby.get_bot_config().botname
+        self.load_cmds()
 
     def load_cmds(self):
         cmd_loader = CMDLoader()
         self.cmds = [None] * len(self.onlyfiles)
         for i in range(0, len(self.onlyfiles)):
             cmd_json = JSONLoader.loadJSON(TwitchConfig.CMD_PATH + self.onlyfiles[i])
-            self.cmds[i] = cmd_loader.create_cmd(cmd_json, self.bot_config)
+            self.cmds[i] = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config())
         Logger.log(Logger.INFO, str(len(self.cmds)) + " commands loaded")
 
     def get_cmds(self):

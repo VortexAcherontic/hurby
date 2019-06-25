@@ -24,3 +24,6 @@ class Hurby:
 
     def get_twitch_receiver(self):
         return self.twitch_receiver
+
+    def get_bot_config(self):
+        return self.botConfig
