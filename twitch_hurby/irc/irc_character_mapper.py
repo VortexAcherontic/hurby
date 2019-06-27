@@ -1,0 +1,2 @@
+class IRCCharacterMapper:
+    pass

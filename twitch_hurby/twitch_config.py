@@ -8,6 +8,8 @@ from utils.const import CONST
 
 class TwitchConfig:
     CMD_PATH = CONST.USER_HOME + "/" + CONST.DIR_APP_DATA + "/templates/commands/twitch/"
+    HOST = "irc.twitch.tv"
+    PORT = 6667
 
     def __init__(self, hurby):
         self.hurby = hurby
