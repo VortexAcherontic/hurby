@@ -62,7 +62,7 @@ class IRCConnector:
                     message = self.extractor.extract_message(line)
                     if message.startswith("!"):
                         self.receiver.do_command(message, None, None, self)
-        self.check_viewers()
+        # self.check_viewers()
 
     def check_viewers(self):
         self.connection.send(bytes('WHO %s\r\n' % self.channel, 'UTF-8'))
