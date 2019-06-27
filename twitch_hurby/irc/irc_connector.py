@@ -1,22 +1,28 @@
 import re
 import socket
 import threading
+import time
+from random import randint
 
 from twitch_hurby.irc.irc_chat_extractor import IRCChatExtractor
+from twitch_hurby.irc.threads.cron_jobs import CronJobs
+from twitch_hurby.irc.threads.read_chat import ReadChat
 from twitch_hurby.twitch_config import TwitchConfig
 from utils import logger
 
 
 class IRCConnector:
-    def __init__(self, username: str, password: str, receiver, tick=1):
+    def __init__(self, username: str, password: str, receiver, tick, twitch_conf: TwitchConfig):
         self.host = TwitchConfig.HOST
         self.port = TwitchConfig.PORT
+        self.twitch_conf = twitch_conf
         self.username = username
         self.password = password
         self.connection = None
         self.tick = tick
         self.receiver = receiver
         self.thread = None
+        self.cron_jobs_thread = None
         self.channel = None
         self.extractor = IRCChatExtractor
 
@@ -33,17 +39,10 @@ class IRCConnector:
         self.channel = channel
         self.connect()
         self.join_channel(self.channel)
-        self.thread = threading.Thread(target=self.loop())
+        self.thread = ReadChat(self, self.tick)
+        self.cron_jobs_thread = CronJobs(self.twitch_conf, self.receiver, self)
         self.thread.start()
-
-    def loop(self):
-        ctc = 0
-        while True:
-            # time.sleep(self.tick)
-            ctc += 1
-            self.read_chat()
-            # self.send_message("Tick: " + str(ctc))
-            # logger.log(logger.INFO, "Tick: " + str(ctc))
+        self.cron_jobs_thread.start()
 
     def read_chat(self):
         data = self.connection.recv(1024).decode('UTF-8')
@@ -62,7 +61,6 @@ class IRCConnector:
                     message = self.extractor.extract_message(line)
                     if message.startswith("!"):
                         self.receiver.do_command(message, None, None, self)
-        # self.check_viewers()
 
     def check_viewers(self):
         self.connection.send(bytes('WHO %s\r\n' % self.channel, 'UTF-8'))

@@ -36,7 +36,7 @@ class TwitchReceiver:
         # self.helix = TwitchHelix(client_id=self.twitch_conf.client_id, oauth_token=self.twitch_conf.oauth_token)
 
     def connect_twitch_irc(self):
-        self.twitch_listener = IRCConnector(self.twitch_conf.bot_username, self.twitch_conf.oauth_token, self, 1)
+        self.twitch_listener = IRCConnector(self.twitch_conf.bot_username, self.twitch_conf.oauth_token, self, 1, self.twitch_conf)
 
     def get_twitch_irc_connector(self) -> IRCConnector:
         return self.twitch_listener
