@@ -16,6 +16,6 @@ if not hurby.get_char_manager().get_black_list().is_black_listed("Suroth"):
     # logger.log(logger.INFO, "Suroth is not blacklisted")
 
 # hurby.get_twitch_receiver().do_command("!loots", None, None)
-irc_listener = hurby.get_twitch_receiver().get_irc_listener().start()
+irc_listener = hurby.get_twitch_receiver().get_twitch_irc_connector().start("#couchrebellen")
 # irc_listener.handle_forever()
 # hurby.get_twitch_receiver().get_irc_listener().run()
