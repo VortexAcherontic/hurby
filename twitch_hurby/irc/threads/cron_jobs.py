@@ -2,6 +2,7 @@ import threading
 import time
 from random import randint
 
+from twitch_hurby.irc import irc_chat_extractor
 from utils import logger
 
 
@@ -17,5 +18,6 @@ class CronJobs (threading.Thread):
         while True:
             logger.log(logger.INFO, "Do cron job")
             cmd = self.twitch_conf.cron_jobs[randint(0, len(self.twitch_conf.cron_jobs) - 1)]
-            self.receiver.do_command(cmd, None, None, self.irc)
+            tmp = irc_chat_extractor.extract_command(cmd)
+            self.receiver.do_command(tmp, None, self.irc)
             time.sleep(self.twitch_conf.cron_job_time * 60)
