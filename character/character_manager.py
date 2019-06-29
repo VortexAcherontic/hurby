@@ -1,7 +1,5 @@
 import json
 
-import demjson as demjson
-
 from character.blacklist import Blacklist
 from character.character import Character
 from character.character_reference_table import CharacterReferenceTable
@@ -37,7 +35,7 @@ class CharacterManager:
         file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + str(char.uuid) + ".json"
         json_loader.save_json(file, data)
         # with open(file, 'w', encoding='utf-8') as outfile:
-            # json.dump(data, outfile, ensure_ascii=False, indent=2)
+        # json.dump(data, outfile, ensure_ascii=False, indent=2)
 
     # This will create a new default character based on the users id and the id type.
     # The ID type is basically determined by the platfrom the user has appeard
