@@ -1,4 +1,6 @@
-from utils import hurby_utils
+import uuid
+
+from utils import hurby_utils, logger
 
 
 class Character:
@@ -14,14 +16,28 @@ class Character:
         self.inventory = [None]
         self.mails = None
         self.twitchid = None
+        self.twitterid = None
         self.discordid = None
         self.youtubeid = None
         self.name = None
         self.can_do_mini_game = True
+        self.uuid = None
 
     def init_default_character(self, name):
+        logger.log(logger.INFO, "New default character: "+name)
         self.name = name
         self.credits = 100
+        self.endurance = 100
+        self.endurance_max = 100
+        self.inventory = [None]
+        self.mails = [None]
+        self.twitchid = None
+        self.twitterid = None
+        self.discordid = None
+        self.youtubeid = None
+        self.name = None
+        self.can_do_mini_game = True
+        self.uuid = str(uuid.uuid4())
 
     def set_twitch_id(self, id):
         self.twitchid = id
