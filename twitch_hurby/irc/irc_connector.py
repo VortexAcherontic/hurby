@@ -59,3 +59,7 @@ class IRCConnector:
     def ping_pong(self, msg: str):
         output = "PONG " + msg + "\r\n"
         self.connection.send(bytes(output, 'UTF-8'))
+
+    def get_users(self):
+        output = "/NAMES "+self.channel+" \r\n"
+        self.connection.send(bytes(output, 'UTF-8'))
