@@ -47,11 +47,9 @@ class IRCConnector:
         self.connection.send(bytes('WHO %s\r\n' % self.channel, 'UTF-8'))
 
     def send_message(self, msg):
-        # output = 'PRIVMSG %s :%s\r\n' % (self.channel, msg)
         output = "PRIVMSG " + self.channel + " :" + msg + "\r\n"
         logger.log(logger.INFO, output)
         self.connection.send(bytes(output, 'UTF-8'))
-        # self.connection.send(bytes('PRIVMSG %s :%s\r\n' % (self.channel, msg), 'UTF-8'))
 
     def send_whisper(self, user, msg):
         output = "PRIVMSG " + self.channel + " :/w " + user + " " + msg + "\r\n"
