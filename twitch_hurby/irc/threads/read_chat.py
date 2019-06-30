@@ -1,16 +1,16 @@
 import re
-import threading
 import time
 
 from character.character_manager import CharacterManager
 from twitch_hurby.irc import irc_chat_extractor
+from twitch_hurby.irc.threads.hurby_thread import HurbyThread
 from utils import logger
 from utils.const import CONST
 
 
-class ReadChat (threading.Thread):
+class ReadChat (HurbyThread):
     def __init__(self, irc_connector, tick, twitch_receiver):
-        threading.Thread.__init__(self)
+        HurbyThread.__init__(self)
         self.irc_connector = irc_connector
         self.tick = tick
         self.receiver = twitch_receiver
@@ -20,6 +20,10 @@ class ReadChat (threading.Thread):
         while CONST.RUNNING:
             time.sleep(self.tick)
             self.read_chat()
+        logger.log(logger.INFO, "Stopped reading chat")
+
+    def stop(self):
+        self._stop_event.set()
 
     def read_chat(self):
         con = self.irc_connector.connection

@@ -1,3 +1,5 @@
+import sys
+
 from character.character import Character
 from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.irc.irc_cmd import IRCCommand
@@ -34,7 +36,9 @@ class TwitchReceiver:
             irc.check_viewers()
         if cmd.cmd == "!shutdown":
             if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
+                logger.log(logger.INFO, "Shuttding down bot...")
                 CONST.RUNNING = False
+                sys.exit(0)
 
     def connect_twitch_helix(self):
         pass
