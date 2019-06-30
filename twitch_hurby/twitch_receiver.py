@@ -3,6 +3,7 @@ from twitch_hurby.irc.irc_cmd import IRCCommand
 from twitch_hurby.irc.irc_connector import IRCConnector
 from twitch_hurby.twitch_config import TwitchConfig
 from utils import logger
+from utils.const import CONST
 
 
 class TwitchReceiver:
@@ -32,9 +33,15 @@ class TwitchReceiver:
                             irc.send_message(twitch_cmds[i].respond())
                     else:
                         pass
-                elif cmd == "!whisper":
-                    logger.log(logger.INFO, "Sending whisper to: " + char)
-                    irc.send_whisper(char, "Hello: " + char)
+        if cmd.cmd == "!whisper":
+            logger.log(logger.INFO, "Sending whisper to: " + char)
+            irc.send_whisper(char, "Hello: " + char)
+        if cmd.cmd == "!users":
+            logger.log(logger.INFO, "Checking viewers")
+            irc.check_viewers()
+        if cmd.cmd == "!shutdown":
+            if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
+                CONST.RUNNING = False
 
     def connect_twitch_helix(self):
         pass

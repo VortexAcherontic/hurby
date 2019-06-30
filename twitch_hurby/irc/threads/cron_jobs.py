@@ -4,6 +4,7 @@ from random import randint
 
 from twitch_hurby.irc import irc_chat_extractor
 from utils import logger
+from utils.const import CONST
 
 
 class CronJobs (threading.Thread):
@@ -15,7 +16,7 @@ class CronJobs (threading.Thread):
 
     def run(self):
         logger.log(logger.INFO, "Running CronJobs")
-        while True:
+        while CONST.RUNNING:
             logger.log(logger.INFO, "Do cron job")
             cmd = self.twitch_conf.cron_jobs[randint(0, len(self.twitch_conf.cron_jobs) - 1)]
             tmp = irc_chat_extractor.extract_command(cmd)

@@ -5,6 +5,7 @@ import time
 from character.character_manager import CharacterManager
 from twitch_hurby.irc import irc_chat_extractor
 from utils import logger
+from utils.const import CONST
 
 
 class ReadChat (threading.Thread):
@@ -16,7 +17,7 @@ class ReadChat (threading.Thread):
 
     def run(self):
         logger.log(logger.INFO, "Running ReadChat")
-        while True:
+        while CONST.RUNNING:
             time.sleep(self.tick)
             self.read_chat()
 

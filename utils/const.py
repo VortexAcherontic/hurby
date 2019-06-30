@@ -23,5 +23,7 @@ class Const:
     FILE_BLACKLIST = "blacklist.json"
     FILE_CHAR_REF_TABLE = "reference_table.json"
 
+    RUNNING = True
+
 
 CONST = Const()
