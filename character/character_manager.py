@@ -31,7 +31,7 @@ class CharacterManager:
 
     # This will store a character on disk if a user will leave the stream or disconnect from discord
     def save_char(self, char: Character):
-        data = self.char_to_json(char)
+        data = char.convert_to_json()
         file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + str(char.uuid) + ".json"
         json_loader.save_json(file, data)
         # with open(file, 'w', encoding='utf-8') as outfile:
@@ -47,21 +47,6 @@ class CharacterManager:
         self.save_char(char)
         return char
 
-    def char_to_json(self, char: Character):
-        text = [{
-            "uuid": char.uuid,
-            "name": char.name,
-            "credits": char.credits,
-            "endurance_cur": char.endurance,
-            "endurance_max": char.endurance_max,
-            "discordid": char.discordid,
-            "twitchid": char.twitchid,
-            "youtubeid": char.youtubeid,
-            "twitterid": char.twitterid,
-            "mail": [char.mails],
-            "inventroy": [char.inventory]
-        }]
-        return text
 
     def get_black_list(self):
         return self.black_list

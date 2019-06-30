@@ -8,6 +8,9 @@ class Character:
     ID_TYPE_DISCORD = "discordid"
     ID_TYPE_YOUTUBE = "youtubeid"
     ID_TYPE_TWITTER = "twitterid"
+    PERM_EVE = "everybody"
+    PERM_MOD = "mod"
+    PERM_ADM = "admin"
 
     def __init__(self):
         self.credits = None
@@ -22,9 +25,10 @@ class Character:
         self.name = None
         self.can_do_mini_game = True
         self.uuid = None
+        self.perm = Character.PERM_EVE
 
     def init_default_character(self, name):
-        logger.log(logger.INFO, "New default character: "+name)
+        logger.log(logger.INFO, "New default character: " + name)
         self.name = name
         self.credits = 100
         self.endurance = 100
@@ -63,3 +67,19 @@ class Character:
 
     def parse_json(self, json):
         pass
+
+    def convert_to_json(self):
+        text = {
+            "uuid": self.uuid,
+            "name": self.name,
+            "credits": self.credits,
+            "endurance_cur": self.endurance,
+            "endurance_max": self.endurance_max,
+            "discordid": self.discordid,
+            "twitchid": self.twitchid,
+            "youtubeid": self.youtubeid,
+            "twitterid": self.twitterid,
+            "mail": [self.mails],
+            "inventroy": [self.inventory]
+        }
+        return text
