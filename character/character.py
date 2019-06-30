@@ -9,8 +9,8 @@ class Character:
     ID_TYPE_YOUTUBE = "youtubeid"
     ID_TYPE_TWITTER = "twitterid"
     PERM_EVE = "everybody"
-    PERM_MOD = "mod"
-    PERM_ADM = "admin"
+    PERM_MOD = "moderator"
+    PERM_ADM = "administrator"
 
     def __init__(self):
         self.credits = None
@@ -80,6 +80,7 @@ class Character:
             "youtubeid": self.youtubeid,
             "twitterid": self.twitterid,
             "mail": [self.mails],
-            "inventroy": [self.inventory]
+            "inventory": [self.inventory],
+            "permission_level": self.perm
         }
         return text
