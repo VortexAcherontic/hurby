@@ -3,11 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="296ea042-884d-4dc5-a5d0-7eef2c776bd2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitch_hurby/irc/irc_connector.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/irc/irc_connector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitch_hurby/irc/threads/cron_jobs.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/irc/threads/cron_jobs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitch_hurby/irc/threads/read_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/irc/threads/read_chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitch_hurby/cmd/cmd_const.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitch_hurby/cmd/cmd_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/cmd/cmd_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitch_hurby/cmd/simple_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/cmd/simple_response.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitch_hurby/twitch_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/twitch_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/twitch_hurby/twitch_receiver.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/twitch_receiver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/const.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/twitch_hurby/twitch_receiver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="43" column="37" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
+            <state relative-caret-position="180">
+              <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -29,23 +29,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/threads/cron_jobs.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/twitch_hurby/twitch_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="27" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="27" />
+            <state relative-caret-position="398">
+              <caret line="35" column="87" selection-start-line="35" selection-start-column="87" selection-end-line="35" selection-end-column="87" />
               <folding>
-                <element signature="e#0#16#0" expanded="true" />
+                <element signature="e#0#22#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/const.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="18" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -53,8 +44,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/irc_connector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="63" column="17" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+            <state relative-caret-position="120">
+              <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -62,13 +53,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/threads/read_chat.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/cmd_loader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+            <state relative-caret-position="225">
+              <caret line="15" column="79" selection-start-line="15" selection-start-column="79" selection-end-line="15" selection-end-column="79" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -77,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hurby.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+            <state relative-caret-position="195">
+              <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
               <folding>
                 <element signature="e#0#56#0" expanded="true" />
               </folding>
@@ -87,48 +78,54 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/character/character_manager.py">
+        <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/simple_response.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
+            <state relative-caret-position="405">
+              <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
               <folding>
-                <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/character/character.py">
+        <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/threads/cron_jobs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="106" selection-start-line="106" selection-end-line="106" />
+            <state relative-caret-position="135">
+              <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#16#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/character/character_reference_table.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/json_loader.py">
+        <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/enums/permission_levels.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+              <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/enums/cmd_types.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/abstract_command.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="21" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="21" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -152,6 +149,7 @@
       <find>Cron Jobs</find>
       <find>def read_chat\(self\)\:\n        data \= self\.connection\.recv\(1024\)\.decode\(\'UTF\-8\'\)\n        data_split \= re\.split\(r\&quot;\[\~\\r\\n\]\+\&quot;\, data\)\n        logger\.log\(logger\.INFO\, data_split\)\n        for line in data_split\:\n            line \= str\.rstrip\(line\)\n            line \= str\.split\(line\)\n\n            if len\(line\) \&gt;\= 1\:\n                if line\[0\] \=\= \'PING\'\:\n                    self\.ping_pong\(line\[1\]\)\n\n                if line\[1\] \=\= \'PRIVMSG\'\:\n                    sender \= self\.extractor\.extract_sender\(line\[0\]\)\n                    message \= self\.extractor\.extract_message\(line\)\n                    if message\.startswith\(\&quot;\!\&quot;\)\:\n                        self\.receiver\.do_command\(message\, None\, None\, self\)|def read_chat\(self\)\:\n        data \= self\.connection\.recv\(1024\)\.decode\(\'UTF\-8\'\)\n        data_split \= re\.split\(r\&quot;\[\~\\r\\n\]\+\&quot;\, data\)\n        logger\.log\(logger\.INFO\, data_split\)\n        for line in data_split\:\n            line \= str\.rstrip\(line\)\n            line \= str\.split\(line\)\n\n            if len\(line\) \&gt;\= 1\:\n                if line\[0\] \=\= \'PING\'\:\n                    self\.ping_pong\(line\[1\]\)\n\n                if line\[1\] \=\= \'PRIVMSG\'\:\n                    sender \= self\.extractor\.extract_sender\(line\[0\]\)\n                    message \= self\.extractor\.extract_message\(line\)\n                    if message\.startswith\(\&quot;\!\&quot;\)\:\n                        self\.receiver\.do_command\(message\, None\, None\, self\)</find>
       <find>:</find>
+      <find>run(</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -164,13 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/utils/ModuleLoader.py" />
-        <option value="$PROJECT_DIR$/config/Config.py" />
-        <option value="$PROJECT_DIR$/twitch/cmd/CMDResponseTypes.py" />
-        <option value="$PROJECT_DIR$/twitch/cmd/CMDConst.py" />
-        <option value="$PROJECT_DIR$/utils/JSONLoader.py" />
-        <option value="$PROJECT_DIR$/utils/Logger.py" />
-        <option value="$PROJECT_DIR$/twitch/cmd/CMDActionLoader.py" />
         <option value="$PROJECT_DIR$/twitch/minigame/MiniGameConf.py" />
         <option value="$PROJECT_DIR$/twitch/minigame/MiniGameConstans.py" />
         <option value="$PROJECT_DIR$/twitch/minigame/MiniGameConst.py" />
@@ -193,14 +184,11 @@
         <option value="$PROJECT_DIR$/twitch_hurby/TwitchIRCBot.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/TwitchReceiver.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/cmd/CMDLoader.py" />
-        <option value="$PROJECT_DIR$/twitch_hurby/cmd/cmd_loader.py" />
         <option value="$PROJECT_DIR$/utils/hurby_utils.py" />
         <option value="$PROJECT_DIR$/venv/lib64/python3.6/site-packages/python_twitch_irc/irc.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/twitch_irc_bot.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/irc_connector.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/irc/irc_character_mapper.py" />
-        <option value="$PROJECT_DIR$/twitch_hurby/cmd/simple_response.py" />
-        <option value="$PROJECT_DIR$/twitch_hurby/twitch_config.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/irc/irc_cmd.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/irc/irc_chat_extractor.py" />
         <option value="$PROJECT_DIR$/run.py" />
@@ -212,9 +200,19 @@
         <option value="$PROJECT_DIR$/character/character_reference_table.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/irc/irc_connector.py" />
         <option value="$PROJECT_DIR$/utils/const.py" />
-        <option value="$PROJECT_DIR$/twitch_hurby/twitch_receiver.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/irc/threads/cron_jobs.py" />
         <option value="$PROJECT_DIR$/twitch_hurby/irc/threads/read_chat.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/cmd_types.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/enums/cmd_response_types.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/enums/permission_types.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/enums/cmd_response_realms.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/enums/permission_levels.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/enums/cmd_types.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/abstract_command.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/twitch_receiver.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/cmd_loader.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/cmd/simple_response.py" />
+        <option value="$PROJECT_DIR$/twitch_hurby/twitch_config.py" />
       </list>
     </option>
   </component>
@@ -259,6 +257,13 @@
               <item name="Hurby" type="b2602c69:ProjectViewProjectNode" />
               <item name="Hurby" type="462c0819:PsiDirectoryNode" />
               <item name="twitch_hurby" type="462c0819:PsiDirectoryNode" />
+              <item name="cmd" type="462c0819:PsiDirectoryNode" />
+              <item name="enums" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Hurby" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Hurby" type="462c0819:PsiDirectoryNode" />
+              <item name="twitch_hurby" type="462c0819:PsiDirectoryNode" />
               <item name="irc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -287,6 +292,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/twitch_hurby/cmd/enums" />
       <recent name="$PROJECT_DIR$/twitch_hurby/irc" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/de/zray/hurby/utils" />
@@ -347,13 +353,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1914" y="0" width="1932" height="1050" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1797575" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969433" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3286026" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286026" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3995633" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -369,6 +376,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/twitch_hurby/twitch_config.py</url>
+          <line>31</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -379,10 +393,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/twitch/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/config/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/utils/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/utils/ModuleLoader.py" />
     <entry file="file:///usr/lib64/python3.6/ntpath.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="331">
@@ -433,20 +443,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/action_cmd_manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="33" lean-forward="true" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/cmd_const.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/twitch_hurby/minigame/raid/raid.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -458,13 +454,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="32" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/hurby_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="44" selection-start-column="44" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -503,13 +492,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib64/python3.6/threading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="827" column="8" selection-start-line="827" selection-start-column="8" selection-end-line="827" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/pipenv/vendor/urllib3/contrib/securetransport.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7350">
@@ -517,48 +499,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/simple_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="67" selection-start-line="14" selection-start-column="67" selection-end-line="14" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/twitch_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/cmd_loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="12" column="47" lean-forward="true" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/lib64/python3.6/curses/textpad.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
           <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="94" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/irc_cmd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/irc_chat_extractor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -579,12 +523,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hurby.py">
+    <entry file="file://$PROJECT_DIR$/character/character_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+        <state relative-caret-position="570">
+          <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
           <folding>
-            <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/character/character_reference_table.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/cmd_const.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/threads/read_chat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -601,41 +572,53 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/character/character.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="106" selection-start-line="106" selection-end-line="106" />
+        <state relative-caret-position="210">
+          <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/character/character_manager.py">
+    <entry file="file://$PROJECT_DIR$/utils/hurby_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="44" selection-start-column="44" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/character/character_reference_table.py">
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/irc_cmd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/irc_chat_extractor.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
-          <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/irc_connector.py">
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/enums/cmd_response_realms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="63" column="17" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="120">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib64/python3.6/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="1178" column="12" selection-start-line="1178" selection-start-column="8" selection-end-line="1178" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/action_cmd_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="33" lean-forward="true" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -646,32 +629,96 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/twitch_receiver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="43" column="37" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/threads/cron_jobs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="27" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="27" />
+        <state relative-caret-position="135">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/threads/read_chat.py">
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/abstract_command.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+          <caret line="19" column="21" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="21" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/enums/permission_levels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/enums/cmd_types.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/irc/irc_connector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/cmd_loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="79" selection-start-line="15" selection-start-column="79" selection-end-line="15" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hurby.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/twitch_receiver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/cmd/simple_response.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitch_hurby/twitch_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="35" column="87" selection-start-line="35" selection-start-column="87" selection-end-line="35" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>

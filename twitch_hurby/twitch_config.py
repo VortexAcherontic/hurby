@@ -23,7 +23,7 @@ class TwitchConfig:
         self.enable_cron_jobs = twitch_json["enable_cron_jobs"]
         self.cron_job_time = twitch_json["cron_job_time"]
         self.cron_jobs = twitch_json["cron_jobs"]
-        logger.log(logger.INFO, "Cron jobs: "+str(self.enable_cron_jobs))
+        logger.log(logger.INFO, "Cron jobs: " + str(self.enable_cron_jobs))
         logger.log(logger.INFO, self.cron_jobs)
         self.bot_username = self.hurby.get_bot_config().botname
         self.load_cmds()
@@ -33,7 +33,7 @@ class TwitchConfig:
         self.cmds = [None] * len(self.onlyfiles)
         for i in range(0, len(self.onlyfiles)):
             cmd_json = json_loader.loadJSON(TwitchConfig.CMD_PATH + self.onlyfiles[i])
-            self.cmds[i] = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config())
+            self.cmds[i] = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby)
         logger.log(logger.INFO, str(len(self.cmds)) + " commands loaded")
 
     def get_cmds(self) -> list:

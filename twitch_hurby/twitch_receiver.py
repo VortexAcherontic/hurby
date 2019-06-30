@@ -1,4 +1,5 @@
 from character.character import Character
+from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.irc.irc_cmd import IRCCommand
 from twitch_hurby.irc.irc_connector import IRCConnector
 from twitch_hurby.twitch_config import TwitchConfig
@@ -19,20 +20,12 @@ class TwitchReceiver:
         logger.log(logger.INFO, "Received cmd:\"" + cmd.cmd + "\"")
         logger.log(logger.INFO, "Params:")
         logger.log(logger.INFO, cmd.params)
-        twitch_cmds = self.twitch_conf.get_cmds()
+        twitch_cmds: AbstractCommand = self.twitch_conf.get_cmds()
         for i in range(0, len(twitch_cmds)):
             if twitch_cmds[i] is not None:
-                # logger.log(logger.INFO, "Checking: "+twitch_cmds[i].cmd)
-                if cmd.cmd == twitch_cmds[i].cmd:
-                    if twitch_cmds[i].__class__.__name__ is "SimpleResponse":
-                        if self.hurby.botConfig.bot_name_in_reply:
-                            bot_name = self.hurby.botConfig.botname
-                            irc.send_message(bot_name + ": " + twitch_cmds[i].respond())
-                            # logger.log(logger.INFO, bot_name + ": " + twitch_cmds[i].respond())
-                        else:
-                            irc.send_message(twitch_cmds[i].respond())
-                    else:
-                        pass
+                tmp: AbstractCommand = twitch_cmds[i]
+                if tmp.check_trigger(cmd.cmd):
+                    tmp.do_command(None)
         if cmd.cmd == "!whisper":
             logger.log(logger.INFO, "Sending whisper to: " + char)
             irc.send_whisper(char, "Hello: " + char)
