@@ -29,14 +29,16 @@ class TwitchReceiver:
                 if tmp.check_trigger(cmd.cmd):
                     tmp.do_command(None)
         if cmd.cmd == "!whisper":
-            logger.log(logger.INFO, "Sending whisper to: " + char)
-            irc.send_whisper(char, "Hello: " + char)
+            if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
+                logger.log(logger.INFO, "Sending whisper to: " + char)
+                irc.send_whisper(char, "Hello: " + char)
         if cmd.cmd == "!users":
-            logger.log(logger.INFO, "Checking viewers")
-            irc.check_viewers()
+            if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
+                logger.log(logger.INFO, "Checking viewers")
+                irc.check_viewers()
         if cmd.cmd == "!shutdown":
             if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
-                logger.log(logger.INFO, "Shuttding down bot...")
+                logger.log(logger.INFO, "Shutting down bot...")
                 CONST.RUNNING = False
                 sys.exit(0)
 
