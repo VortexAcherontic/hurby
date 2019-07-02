@@ -1,5 +1,7 @@
 import json
 
+from pipenv import exceptions
+
 from utils import json_loader, logger
 from utils.const import CONST
 
@@ -33,3 +35,11 @@ class CharacterReferenceTable:
         logger.log(logger.INFO, self.map)
         with open(CharacterReferenceTable.REF_TABLE_FILE, 'w') as fp:
             json.dump(self.map, fp)
+
+    def check_user_id(self, user_id):
+        if self.map is not None:
+            try:
+                return self.map[user_id] is not None
+            except KeyError as e:
+                return False
+        return False

@@ -1,17 +1,11 @@
 import uuid
 
+from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from utils import hurby_utils, logger, json_loader
 from utils.const import CONST
 
 
 class Character:
-    ID_TYPE_TWITCH = "twitchid"
-    ID_TYPE_DISCORD = "discordid"
-    ID_TYPE_YOUTUBE = "youtubeid"
-    ID_TYPE_TWITTER = "twitterid"
-    PERM_EVE = "everybody"
-    PERM_MOD = "moderator"
-    PERM_ADM = "administrator"
 
     def __init__(self):
         self.credits: int = None
@@ -26,10 +20,10 @@ class Character:
         self.name: str = None
         self.can_do_mini_game: bool = True
         self.uuid: str = None
-        self.perm: str = Character.PERM_EVE
+        self.perm: str = PermissionLevels.EVERYBODY
 
-    def init_default_character(self, name):
-        logger.log(logger.INFO, "New default character: " + name)
+    def init_default_character(self, name: str, permission_level: PermissionLevels):
+        logger.log(logger.INFO, "New character: " + name)
         self.name = name
         self.credits = 100
         self.endurance = 100
@@ -43,12 +37,16 @@ class Character:
         self.name = None
         self.can_do_mini_game = True
         self.uuid = str(uuid.uuid4())
+        self.perm = permission_level.value
 
-    def set_twitch_id(self, id):
-        self.twitchid = id
+    def set_twitch_id(self, user_id):
+        self.twitchid = user_id
 
-    def set_discord_id(self, id):
-        self.discordid = id
+    def set_discord_id(self, user_id):
+        self.discordid = user_id
+
+    def set_twitter_id(self, user_id):
+        self.twitterid = user_id
 
     def add_mail(self, mail):
         if len(self.mails) == 0:
@@ -78,7 +76,7 @@ class Character:
         self.twitterid = json["twitterid"]
         self.mails = json["mail"]
         self.inventory = json["inventory"]
-        self.perm = json["permission_level"]
+        self.perm = PermissionLevels[json["permission_level"]]
 
     def convert_to_json(self) -> dict:
         text = {
