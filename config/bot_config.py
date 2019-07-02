@@ -1,3 +1,5 @@
+import random
+
 from utils import json_loader
 from utils.const import CONST
 
@@ -24,3 +26,7 @@ class BotConfig:
         self.modules[BotConfig.MODULE_TRELLO] = bot_json["modules"]["trello"]
         self.modules[BotConfig.MODULE_MINIGAME] = bot_json["modules"]["minigame"]
         self.bot_name_in_reply = bot_json["bot_name_in_reply"]
+        self.unknown_cmd_response = bot_json["unknown_command_response"]
+
+    def get_unknown_cmd_response(self):
+        return self.unknown_cmd_response[random.randint(0, len(self.unknown_cmd_response) - 1)]

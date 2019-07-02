@@ -32,15 +32,19 @@ class TwitchReceiver:
             if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
                 logger.log(logger.INFO, "Sending whisper to: " + char)
                 irc.send_whisper(char, "Hello: " + char)
-        if cmd.cmd == "!users":
+        elif cmd.cmd == "!users":
             if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
                 logger.log(logger.INFO, "Checking viewers")
                 irc.check_viewers()
-        if cmd.cmd == "!shutdown":
+        elif cmd.cmd == "!shutdown":
             if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
                 logger.log(logger.INFO, "Shutting down bot...")
                 CONST.RUNNING = False
                 sys.exit(0)
+        else:
+            self.hurby.twitch_receiver.twitch_listener.send_message( self.hurby.botConfig.get_unknown_cmd_response())
+
+
 
     def connect_twitch_helix(self):
         pass
