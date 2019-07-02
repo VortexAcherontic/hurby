@@ -1,5 +1,6 @@
 import socket
 
+from twitch_hurby.irc.threads.crawler.crawler import Crawler
 from twitch_hurby.irc.threads.cron_jobs import CronJobs
 from twitch_hurby.irc.threads.read_chat import ReadChat
 from twitch_hurby.twitch_config import TwitchConfig
@@ -18,6 +19,7 @@ class IRCConnector:
         self.receiver = receiver
         self.thread = None
         self.cron_jobs_thread = None
+        self.crawler_thread = None
         self.channel = None
         self.hurby = hurby
 
@@ -40,8 +42,10 @@ class IRCConnector:
         # self.cap()
         self.thread = ReadChat(self, self.tick, self.receiver)
         self.cron_jobs_thread = CronJobs(self.twitch_conf, self.receiver, self)
+        self.crawler_thread = Crawler(self.twitch_conf, self.hurby.char_manager)
         self.thread.start()
         self.cron_jobs_thread.start()
+        self.crawler_thread.start()
 
     def check_viewers(self):
         self.connection.send(bytes('WHO %s\r\n' % self.channel, 'UTF-8'))
