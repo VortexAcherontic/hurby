@@ -1,7 +1,6 @@
 import re
 import time
 
-from character.character_manager import CharacterManager
 from character.user_id_types import UserIDType
 from twitch_hurby.irc import irc_chat_extractor
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
@@ -42,6 +41,7 @@ class ReadChat (HurbyThread):
 
                 if line[1] == 'PRIVMSG':
                     sender = irc_chat_extractor.extract_sender(line[0])
+                    self.irc_connector.crawler_thread.crawl_chatters()
                     char = self.irc_connector.hurby.get_char_manager().get_char(sender, UserIDType.TWITCH)
                     message = irc_chat_extractor.extract_message(line)
                     if message.startswith("!"):

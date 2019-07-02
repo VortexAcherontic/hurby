@@ -1,8 +1,11 @@
+from typing import List
+
 from character.blacklist import Blacklist
 from character.character import Character
 from character.character_reference_table import CharacterReferenceTable
 from character.permission_levels import PermissionLevel
 from character.user_id_types import UserIDType
+from utils import logger
 
 
 class CharacterManager:
@@ -24,16 +27,7 @@ class CharacterManager:
             for i in range(0, len(self.chars)):
                 if self.chars[i].twitchid == user_id:
                     return self.chars[i]
-        tmp = Character()
-        json_file_name = self._check_reference_table(user_id)
-        if json_file_name is not None:
-            tmp.load(json_file_name)
-        else:
-            tmp.init_default_character(user_id)
-            tmp.set_twitch_id(user_id)
-            self.ref_table.add_to_ref_table(user_id, tmp.uuid)
-            tmp.save()
-        return tmp
+        return None
 
     def _check_reference_table(self, user_id) -> str:
         return self.ref_table.get_json_file_by_user_id(user_id)
@@ -54,3 +48,17 @@ class CharacterManager:
         self.ref_table.add_to_ref_table(user_id, tmp.uuid)
         tmp.save()
 
+    def unload_offline_character(self, user_ids: List[str], user_id_type: UserIDType):
+        logger.log(logger.INFO, "Check for offline chatters:")
+        logger.log(logger.INFO, user_ids)
+        if self.chars is not None:
+            for c in self.chars:
+                char_in_uids = False
+                for uid in user_ids:
+                    if user_id_type == UserIDType.TWITCH:
+                        if c.twitchid == uid:
+                            char_in_uids = True
+                if not char_in_uids:
+                    logger.log(logger.INFO, "Character: " + c.twitchid + " is offline, unloading ....")
+                    c.save()
+                    self.chars.remove(c)

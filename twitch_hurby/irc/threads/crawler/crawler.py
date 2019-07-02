@@ -22,11 +22,12 @@ class Crawler(HurbyThread):
     def run(self):
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
-            self._crawl_chatters()
+            self.crawl_chatters()
             time.sleep(self.tick * 60)
         logger.log(logger.INFO, "Stopped Twitch Crawler")
 
-    def _crawl_chatters(self):
+    def crawl_chatters(self):
+        logger.log(logger.INFO, "Crawling chatters ...")
         streamer = self.twitch_conf.streamer
         url = "https://tmi.twitch.tv/group/user/" + streamer + "/chatters"
         r = urllib.request.urlopen(url)
@@ -39,6 +40,8 @@ class Crawler(HurbyThread):
         staff = self._get_chatters_by_type(json_data, ChatterType.STAFF.value)
         viewer = self._get_chatters_by_type(json_data, ChatterType.VIEWER.value)
         vips = self._get_chatters_by_type(json_data, ChatterType.VIP.value)
+        all_chatters = [mods + broadcaster + admins + global_mods + staff + viewer + vips]
+        all_chatters = [str(i) for i in all_chatters]
         for i in mods:
             self._check_and_create_character(i, ChatterType.MODERATOR)
         for i in broadcaster:
@@ -53,6 +56,7 @@ class Crawler(HurbyThread):
             self._check_and_create_character(i, ChatterType.VIEWER)
         for i in vips:
             self._check_and_create_character(i, ChatterType.VIP)
+        self.char_man.unload_offline_character(all_chatters, UserIDType.TWITCH)
 
     def _get_chatters_by_type(self, json_data, chatter_type: str):
         return json_data["chatters"][chatter_type]
@@ -66,5 +70,4 @@ class Crawler(HurbyThread):
                 self.char_man.create_new_character(UserIDType.TWITCH, name, PermissionLevel.ADMINISTRATOR)
             else:
                 self.char_man.create_new_character(UserIDType.TWITCH, name, PermissionLevel.EVERY_BODY)
-
         logger.log(logger.INFO, "Chatter: " + name + " is known: " + str(known))

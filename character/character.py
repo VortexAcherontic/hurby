@@ -21,6 +21,7 @@ class Character:
         self.can_do_mini_game: bool = True
         self.uuid: str = None
         self.perm: str = PermissionLevels.EVERYBODY
+        self.last_seen = None
 
     def init_default_character(self, name: str, permission_level: PermissionLevels):
         logger.log(logger.INFO, "New character: " + name)
