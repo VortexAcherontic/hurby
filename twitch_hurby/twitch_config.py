@@ -19,10 +19,12 @@ class TwitchConfig:
         self.cmds = [None] * len(self.onlyfiles)
         self.oauth_token = twitch_json["oauth_token"]
         self.channel_name = twitch_json["channel_name"]
+        self.streamer = twitch_json["streamer"]
         self.client_id = twitch_json["client_id"]
         self.enable_cron_jobs = twitch_json["enable_cron_jobs"]
         self.cron_job_time = twitch_json["cron_job_time"]
         self.cron_jobs = twitch_json["cron_jobs"]
+        self.crawler_time = twitch_json["crawler_time_mins"]
         logger.log(logger.INFO, "Cron jobs: " + str(self.enable_cron_jobs))
         logger.log(logger.INFO, self.cron_jobs)
         self.bot_username = self.hurby.get_bot_config().botname
