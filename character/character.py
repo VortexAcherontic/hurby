@@ -76,7 +76,7 @@ class Character:
         self.twitterid = json["twitterid"]
         self.mails = json["mail"]
         self.inventory = json["inventory"]
-        self.perm = PermissionLevels[json["permission_level"]]
+        self.perm = PermissionLevels[json["permission_level"].upper()]
 
     def convert_to_json(self) -> dict:
         text = {
