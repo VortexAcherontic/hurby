@@ -28,7 +28,7 @@ class TwitchReceiver:
                 tmp: AbstractCommand = twitch_cmds[i]
                 if tmp.check_trigger(cmd.cmd):
                     if tmp.check_permissions(char):
-                        tmp.do_command(cmd.params)
+                        tmp.do_command(cmd.params, character=char)
                         return
                     elif char is not None:
                         logger.log(logger.INFO, char.twitchid + " has no permission to execute: " + cmd.cmd)
