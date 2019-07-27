@@ -27,8 +27,11 @@ class TwitchReceiver:
             if twitch_cmds[i] is not None:
                 tmp: AbstractCommand = twitch_cmds[i]
                 if tmp.check_trigger(cmd.cmd):
-                    tmp.do_command(cmd.params)
-                    return
+                    if tmp.check_permissions(char):
+                        tmp.do_command(cmd.params)
+                        return
+                    elif char is not None:
+                        logger.log(logger.INFO, char.twitchid + " has no permission to execute: " + cmd.cmd)
         self.hurby.twitch_receiver.twitch_listener.send_message(self.hurby.botConfig.get_unknown_cmd_response())
 
     def connect_twitch_helix(self):
