@@ -20,8 +20,8 @@ class SearchCommand(AbstractCommand):
 
     def do_command(self, params: list):
         search_string = params[0]
-        logger.log(logger.INFO, "Searching for "+seartch_string)
-        url = "https://api.duckduckgo.com/?q="+seartch_string+"&format=json&atb=v105-1"
+        logger.log(logger.INFO, "Searching for "+search_string)
+        url = "https://api.duckduckgo.com/?q="+search_string+"&format=json&atb=v105-1"
         r = urllib.request.urlopen(url)
         string_data = r.read().decode('utf-8')
         json_data = json.loads(string_data)
