@@ -1,3 +1,4 @@
+from character.character import Character
 from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.cmd.enums.cmd_response_realms import CMDResponseRealms
 from twitch_hurby.cmd.enums.cmd_types import CMDType
@@ -14,5 +15,5 @@ class CreditsCommand(AbstractCommand):
         AbstractCommand.__init__(self, trigger, cmd_type, cmd_realm, replies, cmd_perm)
         self.hurby = hurby
 
-    def do_command(self, params: list):
+    def do_command(self, params: list, character : Character):
         pass

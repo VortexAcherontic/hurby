@@ -1,6 +1,7 @@
 import json
 import urllib
 
+from character.character import Character
 from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.cmd.enums.cmd_response_realms import CMDResponseRealms
 from twitch_hurby.cmd.enums.cmd_types import CMDType
@@ -18,7 +19,7 @@ class SearchCommand(AbstractCommand):
         AbstractCommand.__init__(self, trigger, cmd_type, cmd_realm, replies, cmd_perm)
         self.hurby = hurby
 
-    def do_command(self, params: list):
+    def do_command(self, params: list, character : Character):
         search_string = params[0]
         logger.log(logger.INFO, "Searching for "+search_string)
         url = "https://api.duckduckgo.com/?q="+search_string+"&format=json&atb=v105-1"
