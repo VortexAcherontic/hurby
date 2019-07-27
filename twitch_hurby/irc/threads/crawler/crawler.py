@@ -18,9 +18,14 @@ class Crawler(HurbyThread):
         self.twitch_conf = twitch_config
         self.char_man = char_manager
         self.tick = twitch_config.crawler_time
+        self.spend_time = twitch_config.spend_time
         self.crawl_cache = None
+        self.credit_increase_base = twitch_config.credit_increase_base
+        self.credit_increase_supporter = twitch_config.credit_increase_supporter
 
     def run(self):
+        credit_thread = CreditSpendThread(self)
+        credit_thread.start()
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
             self.crawl_chatters(True)
@@ -78,3 +83,25 @@ class Crawler(HurbyThread):
 
     def _is_subscriber(self, user_id):
         pass
+
+
+class CreditSpendThread(HurbyThread):
+    def __init__(self, crawler: Crawler):
+        HurbyThread.__init__(self)
+        self.crawler = crawler
+        self.spend_time = self.crawler.spend_time
+
+    def run(self):
+        logger.log(logger.INFO, "Running spend Thread...")
+        while CONST.RUNNING:
+            time.sleep(self.spend_time * 60)
+            logger.log(logger.INFO, "Spending credits ...")
+            if self.crawler.char_man.chars is not None:
+                for c in self.crawler.char_man.chars:
+                    if c.is_supporter:
+                        c.credits += self.crawler.credit_increase_supporter
+                    else:
+                        c.credits += self.crawler.credit_increase_base
+                    c.save()
+            else:
+                logger.log(logger.INFO, "No Chars :/")

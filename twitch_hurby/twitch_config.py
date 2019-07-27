@@ -25,6 +25,9 @@ class TwitchConfig:
         self.cron_job_time = twitch_json["cron_job_time"]
         self.cron_jobs = twitch_json["cron_jobs"]
         self.crawler_time = twitch_json["crawler_time_mins"]
+        self.credit_increase_base = twitch_json["credit_increase_base"]
+        self.credit_increase_supporter = twitch_json["credit_increase_supporter"]
+        self.spend_time = twitch_json["spend_time"]
         logger.log(logger.INFO, "Cron jobs: " + str(self.enable_cron_jobs))
         logger.log(logger.INFO, self.cron_jobs)
         self.bot_username = self.hurby.get_bot_config().botname
