@@ -27,24 +27,9 @@ class TwitchReceiver:
             if twitch_cmds[i] is not None:
                 tmp: AbstractCommand = twitch_cmds[i]
                 if tmp.check_trigger(cmd.cmd):
-                    tmp.do_command(None)
-        if cmd.cmd == "!whisper":
-            if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
-                logger.log(logger.INFO, "Sending whisper to: " + char)
-                irc.send_whisper(char, "Hello: " + char)
-        elif cmd.cmd == "!users":
-            if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
-                logger.log(logger.INFO, "Checking viewers")
-                irc.check_viewers()
-        elif cmd.cmd == "!shutdown":
-            if char.perm == Character.PERM_ADM or char.perm == Character.PERM_MOD:
-                logger.log(logger.INFO, "Shutting down bot...")
-                CONST.RUNNING = False
-                sys.exit(0)
-        else:
-            self.hurby.twitch_receiver.twitch_listener.send_message( self.hurby.botConfig.get_unknown_cmd_response())
-
-
+                    tmp.do_command(cmd.params)
+                    return
+        self.hurby.twitch_receiver.twitch_listener.send_message(self.hurby.botConfig.get_unknown_cmd_response())
 
     def connect_twitch_helix(self):
         pass
