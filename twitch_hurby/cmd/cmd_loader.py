@@ -1,5 +1,6 @@
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import simple_response
+from twitch_hurby.cmd.actions.credits_command import CreditsCommand
 from twitch_hurby.cmd.actions.search_command import SearchCommand
 from twitch_hurby.cmd.actions.shutdown_command import ShutdownCommand
 from twitch_hurby.cmd.actions.whisper_command import WhisperCommand
@@ -31,10 +32,10 @@ class CMDLoader:
                 if logic_trigger == "$search":
                     return SearchCommand(json_data, hurby)
                 if logic_trigger == "$whisper":
-                    return WhisperCommand()
+                    return WhisperCommand(json_data, hurby)
                 if logic_trigger == "$shutdown":
-                    return ShutdownCommand()
+                    return ShutdownCommand(json_data, hurby)
                 if logic_trigger == "$credits":
-                    pass
+                    return CreditsCommand(json_data, hurby)
         else:
             logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])
