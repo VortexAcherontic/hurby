@@ -1,6 +1,7 @@
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import simple_response
 from twitch_hurby.cmd.actions.credits_command import CreditsCommand
+from twitch_hurby.cmd.actions.raid_command import RaidCommand
 from twitch_hurby.cmd.actions.search_command import SearchCommand
 from twitch_hurby.cmd.actions.shutdown_command import ShutdownCommand
 from twitch_hurby.cmd.actions.whisper_command import WhisperCommand
@@ -20,15 +21,15 @@ class CMDLoader:
             simpleCMD = simple_response.SimpleResponse(json_data, hurby)
             return simpleCMD
         elif cmd_type == CMDType.ACTION:
+            logic_trigger = json_data["reply"]
             if json_data["minigame"]:
                 if bot_config.modules[bot_config.MODULE_MINIGAME] == "enabled":
-                    pass
-                    # Logger.log(Logger.INFO, "CMD: " + json["cmd"] + " is Mini game")
+                    if logic_trigger == "$raid":
+                        return RaidCommand(json_data, hurby)
                 else:
                     pass
                     # Logger.log(Logger.INFO, "Skip mini game: " + json["cmd"] + " mini games are disabled")
             else:
-                logic_trigger = json_data["reply"]
                 if logic_trigger == "$search":
                     return SearchCommand(json_data, hurby)
                 if logic_trigger == "$whisper":
@@ -37,5 +38,6 @@ class CMDLoader:
                     return ShutdownCommand(json_data, hurby)
                 if logic_trigger == "$credits":
                     return CreditsCommand(json_data, hurby)
+
         else:
             logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])

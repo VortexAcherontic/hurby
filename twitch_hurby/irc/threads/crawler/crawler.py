@@ -75,3 +75,6 @@ class Crawler(HurbyThread):
                 self.char_man.create_new_character(UserIDType.TWITCH, name, PermissionLevel.EVERY_BODY)
         else:
             self.char_man.load_character(user_id=name, id_type=UserIDType.TWITCH)
+
+    def _is_subscriber(self, user_id):
+        pass

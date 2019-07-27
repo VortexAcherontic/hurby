@@ -20,8 +20,9 @@ class Character:
         self.youtubeid: str = None
         self.can_do_mini_game: bool = True
         self.uuid: str = None
-        self.perm: str = PermissionLevels.EVERYBODY
+        self.perm = PermissionLevels.EVERYBODY
         self.last_seen = None
+        self.is_supporter = False
 
     def init_default_character(self, user_id: str, permission_level: PermissionLevels, user_id_type: UserIDType):
         logger.log(logger.INFO, "New character: " + user_id)
@@ -36,7 +37,11 @@ class Character:
         self.youtubeid = None
         self.can_do_mini_game = True
         self.uuid = str(uuid.uuid4())
-        self.perm = permission_level.value
+        self.perm = permission_level
+        self.is_supporter = False
+
+    def set_supporter(self, status: bool):
+        self.is_supporter = status
 
     def set_twitch_id(self, user_id):
         self.twitchid = user_id
@@ -75,6 +80,7 @@ class Character:
         self.mails = json["mail"]
         self.inventory = json["inventory"]
         self.perm = PermissionLevels[json["permission_level"].upper()]
+        self.is_supporter = json["is_supporter"]
 
     def convert_to_json(self) -> dict:
         text = {
@@ -88,7 +94,8 @@ class Character:
             "twitterid": self.twitterid,
             "mail": [self.mails],
             "inventory": [self.inventory],
-            "permission_level": self.perm
+            "permission_level": self.perm.value,
+            "is_supporter": self.is_supporter
         }
         return text
 
