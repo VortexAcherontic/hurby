@@ -15,10 +15,17 @@ class AbstractCommand:
         self.permission_level = perm
 
     def check_permissions(self, char: Character) -> bool:
-        pass
+        if char is None:
+            return self.permission_level == PermissionLevels.EVERYBODY
+        if self.permission_level == PermissionLevels.EVERYBODY:
+            return True
+        if self.permission_level == PermissionLevels.MODERATOR:
+            return char.perm == PermissionLevels.MODERATOR or char.perm == PermissionLevels.ADMINISTRATOR
+        if self.permission_level == PermissionLevels.ADMINISTRATOR:
+            return char.perm == PermissionLevels.ADMINISTRATOR
 
     def check_trigger(self, trigger: str) -> bool:
         return self.trigger == trigger
 
-    def do_command(self, params: list):
+    def do_command(self, params: list, character: Character):
         pass
