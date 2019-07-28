@@ -40,7 +40,7 @@ class IRCConnector:
         self.connect()
         self.join_channel(self.channel)
         # self.cap()
-        self.thread = ReadChat(self, self.tick, self.receiver)
+        self.thread = ReadChat(self, self.tick, self.receiver, self.hurby)
         self.cron_jobs_thread = CronJobs(self.twitch_conf, self.receiver, self)
         self.crawler_thread = Crawler(self.twitch_conf, self.hurby.char_manager)
         self.thread.start()
