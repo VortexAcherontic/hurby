@@ -3,6 +3,7 @@ from twitch_hurby.cmd import simple_response
 from twitch_hurby.cmd.actions.credits_command import CreditsCommand
 from twitch_hurby.cmd.actions.raid_command import RaidCommand
 from twitch_hurby.cmd.actions.search_command import SearchCommand
+from twitch_hurby.cmd.actions.set_credits_command import SetCreditsCommand
 from twitch_hurby.cmd.actions.shutdown_command import ShutdownCommand
 from twitch_hurby.cmd.actions.whisper_command import WhisperCommand
 from twitch_hurby.cmd.enums.cmd_types import CMDType
@@ -38,6 +39,8 @@ class CMDLoader:
                     return ShutdownCommand(json_data, hurby)
                 if logic_trigger == "$credits":
                     return CreditsCommand(json_data, hurby)
+                if logic_trigger == "$set_credits":
+                    return SetCreditsCommand(json_data, hurby)
 
         else:
             logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])
