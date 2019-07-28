@@ -88,6 +88,8 @@ class RaidCommand(AbstractCommand):
         else:
             try:
                 test = int(params[0])
+                if test < 0:
+                    return False
             except Exception:
                 msg = self.raid_error_parse_credits[random.randint(0, len(self.raid_error_parse_credits) - 1)]
                 irc.send_message(msg)
@@ -134,7 +136,8 @@ class RaidCountdownThread(HurbyThread):
                 self.irc.send_message(self.response_10[random.randint(0, len(self.response_10) - 1)])
         self.root_cmd.in_preparation = False
         if len(self.root_cmd.participants) < self.root_cmd.min_participants:
-            msg = self.root_cmd.insufficient_participants[random.randint(0, len(self.root_cmd.insufficient_participants) - 1)]
+            msg = self.root_cmd.insufficient_participants[
+                random.randint(0, len(self.root_cmd.insufficient_participants) - 1)]
             msg.replace("$min_participants", str(self.root_cmd.min_participants))
             self.root_cmd.participants = None
             self.irc.send_message(msg)
