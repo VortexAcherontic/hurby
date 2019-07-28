@@ -32,6 +32,7 @@ class TwitchReceiver:
                         return
                     elif char is not None:
                         logger.log(logger.INFO, char.twitchid + " has no permission to execute: " + cmd.cmd)
+                        return
         self.hurby.twitch_receiver.twitch_listener.send_message(self.hurby.botConfig.get_unknown_cmd_response())
 
     def connect_twitch_helix(self):
