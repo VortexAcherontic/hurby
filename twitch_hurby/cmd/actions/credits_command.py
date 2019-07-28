@@ -19,8 +19,9 @@ class CreditsCommand(AbstractCommand):
         self.answers = json_data["answers"]
 
     def do_command(self, params: list, character: Character):
-        irc = self.hurby.twitch_receiver.twitch_listener
-        cur_answer = self.answers[random.randint(0, len(self.answers) - 1)]
-        cur_answer = cur_answer.replace("$user_id", character.twitchid)
-        cur_answer = cur_answer.replace("$user_credits", str(character.credits))
-        irc.send_message(cur_answer)
+        if character is not None:
+            irc = self.hurby.twitch_receiver.twitch_listener
+            cur_answer = self.answers[random.randint(0, len(self.answers) - 1)]
+            cur_answer = cur_answer.replace("$user_id", character.twitchid)
+            cur_answer = cur_answer.replace("$user_credits", str(character.credits))
+            irc.send_message(cur_answer)
