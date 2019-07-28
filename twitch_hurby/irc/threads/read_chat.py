@@ -1,6 +1,7 @@
 import re
 import time
 
+from character.permission_levels import PermissionLevel
 from character.user_id_types import UserIDType
 from twitch_hurby.irc import irc_chat_extractor
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
@@ -8,12 +9,13 @@ from utils import logger
 from utils.const import CONST
 
 
-class ReadChat (HurbyThread):
-    def __init__(self, irc_connector, tick, twitch_receiver):
+class ReadChat(HurbyThread):
+    def __init__(self, irc_connector, tick, twitch_receiver, hurby):
         HurbyThread.__init__(self)
         self.irc_connector = irc_connector
         self.tick = tick
         self.receiver = twitch_receiver
+        self.hurby = hurby
 
     def run(self):
         logger.log(logger.INFO, "Running ReadChat")
@@ -45,6 +47,11 @@ class ReadChat (HurbyThread):
                     if char is None:
                         self.irc_connector.crawler_thread.crawl_chatters(True)
                         char = self.irc_connector.hurby.get_char_manager().get_char(sender, UserIDType.TWITCH)
+                        if char is None:
+                            char_man = self.hurby.char_manager
+                            char = char_man.load_character(user_id=sender, id_type=UserIDType.TWITCH)
+                            if char is None:
+                                char = char_man.create_new_character(UserIDType.TWITCH, sender, PermissionLevel.EVERY_BODY)
                     message = irc_chat_extractor.extract_message(line)
                     if message.startswith("!"):
                         cmd = irc_chat_extractor.extract_command(message)
