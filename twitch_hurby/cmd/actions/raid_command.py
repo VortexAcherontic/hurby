@@ -1,9 +1,6 @@
-import datetime
 import math
 import random
 import time
-
-from pipenv.vendor.tomlkit.items import Integer
 
 from character.character import Character
 from twitch_hurby.cmd.abstract_command import AbstractCommand
@@ -45,27 +42,30 @@ class RaidCommand(AbstractCommand):
         self.raid_in_cooldown = json_data["raid_in_cooldown"]
         self.win_ratio_base = json_data["win_ratio_base"]
         self.win_ratio_supporter = json_data["win_ratio_supporter"]
+        self.win_template = json_data["win_template"]
+        self.min_participants = json_data["min_participants"]
+        self.insufficient_participants = json_data["insufficient_participants"]
 
     def do_command(self, params: list, character: Character):
-        if self._input_valid(params):
-            credits = params[0]
+        if self._input_valid(params) and character is not None:
+            credit_spend = params[0]
             msg = ""
             irc = self.hurby.twitch_receiver.twitch_listener
             if self._invokable():
                 if not self._participating(character):
-                    if not self._insufficient_credits(character, int(credits)):
+                    if not self._insufficient_credits(character, int(credit_spend)):
                         if self.in_preparation:
                             self.participants.append(character)
-                            self.credits_spend.append(credits)
+                            self.credits_spend.append(credit_spend)
                             msg = self.reply_join[random.randint(0, len(self.reply_join) - 1)]
                         else:
                             msg = self.reply_start[random.randint(0, len(self.reply_join) - 1)]
                             self.participants = [character]
-                            self.credits_spend = [credits]
+                            self.credits_spend = [credit_spend]
                             countdown_thread = RaidCountdownThread(self)
                             countdown_thread.start()
                         msg = msg.replace("$user_id", character.twitchid)
-                        msg = msg.replace("$credits_spend", str(credits))
+                        msg = msg.replace("$credits_spend", str(credit_spend))
                     else:
                         msg = self.insufficient_credits[random.randint(0, len(self.insufficient_credits) - 1)]
                         msg = msg.replace("$user_credits", str(character.credits))
@@ -130,10 +130,16 @@ class RaidCountdownThread(HurbyThread):
             logger.log(logger.INFO, "Raid in: " + str(self.countdown) + " Seconds")
             if self.countdown == 10:
                 self.irc.send_message(self.response_10[random.randint(0, len(self.response_10) - 1)])
-        self.irc.send_message(self.raid_starting[random.randint(0, len(self.raid_starting) - 1)])
         self.root_cmd.in_preparation = False
-        raid_thread = RaidThread(self.root_cmd)
-        raid_thread.run()
+        if len(self.root_cmd.participants) < self.root_cmd.min_participants:
+            msg = self.root_cmd.insufficient_participants[random.randint(0, len(self.root_cmd.insufficient_participants) - 1)]
+            msg.replace("$min_participants", str(self.root_cmd.min_participants))
+            self.root_cmd.participants = None
+            self.irc.send_message(msg)
+        else:
+            self.irc.send_message(self.raid_starting[random.randint(0, len(self.raid_starting) - 1)])
+            raid_thread = RaidThread(self.root_cmd)
+            raid_thread.run()
 
 
 class RaidThread(HurbyThread):
@@ -157,7 +163,7 @@ class RaidThread(HurbyThread):
         raid_cooldown.start()
 
     def _finish_raid(self):
-        winners = {}
+        rewards = {}
         for i in range(0, len(self.root_cmd.participants)):
             char = self.root_cmd.participants[i]
             spend = int(self.root_cmd.credits_spend[i])
@@ -172,14 +178,17 @@ class RaidThread(HurbyThread):
             if won:
                 credits_won = math.ceil(spend + spend * 0.5)
                 char.credits += credits_won
-                winners[char.twitchid] = credits_won
+                rewards[char.twitchid] = credits_won
                 char.save()
-        if winners is None:
+        if not bool(rewards):
             self.irc.send_message(self.reply_fail[random.randint(0, len(self.reply_fail) - 1)])
         else:
             winners_str = ""
-            for key in winners:
-                winners_str += key + " " + str(winners[key]) + " | "
+            win_template = self.root_cmd.win_template[random.randint(0, len(self.root_cmd.win_template) - 1)]
+            for key in rewards:
+                tmp = win_template.replace("$user_id", key)
+                tmp = tmp.replace("$reward", str(rewards[key]))
+                winners_str += tmp + " | "
             msg = self.reply_success[random.randint(0, len(self.reply_success) - 1)]
             msg = msg.replace("$raid_results", winners_str)
             self.irc.send_message(msg)

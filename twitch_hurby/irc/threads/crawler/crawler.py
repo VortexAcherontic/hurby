@@ -33,7 +33,7 @@ class Crawler(HurbyThread):
         logger.log(logger.INFO, "Stopped Twitch Crawler")
 
     def crawl_chatters(self, force_re_fetch: bool):
-        logger.log(logger.INFO, "Crawling chatters ...")
+        logger.log(logger.INFO, "Crawling chatters ... Force fetch: " + str(force_re_fetch))
         streamer = self.twitch_conf.streamer
         url = "https://tmi.twitch.tv/group/user/" + streamer + "/chatters"
         if force_re_fetch:
