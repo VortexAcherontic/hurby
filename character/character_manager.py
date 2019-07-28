@@ -53,7 +53,6 @@ class CharacterManager:
             for c in self.chars:
                 char_in_uids = False
                 for uid in user_ids:
-                    logger.log(logger.INFO, "Checking: " + uid)
                     if user_id_type == UserIDType.TWITCH:
                         if c.twitchid == uid:
                             char_in_uids = True

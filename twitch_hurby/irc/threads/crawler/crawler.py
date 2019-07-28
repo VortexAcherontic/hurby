@@ -70,7 +70,6 @@ class Crawler(HurbyThread):
 
     def _init_character(self, name: str, chatter_type: ChatterType):
         known: bool = self.char_man.check_viewer_id(UserIDType.TWITCH, name)
-        logger.log(logger.INFO, "Chatter: " + name + " is known: " + str(known))
         if not known:
             if chatter_type == ChatterType.MODERATOR:
                 self.char_man.create_new_character(UserIDType.TWITCH, name, PermissionLevel.MODERATOR)

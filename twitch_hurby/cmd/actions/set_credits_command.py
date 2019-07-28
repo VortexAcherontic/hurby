@@ -22,7 +22,7 @@ class SetCreditsCommand(AbstractCommand):
 
     def do_command(self, params: list, character: Character):
         irc = self.hurby.twitch_receiver.twitch_listener
-        if len(params) < 2 :
+        if len(params) < 2:
             msg = self.error_less_params[random.randint(0, len(self.error_less_params) - 1)]
             irc.send_message(msg)
         elif character is not None:
@@ -38,9 +38,6 @@ class SetCreditsCommand(AbstractCommand):
                 except Exception:
                     logger.log(logger.INFO, "Exception: Unable to set credits")
             else:
-                logger.log(logger.INFO, "Exception: Receiving character is None: "+receiving_char_name)
+                logger.log(logger.INFO, "Exception: Receiving character is None: " + receiving_char_name)
         else:
             logger.log(logger.INFO, "Exception: Issuing character is None")
-
-
-
