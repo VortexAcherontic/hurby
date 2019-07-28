@@ -54,6 +54,8 @@ class RaidCommand(AbstractCommand):
             if self._invokable():
                 if not self._participating(character):
                     if not self._insufficient_credits(character, int(credit_spend)):
+                        character.credits -= int(credit_spend)
+                        character.save()
                         if self.in_preparation:
                             self.participants.append(character)
                             self.credits_spend.append(credit_spend)
