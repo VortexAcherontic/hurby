@@ -45,6 +45,7 @@ class RaidCommand(AbstractCommand):
         self.win_template = json_data["win_template"]
         self.min_participants = json_data["min_participants"]
         self.insufficient_participants = json_data["insufficient_participants"]
+        self.overall_credits_spend = 0
 
     def do_command(self, params: list, character: Character):
         if self._input_valid(params) and character is not None:
@@ -66,6 +67,7 @@ class RaidCommand(AbstractCommand):
                             self.credits_spend = [credit_spend]
                             countdown_thread = RaidCountdownThread(self)
                             countdown_thread.start()
+                        self.overall_credits_spend += credit_spend
                         msg = msg.replace("$user_id", character.twitchid)
                         msg = msg.replace("$credits_spend", str(credit_spend))
                     else:
@@ -174,6 +176,9 @@ class RaidThread(HurbyThread):
             spend = int(self.root_cmd.credits_spend[i])
             won = False
             win_ratio = random.random()
+            win_ratio_increase = (2 - 2 / math.log1p(self.overall_credits_spend)) / 10
+            win_ratio = win_ratio_increase + win_ratio
+            logger.log(logger.INFO, "Win ratio for: " + char.twitchid + " is: " + str(win_ratio))
             if char.is_supporter:
                 if win_ratio <= self.root_cmd.win_ratio_supporter:
                     won = True
