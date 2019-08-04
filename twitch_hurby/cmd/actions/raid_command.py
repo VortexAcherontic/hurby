@@ -67,7 +67,7 @@ class RaidCommand(AbstractCommand):
                             self.credits_spend = [credit_spend]
                             countdown_thread = RaidCountdownThread(self)
                             countdown_thread.start()
-                        self.overall_credits_spend += credit_spend
+                        self.overall_credits_spend += int(credit_spend)
                         msg = msg.replace("$user_id", character.twitchid)
                         msg = msg.replace("$credits_spend", str(credit_spend))
                     else:
