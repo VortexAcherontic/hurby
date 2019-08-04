@@ -48,7 +48,6 @@ class CharacterManager:
 
     def unload_offline_character(self, user_ids: List[str], user_id_type: UserIDType):
         logger.log(logger.INFO, "Check for offline chatters:")
-        logger.log(logger.INFO, user_ids)
         if self.chars is not None:
             for c in self.chars:
                 char_in_uids = False
@@ -86,6 +85,5 @@ class CharacterManager:
             for i in range(0, len(self.chars)):
                 if id_type == UserIDType.TWITCH:
                     if self.chars[i].twitchid == user_id:
-                        logger.log(logger.INFO, "Character: " + user_id + " is already loaded")
                         return True
         return False
