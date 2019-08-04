@@ -176,7 +176,7 @@ class RaidThread(HurbyThread):
             spend = int(self.root_cmd.credits_spend[i])
             won = False
             win_ratio = random.random()
-            win_ratio_increase = (2 - 2 / math.log1p(self.overall_credits_spend)) / 10
+            win_ratio_increase = (2 - 2 / math.log1p(self.root_cmd.overall_credits_spend)) / 10
             win_ratio = win_ratio_increase + win_ratio
             logger.log(logger.INFO, "Win ratio for: " + char.twitchid + " is: " + str(win_ratio))
             if char.is_supporter:
