@@ -92,8 +92,8 @@ class Character:
             "twitchid": self.twitchid,
             "youtubeid": self.youtubeid,
             "twitterid": self.twitterid,
-            "mail": [self.mails],
-            "inventory": [self.inventory],
+            "mail": self.mails,
+            "inventory": self.inventory,
             "permission_level": self.perm.value,
             "is_supporter": self.is_supporter
         }
