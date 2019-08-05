@@ -40,6 +40,9 @@ class Character:
         self.perm = permission_level
         self.is_supporter = False
 
+    def set_permission_level(self, level: PermissionLevels):
+        self.perm = level
+
     def set_supporter(self, status: bool):
         self.is_supporter = status
 
