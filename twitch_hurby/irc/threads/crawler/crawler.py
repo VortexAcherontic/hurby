@@ -63,22 +63,19 @@ class Crawler(HurbyThread):
             self._init_character(i, ChatterType.VIEWER)
         for i in vips:
             self._init_character(i, ChatterType.VIP)
-        self.char_man.unload_offline_character(all_chatters, UserIDType.TWITCH)
+        self.char_man.unload_offline_characters(all_chatters, UserIDType.TWITCH)
 
     def _get_chatters_by_type(self, json_data, chatter_type: str):
         return json_data["chatters"][chatter_type]
 
     def _init_character(self, name: str, chatter_type: ChatterType):
-        known: bool = self.char_man.check_viewer_id(UserIDType.TWITCH, name)
-        if not known:
-            if chatter_type == ChatterType.MODERATOR:
-                self.char_man.create_new_character(UserIDType.TWITCH, name, PermissionLevel.MODERATOR)
-            elif chatter_type == ChatterType.BROADCASTER:
-                self.char_man.create_new_character(UserIDType.TWITCH, name, PermissionLevel.ADMINISTRATOR)
-            else:
-                self.char_man.create_new_character(UserIDType.TWITCH, name, PermissionLevel.EVERY_BODY)
+        if chatter_type == ChatterType.MODERATOR:
+            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.MODERATOR)
+        elif chatter_type == ChatterType.BROADCASTER:
+            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.ADMINISTRATOR)
         else:
-            self.char_man.load_character(user_id=name, id_type=UserIDType.TWITCH)
+            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.EVERY_BODY)
+
 
     def _is_subscriber(self, user_id):
         pass

@@ -6,3 +6,6 @@ class UserIDType(Enum):
     YOUTUBE = "yt"
     TWITTER = "twitter"
     PATREON = "patreon"
+    TELEGRAM = "telegram"
+    STEAM = "steam"
+    DISCORD = "discord"

@@ -43,15 +43,7 @@ class ReadChat(HurbyThread):
 
                 if line[1] == 'PRIVMSG':
                     sender = irc_chat_extractor.extract_sender(line[0])
-                    char = self.irc_connector.hurby.get_char_manager().get_char(sender, UserIDType.TWITCH)
-                    if char is None:
-                        self.irc_connector.crawler_thread.crawl_chatters(True)
-                        char = self.irc_connector.hurby.get_char_manager().get_char(sender, UserIDType.TWITCH)
-                        if char is None:
-                            char_man = self.hurby.char_manager
-                            char = char_man.load_character(user_id=sender, id_type=UserIDType.TWITCH)
-                            if char is None:
-                                char = char_man.create_new_character(UserIDType.TWITCH, sender, PermissionLevel.EVERY_BODY)
+                    char = self.irc_connector.hurby.get_char_manager().get_character(sender, UserIDType.TWITCH)
                     message = irc_chat_extractor.extract_message(line)
                     if message.startswith("!"):
                         cmd = irc_chat_extractor.extract_command(message)

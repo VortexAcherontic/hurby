@@ -11,7 +11,7 @@ class CharacterReferenceTable:
 
     def __init__(self):
         self.map = None
-        self.load()
+        self._load_table()
 
     def get_json_file_by_user_id(self, user_id):
         if self.map is not None:
@@ -28,9 +28,6 @@ class CharacterReferenceTable:
         self.map[user_id] = uudi + ".json"
         self.save()
 
-    def load(self):
-        self.map = json_loader.loadJSON(CharacterReferenceTable.REF_TABLE_FILE)
-
     def save(self):
         logger.log(logger.INFO, self.map)
         with open(CharacterReferenceTable.REF_TABLE_FILE, 'w') as fp:
@@ -43,3 +40,6 @@ class CharacterReferenceTable:
             except KeyError as e:
                 return False
         return False
+
+    def _load_table(self):
+        self.map = json_loader.loadJSON(CharacterReferenceTable.REF_TABLE_FILE)
