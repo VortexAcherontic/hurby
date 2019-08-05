@@ -18,7 +18,8 @@ class RaidCommand(AbstractCommand):
         cmd_realm = CMDResponseRealms(json_data["realm"])
         cmd_perm = PermissionLevels(json_data["perm"])
         replies = json_data["reply"]
-        AbstractCommand.__init__(self, trigger, cmd_type, cmd_realm, replies, cmd_perm)
+        description = json_data["description"]
+        AbstractCommand.__init__(self, trigger, cmd_type, cmd_realm, replies, cmd_perm, description)
         self.cooldown = json_data["cooldown_min"]
         self.countdown = json_data["countdown_min"]
         self.in_preparation = False

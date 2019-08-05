@@ -7,12 +7,13 @@ from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 class AbstractCommand:
 
     def __init__(self, trigger: str, cmd_type: CMDType, realm: CMDResponseRealms, reply: list,
-                 perm: PermissionLevels):
+                 perm: PermissionLevels, description="No description yet"):
         self.trigger = trigger
         self.cmd_type: CMDType = cmd_type
         self.realm: CMDResponseRealms = realm
         self.reply = reply
         self.permission_level = perm
+        self.description: str = description
 
     def check_permissions(self, char: Character) -> bool:
         if char is None:
