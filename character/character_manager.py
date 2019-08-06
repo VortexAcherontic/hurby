@@ -23,10 +23,14 @@ class CharacterManager:
             if self._is_in_reference_table(user_id):
                 json_file = self.ref_table.get_json_file_by_user_id(user_id)
                 tmp_char.load(json_file)
+                self.chars.append(tmp_char)
                 return tmp_char
             else:
                 tmp_char.init_default_character(user_id, permission_level, user_id_type)
+                self.chars.append(tmp_char)
+                return tmp_char
         else:
+            self.chars.append(tmp_char)
             return tmp_char
 
     def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
