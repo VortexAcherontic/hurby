@@ -1,3 +1,5 @@
+import random
+
 from character.character import Character
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.abstract_command import AbstractCommand

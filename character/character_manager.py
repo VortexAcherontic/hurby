@@ -27,7 +27,9 @@ class CharacterManager:
                 return tmp_char
             else:
                 tmp_char.init_default_character(user_id, permission_level, user_id_type)
+                tmp_char.save()
                 self._add_char_to_table(tmp_char)
+                self._add_char_to_ref_table(tmp_char, user_id_type)
                 return tmp_char
         else:
             return tmp_char
@@ -37,17 +39,15 @@ class CharacterManager:
             for i in range(0, len(self.chars)-1):
                 cur_char = self.chars[i]
                 if not self._is_chars_in_user_ids(user_ids, cur_char, id_type):
-                    logger.log(logger.INFO, "User offline, unloading: " + cur_char.twitchid)
+                    logger.log(logger.INFO, "User offline, unloading: " + str(cur_char.twitchid))
                     cur_char.save()
                     self.chars.remove(cur_char)
 
     def _add_char_to_table(self, char: Character):
         if self.chars is None:
             self.chars = [char]
-            logger.log(logger.INFO, "Adding char: " + char.twitchid + " 1")
         elif self.chars:
             self.chars.append(char)
-            logger.log(logger.INFO, "Adding char: " + char.twitchid + " 2")
 
     def _is_chars_in_user_ids(self, user_ids: [str], char: Character, user_id_type: UserIDType):
         for x in user_ids:
@@ -91,3 +91,7 @@ class CharacterManager:
 
     def _is_in_reference_table(self, user_id: str):
         return self.ref_table.check_user_id(user_id)
+
+    def _add_char_to_ref_table(self, character: Character, user_id_type: UserIDType):
+        if user_id_type == UserIDType.TWITCH :
+            self.ref_table.add_to_ref_table(character.twitchid, character.uuid)

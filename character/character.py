@@ -39,6 +39,8 @@ class Character:
         self.uuid = str(uuid.uuid4())
         self.perm = permission_level
         self.is_supporter = False
+        if user_id_type == UserIDType.TWITCH:
+            self.twitchid = user_id
 
     def set_permission_level(self, level: PermissionLevels):
         self.perm = level
