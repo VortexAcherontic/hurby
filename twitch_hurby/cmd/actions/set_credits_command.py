@@ -29,7 +29,7 @@ class SetCreditsCommand(AbstractCommand):
         elif character is not None:
             char_man = self.hurby.get_char_manager()
             receiving_char_name = params[0].lower()
-            receiving_char = char_man.get_char(receiving_char_name, UserIDType.TWITCH)
+            receiving_char = char_man.get_character(receiving_char_name, UserIDType.TWITCH)
             if receiving_char is not None:
                 try:
                     set_cred = int(params[1])
