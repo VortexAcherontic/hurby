@@ -105,6 +105,7 @@ class Character:
     def save(self):
         data = self.convert_to_json()
         file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + str(self.uuid) + ".json"
+        logger.log(logger.INFO, "Saving character: " + self.uuid)
         json_loader.save_json(file, data)
 
     def load(self, json_file_name):

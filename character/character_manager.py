@@ -30,12 +30,11 @@ class CharacterManager:
                 self._add_char_to_table(tmp_char)
                 return tmp_char
         else:
-            self._add_char_to_table(tmp_char)
             return tmp_char
 
     def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
         if self.chars is not None:
-            for i in range(0, len(self.chars)):
+            for i in range(0, len(self.chars)-1):
                 cur_char = self.chars[i]
                 if not self._is_chars_in_user_ids(user_ids, cur_char, id_type):
                     logger.log(logger.INFO, "User offline, unloading: " + cur_char.twitchid)
@@ -45,9 +44,10 @@ class CharacterManager:
     def _add_char_to_table(self, char: Character):
         if self.chars is None:
             self.chars = [char]
-        elif self.chars is list:
+            logger.log(logger.INFO, "Adding char: " + char.twitchid + " 1")
+        elif self.chars:
             self.chars.append(char)
-
+            logger.log(logger.INFO, "Adding char: " + char.twitchid + " 2")
 
     def _is_chars_in_user_ids(self, user_ids: [str], char: Character, user_id_type: UserIDType):
         for x in user_ids:
@@ -71,7 +71,7 @@ class CharacterManager:
         return False
 
     def _search_loaded_characters(self, user_id: str, user_id_type: UserIDType):
-        if self.chars is not None :
+        if self.chars is not None:
             for tmp in self.chars:
                 if tmp is not None:
                     if user_id_type == UserIDType.TWITCH:
