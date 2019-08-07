@@ -142,16 +142,21 @@ class RaidCountdownThread(HurbyThread):
             msg = self.root_cmd.insufficient_participants[
                 random.randint(0, len(self.root_cmd.insufficient_participants) - 1)]
             msg.replace("$min_participants", str(self.root_cmd.min_participants))
-            loneley_char: Character = self.root_cmd.participants[0]
-            lonley_char_spend: int = self.root_cmd.credits_spend[0]
-            loneley_char.add_credits(lonley_char_spend)
-            loneley_char.save()
+            self._restore_spend_cookies()
             self.root_cmd.participants = None
             self.irc.send_message(msg)
         else:
             self.irc.send_message(self.raid_starting[random.randint(0, len(self.raid_starting) - 1)])
             raid_thread = RaidThread(self.root_cmd)
             raid_thread.run()
+
+    def _restore_spend_cookies(self):
+        logger.log(logger.DEV, "RaidCountdownThread: Restoring spend credits")
+        lonely_chars: list[Character] = self.root_cmd.participants
+        lonely_credits = self.root_cmd.credits_spend
+        for x in range(0, len(lonely_chars)):
+            lonely_chars[x].add_credits(lonely_credits[x])
+            lonely_chars[x].save()
 
 
 class RaidThread(HurbyThread):
