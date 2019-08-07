@@ -142,6 +142,10 @@ class RaidCountdownThread(HurbyThread):
             msg = self.root_cmd.insufficient_participants[
                 random.randint(0, len(self.root_cmd.insufficient_participants) - 1)]
             msg.replace("$min_participants", str(self.root_cmd.min_participants))
+            loneley_char: Character = self.root_cmd.participants[0]
+            lonley_char_spend: int = self.root_cmd.credits_spend[0]
+            loneley_char.add_credits(lonley_char_spend)
+            loneley_char.save()
             self.root_cmd.participants = None
             self.irc.send_message(msg)
         else:
