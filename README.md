@@ -13,7 +13,7 @@ Telegram as well.
 
 A full lsit of Features will be provided when they are available.
 
-##Current Features
+## Current Features
 - Entirely configurable via json files
   - Enable/disable certain features
   - Setting eg.
