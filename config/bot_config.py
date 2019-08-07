@@ -1,6 +1,7 @@
 import random
+import sys
 
-from utils import json_loader
+from utils import json_loader, logger
 from utils.const import CONST
 
 
@@ -27,6 +28,11 @@ class BotConfig:
         self.modules[BotConfig.MODULE_MINIGAME] = bot_json["modules"]["minigame"]
         self.bot_name_in_reply = bot_json["bot_name_in_reply"]
         self.unknown_cmd_response = bot_json["unknown_command_response"]
+        self.dev_mode = False
+        if len(sys.argv) > 0:
+            if sys.argv[1] == "dev":
+                logger.log(logger.INFO, "BotConfig: Enable devmode")
+                self.dev_mode = True
 
     def get_unknown_cmd_response(self):
         return self.unknown_cmd_response[random.randint(0, len(self.unknown_cmd_response) - 1)]

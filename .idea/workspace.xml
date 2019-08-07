@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="296ea042-884d-4dc5-a5d0-7eef2c776bd2" name="Default Changelist" comment="" />
+    <list default="true" id="296ea042-884d-4dc5-a5d0-7eef2c776bd2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bot_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/bot_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitch_hurby/irc/irc_connector.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/irc/irc_connector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/const.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +56,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.run devmode">
+    <configuration name="run devmode" type="PythonConfigurationType" factoryName="Python">
+      <module name="Hurby" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="dev" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python">
       <module name="Hurby" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -73,11 +99,10 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.run" />
-      </list>
-    </recent_temporary>
+    <list>
+      <item itemvalue="Python.run" />
+      <item itemvalue="Python.run devmode" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />

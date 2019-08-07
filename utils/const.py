@@ -1,10 +1,19 @@
 import os
+import sys
+
+from utils import logger
 
 
 class Const:
     USER_HOME = os.getenv("HOME")
 
-    DIR_APP_DATA = ".z-ray/hurby"
+    if len(sys.argv) > 0:
+        if sys.argv[1] == "dev":
+            logger.log(logger.INFO, "CONST: Enable dev mode FS")
+            DIR_APP_DATA = ".z-ray/hurby/dev"
+    else:
+        DIR_APP_DATA = ".z-ray/hurby"
+
     DIR_APP_DATA_ABSOLUTE = USER_HOME + "/" + DIR_APP_DATA
     DIR_CONF = "config"
     DIR_CHARACTERS = "characters"
