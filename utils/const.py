@@ -11,8 +11,10 @@ class Const:
         if sys.argv[1] == "dev":
             logger.log(logger.INFO, "CONST: Enable dev mode FS")
             DIR_APP_DATA = ".z-ray/hurby/dev"
+            DEVMODE = True
     else:
         DIR_APP_DATA = ".z-ray/hurby"
+        DEVMODE = False
 
     DIR_APP_DATA_ABSOLUTE = USER_HOME + "/" + DIR_APP_DATA
     DIR_CONF = "config"

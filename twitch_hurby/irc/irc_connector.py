@@ -5,6 +5,7 @@ from twitch_hurby.irc.threads.cron_jobs import CronJobs
 from twitch_hurby.irc.threads.read_chat import ReadChat
 from twitch_hurby.twitch_config import TwitchConfig
 from utils import logger
+from utils.const import CONST
 
 
 class IRCConnector:
@@ -50,13 +51,13 @@ class IRCConnector:
     def send_message(self, msg):
         output = "PRIVMSG " + self.channel + " :" + msg + "\r\n"
         logger.log(logger.INFO, output)
-        if not self.hurby.botConfig.dev_mode:
+        if not CONST.DEVMODE:
             self.connection.send(bytes(output, 'UTF-8'))
 
     def send_whisper(self, user, msg):
         output = "PRIVMSG " + self.channel + " :/w " + user + " " + msg + "\r\n"
         logger.log(logger.INFO, output)
-        if not self.hurby.botConfig.dev_mode:
+        if not CONST.DEVMODE:
             self.connection.send(bytes(output, 'UTF-8'))
 
     def ping_pong(self, msg: str):

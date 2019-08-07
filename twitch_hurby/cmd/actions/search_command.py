@@ -20,13 +20,13 @@ class SearchCommand(AbstractCommand):
         AbstractCommand.__init__(self, trigger, cmd_type, cmd_realm, replies, cmd_perm, description)
         self.hurby = hurby
 
-    def do_command(self, params: list, character : Character):
+    def do_command(self, params: list, character: Character):
         search_string = params[0]
-        logger.log(logger.INFO, "Searching for "+search_string)
-        url = "https://api.duckduckgo.com/?q="+search_string+"&format=json&atb=v105-1"
+        logger.log(logger.INFO, "Searching for " + search_string)
+        url = "https://api.duckduckgo.com/?q=" + search_string + "&format=json&atb=v105-1"
         r = urllib.request.urlopen(url)
         string_data = r.read().decode('utf-8')
         json_data = json.loads(string_data)
         irc = self.hurby.twitch_receiver.twitch_listener
-        logger.log(logger.INFO, "Result: "+json_data["AbstractText"])
+        logger.log(logger.INFO, "Result: " + json_data["AbstractText"])
         irc.send_message(json_data["AbstractText"])

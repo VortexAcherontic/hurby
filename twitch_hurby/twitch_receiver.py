@@ -1,12 +1,9 @@
-import sys
-
 from character.character import Character
 from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.irc.irc_cmd import IRCCommand
 from twitch_hurby.irc.irc_connector import IRCConnector
 from twitch_hurby.twitch_config import TwitchConfig
 from utils import logger
-from utils.const import CONST
 
 
 class TwitchReceiver:

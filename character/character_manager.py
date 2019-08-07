@@ -1,9 +1,6 @@
-from typing import List
-
 from character.blacklist import Blacklist
 from character.character import Character
 from character.character_reference_table import CharacterReferenceTable
-from character.permission_levels import PermissionLevel
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from utils import logger
@@ -36,7 +33,7 @@ class CharacterManager:
 
     def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
         if self.chars is not None:
-            for i in range(0, len(self.chars)-1):
+            for i in range(0, len(self.chars) - 1):
                 cur_char = self.chars[i]
                 if not self._is_chars_in_user_ids(user_ids, cur_char, id_type):
                     logger.log(logger.INFO, "User offline, unloading: " + str(cur_char.twitchid))
@@ -93,5 +90,5 @@ class CharacterManager:
         return self.ref_table.check_user_id(user_id)
 
     def _add_char_to_ref_table(self, character: Character, user_id_type: UserIDType):
-        if user_id_type == UserIDType.TWITCH :
+        if user_id_type == UserIDType.TWITCH:
             self.ref_table.add_to_ref_table(character.twitchid, character.uuid)

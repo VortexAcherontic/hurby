@@ -18,7 +18,7 @@ class SimpleResponse(AbstractCommand):
         AbstractCommand.__init__(self, trigger, cmd_type, cmd_realm, replies, cmd_perm, description)
         self.hurby = hurby
 
-    def do_command(self, params: list, character : Character):
+    def do_command(self, params: list, character: Character):
         irc = self.hurby.twitch_receiver.twitch_listener
         if self.hurby.botConfig.bot_name_in_reply:
             bot_name = self.hurby.botConfig.botname

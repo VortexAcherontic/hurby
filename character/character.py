@@ -42,6 +42,9 @@ class Character:
         if user_id_type == UserIDType.TWITCH:
             self.twitchid = user_id
 
+    def add_credits(self, credits: int):
+        self.credits += int(credits)
+
     def set_permission_level(self, level: PermissionLevels):
         self.perm = level
 

@@ -1,7 +1,5 @@
 import json
 
-from pipenv import exceptions
-
 from utils import json_loader, logger
 from utils.const import CONST
 
