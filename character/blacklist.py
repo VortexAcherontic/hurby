@@ -6,7 +6,7 @@ class Blacklist:
     DIR_CHARACTER = CONST.DIR_APP_DATA_ABSOLUTE + "/characters"
 
     def __init__(self):
-        black_list_json = json_loader.loadJSON(Blacklist.DIR_CHARACTER + "/" + CONST.FILE_BLACKLIST)
+        black_list_json = json_loader.load_json(Blacklist.DIR_CHARACTER + "/" + CONST.FILE_BLACKLIST)
         self.len_black_list = len(black_list_json["blacklist"])
         self.blacklist = [None] * self.len_black_list
         for i in range(0, self.len_black_list):

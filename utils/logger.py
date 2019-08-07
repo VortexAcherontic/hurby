@@ -1,11 +1,21 @@
+from utils.const import CONST
+
 INFO = "INFO"
 WARN = "WARNING"
 ERR = "ERROR"
+DEV = "DEV"
 
 
-def log(type, msg):
+def log(log_type, msg):
     if isinstance(msg, list):
         for i in range(0, len(msg)):
-            print("[" + type + "]: " + msg[i])
+            _print_log(msg[i], log_type)
     elif isinstance(msg, str):
-        print("[" + type + "]: " + msg)
+        _print_log(msg, log_type)
+
+
+def _print_log(msg: str, log_type):
+    if (log_type == DEV) & CONST.DEVMODE:
+            print("[" + log_type + "]: " + msg)
+    else:
+        print("[" + log_type + "]: " + msg)

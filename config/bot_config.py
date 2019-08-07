@@ -15,7 +15,7 @@ class BotConfig:
 
     def __init__(self):
         config_file = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_CONF_HURBY
-        bot_json = json_loader.loadJSON(config_file)
+        bot_json = json_loader.load_json(config_file)
         self.botname = bot_json["botname"]
         self.modules = [None] * 7
         self.modules[BotConfig.MODULE_TWITCH] = bot_json["modules"]["twitch"]

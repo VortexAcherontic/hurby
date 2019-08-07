@@ -43,6 +43,7 @@ class Character:
             self.twitchid = user_id
 
     def add_credits(self, credits: int):
+        logger.log(logger.DEV, "Adding: " + str(credits) + "to " + str(self.twitchid))
         self.credits += int(credits)
 
     def set_permission_level(self, level: PermissionLevels):
@@ -115,6 +116,6 @@ class Character:
 
     def load(self, json_file_name):
         absolute_file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + json_file_name
-        json_data = json_loader.loadJSON(absolute_file)
+        json_data = json_loader.load_json(absolute_file)
         self.parse_json(json_data)
         logger.log(logger.INFO, "Loaded character: twitchID: " + self.twitchid)
