@@ -31,6 +31,7 @@ class CharacterManager:
             logger.log(logger.DEV,
                        "CharacterManager: Updating permission level for " + user_id + " to: " + permission_level.value)
             tmp_char.set_permission_level(permission_level)
+            tmp_char.save()
         return tmp_char
 
     def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
