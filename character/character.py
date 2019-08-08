@@ -93,7 +93,19 @@ class Character:
         self.mails = self._fix_array_ception(self.mails)
         self.inventory = self._fix_array_ception(self.inventory)
 
-    def convert_to_json(self) -> dict:
+    def save(self):
+        data = self._convert_to_json()
+        file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + str(self.uuid) + ".json"
+        logger.log(logger.DEV, "Saving character: " + self.uuid)
+        json_loader.save_json(file, data)
+
+    def load(self, json_file_name):
+        absolute_file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + json_file_name
+        json_data = json_loader.load_json(absolute_file)
+        self.parse_json(json_data)
+        logger.log(logger.INFO, "Loaded character: twitchID: " + self.twitchid)
+
+    def _convert_to_json(self) -> dict:
         text = {
             "uuid": self.uuid,
             "credits": self.credits,
@@ -110,18 +122,6 @@ class Character:
         }
         return text
 
-    def save(self):
-        data = self.convert_to_json()
-        file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + str(self.uuid) + ".json"
-        logger.log(logger.DEV, "Saving character: " + self.uuid)
-        json_loader.save_json(file, data)
-
-    def load(self, json_file_name):
-        absolute_file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + json_file_name
-        json_data = json_loader.load_json(absolute_file)
-        self.parse_json(json_data)
-        logger.log(logger.INFO, "Loaded character: twitchID: " + self.twitchid)
-
     def _fix_array_ception(self, array):
         layers_found = 0
         tmp_array = array
@@ -129,7 +129,7 @@ class Character:
             layers_found += 1
             tmp_array = tmp_array[0]
         logger.log(logger.DEV, "Found: " + str(layers_found) + " layers in array")
-        for i in range(0,  layers_found - 1):
+        for i in range(0, layers_found - 1):
             array = array[0]
             logger.log(logger.DEV, "Cleaned to: " + str(array))
         return array
