@@ -90,6 +90,8 @@ class Character:
         self.inventory = json["inventory"]
         self.perm = PermissionLevels[json["permission_level"].upper()]
         self.is_supporter = json["is_supporter"]
+        self.mails = self._fix_array_ception(self.mails)
+        self.inventory = self._fix_array_ception(self.inventory)
 
     def convert_to_json(self) -> dict:
         text = {
@@ -111,7 +113,7 @@ class Character:
     def save(self):
         data = self.convert_to_json()
         file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + str(self.uuid) + ".json"
-        logger.log(logger.INFO, "Saving character: " + self.uuid)
+        logger.log(logger.DEV, "Saving character: " + self.uuid)
         json_loader.save_json(file, data)
 
     def load(self, json_file_name):
@@ -119,3 +121,15 @@ class Character:
         json_data = json_loader.load_json(absolute_file)
         self.parse_json(json_data)
         logger.log(logger.INFO, "Loaded character: twitchID: " + self.twitchid)
+
+    def _fix_array_ception(self, array):
+        layers_found = 0
+        tmp_array = array
+        while isinstance(tmp_array, list):
+            layers_found += 1
+            tmp_array = tmp_array[0]
+        logger.log(logger.DEV, "Found: " + str(layers_found) + " layers in array")
+        for i in range(0,  layers_found - 1):
+            array = array[0]
+            logger.log(logger.DEV, "Cleaned to: " + str(array))
+        return array
