@@ -70,11 +70,11 @@ class Crawler(HurbyThread):
 
     def _init_character(self, name: str, chatter_type: ChatterType):
         if chatter_type == ChatterType.MODERATOR:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.MODERATOR)
+            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.MODERATOR, True)
         elif chatter_type == ChatterType.BROADCASTER:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.ADMINISTRATOR)
+            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.ADMINISTRATOR, True)
         else:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.EVERY_BODY)
+            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.EVERY_BODY, True)
 
     def _is_subscriber(self, user_id):
         pass
