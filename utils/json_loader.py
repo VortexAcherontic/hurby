@@ -3,7 +3,7 @@ import json
 from utils import logger
 
 
-def loadJSON(file: str) -> dict:
+def load_json(file: str) -> dict:
     with open(file) as f:
         logger.log(logger.INFO, "Loading JSON: " + file)
         d = json.load(f)

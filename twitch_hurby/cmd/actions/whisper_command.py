@@ -5,5 +5,5 @@ from twitch_hurby.cmd.abstract_command import AbstractCommand
 class WhisperCommand(AbstractCommand):
     pass
 
-    def do_command(self, params: list, character : Character):
+    def do_command(self, params: list, character: Character):
         pass

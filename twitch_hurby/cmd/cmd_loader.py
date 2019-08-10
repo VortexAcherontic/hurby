@@ -20,8 +20,8 @@ class CMDLoader:
 
         if cmd_type == CMDType.REPLY:
             # Logger.log(Logger.INFO, "CMD: " + json["cmd"] + " is SimpleReply")
-            simpleCMD = simple_response.SimpleResponse(json_data, hurby)
-            return simpleCMD
+            simple_cmd = simple_response.SimpleResponse(json_data, hurby)
+            return simple_cmd
         elif cmd_type == CMDType.ACTION:
             logic_trigger = json_data["reply"]
             if json_data["minigame"]:

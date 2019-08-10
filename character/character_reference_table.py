@@ -1,7 +1,5 @@
 import json
 
-from pipenv import exceptions
-
 from utils import json_loader, logger
 from utils.const import CONST
 
@@ -42,4 +40,4 @@ class CharacterReferenceTable:
         return False
 
     def _load_table(self):
-        self.map = json_loader.loadJSON(CharacterReferenceTable.REF_TABLE_FILE)
+        self.map = json_loader.load_json(CharacterReferenceTable.REF_TABLE_FILE)

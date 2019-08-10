@@ -1,9 +1,6 @@
-from typing import List
-
 from character.blacklist import Blacklist
 from character.character import Character
 from character.character_reference_table import CharacterReferenceTable
-from character.permission_levels import PermissionLevel
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from utils import logger
@@ -16,7 +13,8 @@ class CharacterManager:
         self.black_list: Blacklist = Blacklist()
         self.ref_table: CharacterReferenceTable = CharacterReferenceTable()
 
-    def get_character(self, user_id: str, user_id_type: UserIDType, permission_level=PermissionLevels.EVERYBODY):
+    def get_character(self, user_id: str, user_id_type: UserIDType, permission_level=PermissionLevels.EVERYBODY,
+                      update_perm_level=False):
         tmp_char = self._search_loaded_characters(user_id, user_id_type)
         if tmp_char is None:
             tmp_char = Character()
@@ -24,19 +22,21 @@ class CharacterManager:
                 json_file = self.ref_table.get_json_file_by_user_id(user_id)
                 tmp_char.load(json_file)
                 self._add_char_to_table(tmp_char)
-                return tmp_char
             else:
                 tmp_char.init_default_character(user_id, permission_level, user_id_type)
                 tmp_char.save()
                 self._add_char_to_table(tmp_char)
                 self._add_char_to_ref_table(tmp_char, user_id_type)
-                return tmp_char
-        else:
-            return tmp_char
+        if update_perm_level:
+            logger.log(logger.DEV,
+                       "CharacterManager: Updating permission level for " + user_id + " to: " + permission_level.value)
+            tmp_char.set_permission_level(permission_level)
+            tmp_char.save()
+        return tmp_char
 
     def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
         if self.chars is not None:
-            for i in range(0, len(self.chars)-1):
+            for i in range(0, len(self.chars) - 1):
                 cur_char = self.chars[i]
                 if not self._is_chars_in_user_ids(user_ids, cur_char, id_type):
                     logger.log(logger.INFO, "User offline, unloading: " + str(cur_char.twitchid))
@@ -93,5 +93,5 @@ class CharacterManager:
         return self.ref_table.check_user_id(user_id)
 
     def _add_char_to_ref_table(self, character: Character, user_id_type: UserIDType):
-        if user_id_type == UserIDType.TWITCH :
+        if user_id_type == UserIDType.TWITCH:
             self.ref_table.add_to_ref_table(character.twitchid, character.uuid)

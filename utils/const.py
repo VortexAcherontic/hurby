@@ -1,10 +1,18 @@
 import os
+import sys
 
 
 class Const:
     USER_HOME = os.getenv("HOME")
 
-    DIR_APP_DATA = ".z-ray/hurby"
+    if len(sys.argv) > 0:
+        if sys.argv[1] == "dev":
+            DIR_APP_DATA = ".z-ray/hurby/dev"
+            DEVMODE = True
+    else:
+        DIR_APP_DATA = ".z-ray/hurby"
+        DEVMODE = False
+
     DIR_APP_DATA_ABSOLUTE = USER_HOME + "/" + DIR_APP_DATA
     DIR_CONF = "config"
     DIR_CHARACTERS = "characters"

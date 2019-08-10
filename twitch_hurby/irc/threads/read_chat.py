@@ -1,7 +1,6 @@
 import re
 import time
 
-from character.permission_levels import PermissionLevel
 from character.user_id_types import UserIDType
 from twitch_hurby.irc import irc_chat_extractor
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
