@@ -27,23 +27,26 @@ class ReadChat(HurbyThread):
         self._stop_event.set()
 
     def read_chat(self):
-        con = self.irc_connector.connection
-        data = con.recv(1024).decode('UTF-8')
-        # logger.log(logger.INFO, data)
-        data_split = re.split(r"[~\r\n]+", data)
-        logger.log(logger.INFO, data_split)
-        for line in data_split:
-            line = str.rstrip(line)
-            line = str.split(line)
+        try:
+            con = self.irc_connector.connection
+            data = con.recv(1024).decode('UTF-8')
+            # logger.log(logger.INFO, data)
+            data_split = re.split(r"[~\r\n]+", data)
+            logger.log(logger.INFO, data_split)
+            for line in data_split:
+                line = str.rstrip(line)
+                line = str.split(line)
 
-            if len(line) >= 1:
-                if line[0] == 'PING':
-                    self.irc_connector.ping_pong(line[1])
+                if len(line) >= 1:
+                    if line[0] == 'PING':
+                        self.irc_connector.ping_pong(line[1])
 
-                if line[1] == 'PRIVMSG':
-                    sender = irc_chat_extractor.extract_sender(line[0])
-                    char = self.irc_connector.hurby.get_char_manager().get_character(sender, UserIDType.TWITCH)
-                    message = irc_chat_extractor.extract_message(line)
-                    if message.startswith("!"):
-                        cmd = irc_chat_extractor.extract_command(message)
-                        self.receiver.do_command(cmd, char, self.irc_connector)
+                    if line[1] == 'PRIVMSG':
+                        sender = irc_chat_extractor.extract_sender(line[0])
+                        char = self.irc_connector.hurby.get_char_manager().get_character(sender, UserIDType.TWITCH)
+                        message = irc_chat_extractor.extract_message(line)
+                        if message.startswith("!"):
+                            cmd = irc_chat_extractor.extract_command(message)
+                            self.receiver.do_command(cmd, char, self.irc_connector)
+        except IndexError as e:
+            pass
