@@ -30,9 +30,9 @@ class ReadChat(HurbyThread):
         try:
             con = self.irc_connector.connection
             data = con.recv(1024).decode('UTF-8')
-            # logger.log(logger.INFO, data)
+            logger.log(logger.DEV, data)
             data_split = re.split(r"[~\r\n]+", data)
-            logger.log(logger.INFO, data_split)
+            logger.log(logger.DEV, data_split)
             for line in data_split:
                 line = str.rstrip(line)
                 line = str.split(line)
