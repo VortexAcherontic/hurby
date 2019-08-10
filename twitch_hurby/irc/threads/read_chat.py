@@ -48,5 +48,7 @@ class ReadChat(HurbyThread):
                         if message.startswith("!"):
                             cmd = irc_chat_extractor.extract_command(message)
                             self.receiver.do_command(cmd, char, self.irc_connector)
+                        elif "loots.com" in message :
+                            self.hurby.loots.spend_credits(char)
         except IndexError as e:
             pass
