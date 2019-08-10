@@ -36,12 +36,11 @@ class CharacterManager:
 
     def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
         if self.chars is not None:
-            for i in range(0, len(self.chars) - 1):
-                cur_char = self.chars[i]
-                if not self._is_chars_in_user_ids(user_ids, cur_char, id_type):
-                    logger.log(logger.INFO, "User offline, unloading: " + str(cur_char.twitchid))
-                    cur_char.save()
-                    self.chars.remove(cur_char)
+            for tmp in self.chars :
+                if not self._is_chars_in_user_ids(user_ids, tmp, id_type):
+                    logger.log(logger.DEV, "User offline, unloading: " + str(tmp.twitchid))
+                    tmp.save()
+                    self.chars.remove(tmp)
 
     def _add_char_to_table(self, char: Character):
         if self.chars is None:
