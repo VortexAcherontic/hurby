@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="296ea042-884d-4dc5-a5d0-7eef2c776bd2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/character/permission_levels.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitch_hurby/irc/threads/crawler/crawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/irc/threads/crawler/crawler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitch_hurby/irc/threads/read_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/irc/threads/read_chat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitch_hurby/minigame/loots.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch_hurby/minigame/loots.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -134,13 +130,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/twitch_hurby/minigame/loots.py</url>
-          <line>20</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
