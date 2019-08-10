@@ -34,9 +34,12 @@ class CharacterManager:
             tmp_char.save()
         return tmp_char
 
+    def get_characters(self):
+        return self.chars
+
     def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
         if self.chars is not None:
-            for tmp in self.chars :
+            for tmp in self.chars:
                 if not self._is_chars_in_user_ids(user_ids, tmp, id_type):
                     logger.log(logger.DEV, "User offline, unloading: " + str(tmp.twitchid))
                     tmp.save()

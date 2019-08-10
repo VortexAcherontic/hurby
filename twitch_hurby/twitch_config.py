@@ -7,7 +7,7 @@ from utils.const import CONST
 
 
 class TwitchConfig:
-    CMD_PATH = CONST.USER_HOME + "/" + CONST.DIR_APP_DATA + "/templates/commands/twitch/"
+    CMD_PATH = CONST.DIR_APP_DATA_ABSOLUTE + "/templates/commands/twitch/"
     HOST = "irc.twitch.tv"
     PORT = 6667
 
