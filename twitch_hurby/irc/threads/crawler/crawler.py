@@ -69,12 +69,15 @@ class Crawler(HurbyThread):
         return json_data["chatters"][chatter_type]
 
     def _init_character(self, name: str, chatter_type: ChatterType):
-        if chatter_type == ChatterType.MODERATOR:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.MODERATOR, True)
-        elif chatter_type == ChatterType.BROADCASTER:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.ADMINISTRATOR, True)
-        else:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.EVERY_BODY, True)
+        try:
+            if chatter_type == ChatterType.MODERATOR:
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.MODERATOR, True)
+            elif chatter_type == ChatterType.BROADCASTER:
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.ADMINISTRATOR, True)
+            else:
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.EVERYBODY, True)
+        except AttributeError as e:
+            print(e)
 
     def _is_subscriber(self, user_id):
         pass
