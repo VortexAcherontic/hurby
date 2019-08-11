@@ -12,6 +12,10 @@ from utils import logger
 from utils.const import CONST
 
 
+def _get_chatters_by_type(json_data, chatter_type: str):
+    return json_data["chatters"][chatter_type]
+
+
 class Crawler(HurbyThread):
     def __init__(self, twitch_config: TwitchConfig, char_manager: CharacterManager):
         HurbyThread.__init__(self)
@@ -41,13 +45,13 @@ class Crawler(HurbyThread):
             string_data = r.read().decode('utf-8')
             self.crawl_cache = json.loads(string_data)
 
-        mods = self._get_chatters_by_type(self.crawl_cache, ChatterType.MODERATOR.value)
-        broadcaster = self._get_chatters_by_type(self.crawl_cache, ChatterType.BROADCASTER.value)
-        admins = self._get_chatters_by_type(self.crawl_cache, ChatterType.ADMINS.value)
-        global_mods = self._get_chatters_by_type(self.crawl_cache, ChatterType.GLOBAL_MODERATORS.value)
-        staff = self._get_chatters_by_type(self.crawl_cache, ChatterType.STAFF.value)
-        viewer = self._get_chatters_by_type(self.crawl_cache, ChatterType.VIEWER.value)
-        vips = self._get_chatters_by_type(self.crawl_cache, ChatterType.VIP.value)
+        mods = _get_chatters_by_type(self.crawl_cache, ChatterType.MODERATOR.value)
+        broadcaster = _get_chatters_by_type(self.crawl_cache, ChatterType.BROADCASTER.value)
+        admins = _get_chatters_by_type(self.crawl_cache, ChatterType.ADMINS.value)
+        global_mods = _get_chatters_by_type(self.crawl_cache, ChatterType.GLOBAL_MODERATORS.value)
+        staff = _get_chatters_by_type(self.crawl_cache, ChatterType.STAFF.value)
+        viewer = _get_chatters_by_type(self.crawl_cache, ChatterType.VIEWER.value)
+        vips = _get_chatters_by_type(self.crawl_cache, ChatterType.VIP.value)
         all_chatters = mods + broadcaster + admins + global_mods + staff + viewer + vips
         for i in mods:
             self._init_character(i, ChatterType.MODERATOR)
@@ -64,9 +68,6 @@ class Crawler(HurbyThread):
         for i in vips:
             self._init_character(i, ChatterType.VIP)
         self.char_man.unload_offline_characters(all_chatters, UserIDType.TWITCH)
-
-    def _get_chatters_by_type(self, json_data, chatter_type: str):
-        return json_data["chatters"][chatter_type]
 
     def _init_character(self, name: str, chatter_type: ChatterType):
         try:

@@ -11,39 +11,35 @@ from twitch_hurby.cmd.enums.cmd_types import CMDType
 from utils import logger
 
 
-class CMDLoader:
-    def __init__(self):
-        pass
+def create_cmd(json_data, bot_config: BotConfig, hurby):
+    cmd_type = CMDType(json_data["type"])
 
-    def create_cmd(self, json_data, bot_config: BotConfig, hurby):
-        cmd_type = CMDType(json_data["type"])
-
-        if cmd_type == CMDType.REPLY:
-            # Logger.log(Logger.INFO, "CMD: " + json["cmd"] + " is SimpleReply")
-            simple_cmd = simple_response.SimpleResponse(json_data, hurby)
-            return simple_cmd
-        elif cmd_type == CMDType.ACTION:
-            logic_trigger = json_data["reply"]
-            if json_data["minigame"]:
-                if bot_config.modules[bot_config.MODULE_MINIGAME] == "enabled":
-                    if logic_trigger == "$raid":
-                        return RaidCommand(json_data, hurby)
-                else:
-                    pass
-                    # Logger.log(Logger.INFO, "Skip mini game: " + json["cmd"] + " mini games are disabled")
+    if cmd_type == CMDType.REPLY:
+        # Logger.log(Logger.INFO, "CMD: " + json["cmd"] + " is SimpleReply")
+        simple_cmd = simple_response.SimpleResponse(json_data, hurby)
+        return simple_cmd
+    elif cmd_type == CMDType.ACTION:
+        logic_trigger = json_data["reply"]
+        if json_data["minigame"]:
+            if bot_config.modules[bot_config.MODULE_MINIGAME] == "enabled":
+                if logic_trigger == "$raid":
+                    return RaidCommand(json_data, hurby)
             else:
-                if logic_trigger == "$search":
-                    return SearchCommand(json_data, hurby)
-                if logic_trigger == "$whisper":
-                    return WhisperCommand(json_data, hurby)
-                if logic_trigger == "$shutdown":
-                    return ShutdownCommand(json_data, hurby)
-                if logic_trigger == "$credits":
-                    return CreditsCommand(json_data, hurby)
-                if logic_trigger == "$set_credits":
-                    return SetCreditsCommand(json_data, hurby)
-                if logic_trigger == "$help":
-                    return HelpCommand(json_data, hurby)
-
+                pass
+                # Logger.log(Logger.INFO, "Skip mini game: " + json["cmd"] + " mini games are disabled")
         else:
-            logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])
+            if logic_trigger == "$search":
+                return SearchCommand(json_data, hurby)
+            if logic_trigger == "$whisper":
+                return WhisperCommand(json_data)
+            if logic_trigger == "$shutdown":
+                return ShutdownCommand(json_data)
+            if logic_trigger == "$credits":
+                return CreditsCommand(json_data, hurby)
+            if logic_trigger == "$set_credits":
+                return SetCreditsCommand(json_data, hurby)
+            if logic_trigger == "$help":
+                return HelpCommand(json_data, hurby)
+
+    else:
+        logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])

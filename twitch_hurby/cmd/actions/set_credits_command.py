@@ -36,7 +36,7 @@ class SetCreditsCommand(AbstractCommand):
                     receiving_char.credits = set_cred
                     receiving_char.save()
                     logger.log(logger.INFO, receiving_char.twitchid + " has now " + str(set_cred) + "Credits")
-                except Exception:
+                except ValueError:
                     logger.log(logger.INFO, "Exception: Unable to set credits")
             else:
                 logger.log(logger.INFO, "Exception: Receiving character is None: " + receiving_char_name)

@@ -6,6 +6,19 @@ from utils import hurby_utils, logger, json_loader
 from utils.const import CONST
 
 
+def _fix_array_ception(array):
+    layers_found = 0
+    tmp_array = array
+    while isinstance(tmp_array, list):
+        layers_found += 1
+        tmp_array = tmp_array[0]
+    logger.log(logger.DEV, "Found: " + str(layers_found) + " layers in array")
+    for i in range(0, layers_found - 1):
+        array = array[0]
+        logger.log(logger.DEV, "Cleaned to: " + str(array))
+    return array
+
+
 class Character:
 
     def __init__(self):
@@ -42,9 +55,9 @@ class Character:
         if user_id_type == UserIDType.TWITCH:
             self.twitchid = user_id
 
-    def add_credits(self, credits: int):
-        logger.log(logger.DEV, "Adding: " + str(credits) + "to " + str(self.twitchid))
-        self.credits += int(credits)
+    def add_credits(self, cred: int):
+        logger.log(logger.DEV, "Adding: " + str(cred) + "to " + str(self.twitchid))
+        self.credits += int(cred)
 
     def set_permission_level(self, level: PermissionLevels):
         self.perm = level
@@ -90,8 +103,8 @@ class Character:
         self.inventory = json["inventory"]
         self.perm = PermissionLevels[json["permission_level"].upper()]
         self.is_supporter = json["is_supporter"]
-        self.mails = self._fix_array_ception(self.mails)
-        self.inventory = self._fix_array_ception(self.inventory)
+        self.mails = _fix_array_ception(self.mails)
+        self.inventory = _fix_array_ception(self.inventory)
 
     def save(self):
         data = self._convert_to_json()
@@ -121,15 +134,3 @@ class Character:
             "is_supporter": self.is_supporter
         }
         return text
-
-    def _fix_array_ception(self, array):
-        layers_found = 0
-        tmp_array = array
-        while isinstance(tmp_array, list):
-            layers_found += 1
-            tmp_array = tmp_array[0]
-        logger.log(logger.DEV, "Found: " + str(layers_found) + " layers in array")
-        for i in range(0, layers_found - 1):
-            array = array[0]
-            logger.log(logger.DEV, "Cleaned to: " + str(array))
-        return array

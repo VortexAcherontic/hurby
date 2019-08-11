@@ -1,7 +1,7 @@
 from os import listdir
 from os.path import isfile, join
 
-from twitch_hurby.cmd.cmd_loader import CMDLoader
+from twitch_hurby.cmd import cmd_loader
 from utils import logger, json_loader
 from utils.const import CONST
 
@@ -34,7 +34,6 @@ class TwitchConfig:
         self.load_cmds()
 
     def load_cmds(self):
-        cmd_loader = CMDLoader()
         self.cmds = [None] * len(self.onlyfiles)
         for i in range(0, len(self.onlyfiles)):
             cmd_json = json_loader.load_json(TwitchConfig.CMD_PATH + self.onlyfiles[i])

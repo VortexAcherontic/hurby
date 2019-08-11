@@ -11,6 +11,10 @@ from twitch_hurby.irc.threads.hurby_thread import HurbyThread
 from utils import logger
 
 
+def _insufficient_credits(char: Character, credits_spend: int):
+    return char.credits < credits_spend
+
+
 class RaidCommand(AbstractCommand):
     def __init__(self, json_data, hurby):
         trigger = json_data["cmd"]
@@ -55,7 +59,7 @@ class RaidCommand(AbstractCommand):
             irc = self.hurby.twitch_receiver.twitch_listener
             if self._invokable():
                 if not self._participating(character):
-                    if not self._insufficient_credits(character, int(credit_spend)):
+                    if not _insufficient_credits(character, int(credit_spend)):
                         character.credits -= int(credit_spend)
                         character.save()
                         if self.in_preparation:
@@ -93,14 +97,11 @@ class RaidCommand(AbstractCommand):
                 test = int(params[0])
                 if test < 0:
                     return False
-            except Exception:
+            except ValueError:
                 msg = self.raid_error_parse_credits[random.randint(0, len(self.raid_error_parse_credits) - 1)]
                 irc.send_message(msg)
                 return False
         return True
-
-    def _insufficient_credits(self, char: Character, credits_spend: int):
-        return char.credits < credits_spend
 
     def _participating(self, char: Character):
         if self.participants is not None:
