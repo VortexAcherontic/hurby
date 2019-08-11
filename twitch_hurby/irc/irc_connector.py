@@ -49,10 +49,15 @@ class IRCConnector:
         self.crawler_thread.start()
 
     def send_message(self, msg):
-        output = "PRIVMSG " + self.channel + " :" + msg + "\r\n"
-        logger.log(logger.INFO, output)
-        if not CONST.DEVMODE:
-            self.connection.send(bytes(output, 'UTF-8'))
+        try:
+            output = "PRIVMSG " + self.channel + " :" + msg + "\r\n"
+            logger.log(logger.INFO, output)
+            if not CONST.DEVMODE:
+                self.connection.send(bytes(output, 'UTF-8'))
+        except BrokenPipeError:
+            self.connect()
+            self.join_channel(self.channel)
+            self.send_message(msg)
 
     def send_whisper(self, user, msg):
         output = "PRIVMSG " + self.channel + " :/w " + user + " " + msg + "\r\n"
