@@ -16,6 +16,6 @@ def log(log_type, msg):
 
 def _print_log(msg: str, log_type):
     if (log_type == DEV) & CONST.DEVMODE:
-            print("[" + log_type + "]: " + msg)
+        print("[" + log_type + "]: " + msg)
     else:
         print("[" + log_type + "]: " + msg)

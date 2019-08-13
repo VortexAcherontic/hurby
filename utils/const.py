@@ -27,6 +27,7 @@ class Const:
     FILE_CONF_YOUTUBE = "youtube_conf.json"
     FILE_CONF_TWITCH = "twitch_conf.json"
     FILE_CONF_TWITCH_CMD = "twitch_chat_cmd.json"
+    FILE_CONF_LOOTS = "loots_conf.json"
     FILE_LOG = "hurby.log"
     FILE_BLACKLIST = "blacklist.json"
     FILE_CHAR_REF_TABLE = "reference_table.json"

@@ -3,13 +3,17 @@ import time
 import urllib.request
 
 from character.character_manager import CharacterManager
-from character.permission_levels import PermissionLevel
 from character.user_id_types import UserIDType
+from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from twitch_hurby.irc.threads.crawler.chatter_types import ChatterType
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
 from twitch_hurby.twitch_config import TwitchConfig
 from utils import logger
 from utils.const import CONST
+
+
+def _get_chatters_by_type(json_data, chatter_type: str):
+    return json_data["chatters"][chatter_type]
 
 
 class Crawler(HurbyThread):
@@ -41,13 +45,13 @@ class Crawler(HurbyThread):
             string_data = r.read().decode('utf-8')
             self.crawl_cache = json.loads(string_data)
 
-        mods = self._get_chatters_by_type(self.crawl_cache, ChatterType.MODERATOR.value)
-        broadcaster = self._get_chatters_by_type(self.crawl_cache, ChatterType.BROADCASTER.value)
-        admins = self._get_chatters_by_type(self.crawl_cache, ChatterType.ADMINS.value)
-        global_mods = self._get_chatters_by_type(self.crawl_cache, ChatterType.GLOBAL_MODERATORS.value)
-        staff = self._get_chatters_by_type(self.crawl_cache, ChatterType.STAFF.value)
-        viewer = self._get_chatters_by_type(self.crawl_cache, ChatterType.VIEWER.value)
-        vips = self._get_chatters_by_type(self.crawl_cache, ChatterType.VIP.value)
+        mods = _get_chatters_by_type(self.crawl_cache, ChatterType.MODERATOR.value)
+        broadcaster = _get_chatters_by_type(self.crawl_cache, ChatterType.BROADCASTER.value)
+        admins = _get_chatters_by_type(self.crawl_cache, ChatterType.ADMINS.value)
+        global_mods = _get_chatters_by_type(self.crawl_cache, ChatterType.GLOBAL_MODERATORS.value)
+        staff = _get_chatters_by_type(self.crawl_cache, ChatterType.STAFF.value)
+        viewer = _get_chatters_by_type(self.crawl_cache, ChatterType.VIEWER.value)
+        vips = _get_chatters_by_type(self.crawl_cache, ChatterType.VIP.value)
         all_chatters = mods + broadcaster + admins + global_mods + staff + viewer + vips
         for i in mods:
             self._init_character(i, ChatterType.MODERATOR)
@@ -65,16 +69,16 @@ class Crawler(HurbyThread):
             self._init_character(i, ChatterType.VIP)
         self.char_man.unload_offline_characters(all_chatters, UserIDType.TWITCH)
 
-    def _get_chatters_by_type(self, json_data, chatter_type: str):
-        return json_data["chatters"][chatter_type]
-
     def _init_character(self, name: str, chatter_type: ChatterType):
-        if chatter_type == ChatterType.MODERATOR:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.MODERATOR, True)
-        elif chatter_type == ChatterType.BROADCASTER:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.ADMINISTRATOR, True)
-        else:
-            self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevel.EVERY_BODY, True)
+        try:
+            if chatter_type == ChatterType.MODERATOR:
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.MODERATOR, True)
+            elif chatter_type == ChatterType.BROADCASTER:
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.ADMINISTRATOR, True)
+            else:
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.EVERYBODY, True)
+        except AttributeError as e:
+            print(e)
 
     def _is_subscriber(self, user_id):
         pass
