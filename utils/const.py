@@ -5,7 +5,7 @@ import sys
 class Const:
     USER_HOME = os.getenv("HOME")
 
-    if len(sys.argv) > 0:
+    if len(sys.argv) > 1:
         if sys.argv[1] == "dev":
             DIR_APP_DATA = ".z-ray/hurby/dev"
             DEVMODE = True
