@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="296ea042-884d-4dc5-a5d0-7eef2c776bd2" name="Default Changelist" comment="" />
+    <list default="true" id="296ea042-884d-4dc5-a5d0-7eef2c776bd2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/const.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +55,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.run devmode">
+  <component name="RunManager" selected="Python.run">
     <configuration name="run devmode" type="PythonConfigurationType" factoryName="Python">
       <module name="Hurby" />
       <option name="INTERPRETER_OPTIONS" value="" />
