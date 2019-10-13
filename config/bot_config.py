@@ -18,6 +18,7 @@ class BotConfig:
         config_file = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_CONF_HURBY
         bot_json = json_loader.load_json(config_file)
         self.botname = bot_json["botname"]
+        CONST.SUPPRESS_JSON_LOGGING = bot_json["suppress_json_log"]
         self.modules = [None] * 8
         self.modules[BotConfig.MODULE_TWITCH] = bot_json["modules"]["twitch"]
         self.modules[BotConfig.MODULE_TWITTER] = bot_json["modules"]["twitter"]
@@ -29,6 +30,9 @@ class BotConfig:
         self.modules[BotConfig.MODULE_EVENTS] = bot_json["modules"]["events"]
         self.bot_name_in_reply = bot_json["bot_name_in_reply"]
         self.unknown_cmd_response = bot_json["unknown_command_response"]
+        self.event_cooldown_min_min = bot_json["event"]["cooldown_min_min"]
+        self.event_cooldown_max_min = bot_json["event"]["cooldown_max_min"]
+
 
     def get_unknown_cmd_response(self):
         return self.unknown_cmd_response[random.randint(0, len(self.unknown_cmd_response) - 1)]

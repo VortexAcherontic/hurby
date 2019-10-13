@@ -3,6 +3,7 @@ from os.path import isfile, join
 
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import cmd_loader, event_loader
+from twitch_hurby.cmd.event_thread import EventThread
 from utils import logger, json_loader
 from utils.const import CONST
 
@@ -19,8 +20,6 @@ class TwitchConfig:
         twitch_json = json_loader.load_json(config_file)
         self.onlyfiles = [f for f in listdir(TwitchConfig.CMD_PATH) if isfile(join(TwitchConfig.CMD_PATH, f))]
         self.cmds = [None] * len(self.onlyfiles)
-        self.onlyfiles_events = [f for f in listdir(TwitchConfig.EVENT_PATH) if isfile(join(TwitchConfig.EVENT_PATH, f))]
-        self.events = [None] * len(self.onlyfiles_events)
         self.oauth_token = twitch_json["oauth_token"]
         self.channel_name = twitch_json["channel_name"]
         self.streamer = twitch_json["streamer"]
@@ -48,11 +47,14 @@ class TwitchConfig:
 
     def load_events(self):
         if self.hurby.get_bot_config().modules[BotConfig.MODULE_EVENTS]:
-            self.events = [None] * len(self.onlyfiles_events)
-            for i in range(0, len(self.onlyfiles_events)):
-                if self.onlyfiles_events[i].endswith(".json"):
-                    event_json = json_loader.load_json(TwitchConfig.EVENT_PATH + self.onlyfiles_events[i])
-                    self.events[i] = event_loader.create_event(event_json, self.hurby.get_bot_config(), self.hurby)
+            onlyfiles_events = [f for f in listdir(TwitchConfig.EVENT_PATH) if isfile(join(TwitchConfig.EVENT_PATH, f))]
+            events = [None] * len(onlyfiles_events)
+            for i in range(0, len(onlyfiles_events)):
+                if onlyfiles_events[i].endswith(".json"):
+                    event_json = json_loader.load_json(TwitchConfig.EVENT_PATH + onlyfiles_events[i])
+                    events[i] = event_loader.create_event(event_json, self.hurby)
+            event_thread = EventThread(self.hurby, events)
+            event_thread.start()
 
     def get_cmds(self) -> list:
         return self.cmds

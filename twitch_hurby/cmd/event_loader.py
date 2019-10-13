@@ -1,5 +1,8 @@
-from config.bot_config import BotConfig
+from twitch_hurby.cmd.events.rob import EventRob
 
 
-def create_event(json_data, bot_config: BotConfig, hurby):
-    pass
+def create_event(json_data, hurby):
+    trigger = json_data["trigger"]
+    if trigger == "$rob":
+        return EventRob(json_data, hurby)
+    return None
