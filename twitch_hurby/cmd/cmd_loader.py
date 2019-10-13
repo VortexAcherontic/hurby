@@ -1,5 +1,8 @@
+from samba.dcerpc.dfs import Add
+
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import simple_response
+from twitch_hurby.cmd.actions.add_credits import AddCreditsCommand
 from twitch_hurby.cmd.actions.credits_command import CreditsCommand
 from twitch_hurby.cmd.actions.gift_credits import GiftCreditsCommand
 from twitch_hurby.cmd.actions.help_command import HelpCommand
@@ -43,6 +46,8 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
                 return HelpCommand(json_data, hurby)
             if logic_trigger == "$giftcredits":
                 return GiftCreditsCommand(json_data, hurby)
+            if logic_trigger == "$add_credits":
+                return AddCreditsCommand(json_data, hurby)
 
     else:
         logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])
