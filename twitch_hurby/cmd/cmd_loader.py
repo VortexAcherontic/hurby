@@ -25,7 +25,7 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
     elif cmd_type == CMDType.ACTION:
         logic_trigger = json_data["reply"]
         if json_data["minigame"]:
-            if bot_config.modules[bot_config.MODULE_MINIGAME] == "enabled":
+            if bot_config.modules[bot_config.MODULE_MINIGAME]:
                 if logic_trigger == "$raid":
                     return RaidCommand(json_data, hurby)
             else:
