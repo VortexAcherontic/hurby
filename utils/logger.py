@@ -1,4 +1,4 @@
-from utils.const import CONST
+from utils import const
 
 INFO = "INFO"
 WARN = "WARNING"
@@ -15,7 +15,8 @@ def log(log_type, msg):
 
 
 def _print_log(msg: str, log_type):
-    if (log_type == DEV) & CONST.DEVMODE:
-        print("[" + log_type + "]: " + msg)
+    if log_type == DEV:
+        if const.CONST.DEVMODE:
+            print("[" + log_type + "]: " + msg)
     else:
         print("[" + log_type + "]: " + msg)

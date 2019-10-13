@@ -72,11 +72,11 @@ class Crawler(HurbyThread):
     def _init_character(self, name: str, chatter_type: ChatterType):
         try:
             if chatter_type == ChatterType.MODERATOR:
-                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.MODERATOR, True)
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.MODERATOR, True, False)
             elif chatter_type == ChatterType.BROADCASTER:
-                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.ADMINISTRATOR, True)
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.ADMINISTRATOR, True, False)
             else:
-                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.EVERYBODY, True)
+                self.char_man.get_character(name, UserIDType.TWITCH, PermissionLevels.EVERYBODY, True, False)
         except AttributeError as e:
             print(e)
 
