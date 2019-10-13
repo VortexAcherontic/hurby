@@ -6,7 +6,7 @@ from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.cmd.enums.cmd_response_realms import CMDResponseRealms
 from twitch_hurby.cmd.enums.cmd_types import CMDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
-from utils import logger
+from utils import logger, utils
 
 
 class AddCreditsCommand(AbstractCommand):
@@ -24,7 +24,7 @@ class AddCreditsCommand(AbstractCommand):
     def do_command(self, params: list, character: Character):
         irc = self.hurby.twitch_receiver.twitch_listener
         if len(params) < 2:
-            msg = self.error_less_params[random.randint(0, len(self.error_less_params) - 1)]
+            msg = utils.get_random_entry(self.error_less_params)
             irc.send_message(msg)
         elif character is not None:
             char_man = self.hurby.get_char_manager()
@@ -32,10 +32,11 @@ class AddCreditsCommand(AbstractCommand):
             receiving_char = char_man.get_character(receiving_char_name, UserIDType.TWITCH)
             if receiving_char is not None:
                 try:
-                    set_cred = int(params[1])
-                    receiving_char.credits = set_cred
+                    add_cred = int(params[1])
+                    mem = receiving_char.credits
+                    receiving_char.credits += add_cred
                     receiving_char.save()
-                    logger.log(logger.INFO, receiving_char.twitchid + " has now " + str(set_cred) + "Credits")
+                    logger.log(logger.INFO, receiving_char.twitchid + " had "+str(mem)+" credits and now " + str(receiving_char.credits))
                 except ValueError:
                     logger.log(logger.INFO, "Exception: Unable to set credits")
             else:
