@@ -135,7 +135,7 @@ class RaidCountdownThread(HurbyThread):
         while self.countdown > 0:
             time.sleep(1)
             self.countdown -= 1
-            logger.log(logger.INFO, "Raid in: " + str(self.countdown) + " Seconds")
+            logger.log(logger.DEV, "Raid in: " + str(self.countdown) + " Seconds")
             if self.countdown == 10:
                 self.irc.send_message(self.response_10[random.randint(0, len(self.response_10) - 1)])
         self.root_cmd.in_preparation = False

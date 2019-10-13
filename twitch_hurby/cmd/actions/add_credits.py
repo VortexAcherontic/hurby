@@ -1,12 +1,10 @@
-import random
-
 from character.character import Character
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.cmd.enums.cmd_response_realms import CMDResponseRealms
 from twitch_hurby.cmd.enums.cmd_types import CMDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
-from utils import logger, utils
+from utils import hurby_utils, logger
 
 
 class AddCreditsCommand(AbstractCommand):
@@ -24,7 +22,7 @@ class AddCreditsCommand(AbstractCommand):
     def do_command(self, params: list, character: Character):
         irc = self.hurby.twitch_receiver.twitch_listener
         if len(params) < 2:
-            msg = utils.get_random_entry(self.error_less_params)
+            msg = hurby_utils.get_random_reply(self.error_less_params)
             irc.send_message(msg)
         elif character is not None:
             char_man = self.hurby.get_char_manager()

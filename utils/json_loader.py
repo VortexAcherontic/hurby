@@ -5,7 +5,7 @@ from utils import logger
 
 def load_json(file: str) -> dict:
     with open(file) as f:
-        logger.log(logger.INFO, "Loading JSON: " + file)
+        logger.log(logger.JSON, "Loading JSON: " + file)
         d = json.load(f)
         f.close()
     return d

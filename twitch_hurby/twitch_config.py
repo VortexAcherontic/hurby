@@ -1,13 +1,16 @@
 from os import listdir
 from os.path import isfile, join
 
-from twitch_hurby.cmd import cmd_loader
+from config.bot_config import BotConfig
+from twitch_hurby.cmd import cmd_loader, event_loader
+from twitch_hurby.cmd.event_thread import EventThread
 from utils import logger, json_loader
 from utils.const import CONST
 
 
 class TwitchConfig:
     CMD_PATH = CONST.DIR_APP_DATA_ABSOLUTE + "/templates/commands/twitch/"
+    EVENT_PATH = CONST.DIR_APP_DATA_ABSOLUTE + "/templates/events/twitch/"
     HOST = "irc.twitch.tv"
     PORT = 6667
 
@@ -32,6 +35,7 @@ class TwitchConfig:
         logger.log(logger.INFO, self.cron_jobs)
         self.bot_username = self.hurby.get_bot_config().botname
         self.load_cmds()
+        self.load_events()
 
     def load_cmds(self):
         self.cmds = [None] * len(self.onlyfiles)
@@ -40,6 +44,17 @@ class TwitchConfig:
                 cmd_json = json_loader.load_json(TwitchConfig.CMD_PATH + self.onlyfiles[i])
                 self.cmds[i] = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby)
         logger.log(logger.INFO, str(len(self.cmds)) + " commands loaded")
+
+    def load_events(self):
+        if self.hurby.get_bot_config().modules[BotConfig.MODULE_EVENTS]:
+            onlyfiles_events = [f for f in listdir(TwitchConfig.EVENT_PATH) if isfile(join(TwitchConfig.EVENT_PATH, f))]
+            events = [None] * len(onlyfiles_events)
+            for i in range(0, len(onlyfiles_events)):
+                if onlyfiles_events[i].endswith(".json"):
+                    event_json = json_loader.load_json(TwitchConfig.EVENT_PATH + onlyfiles_events[i])
+                    events[i] = event_loader.create_event(event_json, self.hurby)
+            event_thread = EventThread(self.hurby, events)
+            event_thread.start()
 
     def get_cmds(self) -> list:
         return self.cmds
