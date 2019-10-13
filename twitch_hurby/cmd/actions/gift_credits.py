@@ -4,7 +4,7 @@ from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.cmd.enums.cmd_response_realms import CMDResponseRealms
 from twitch_hurby.cmd.enums.cmd_types import CMDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
-from utils import logger, utils
+from utils import hurby_utils, logger
 
 
 class GiftCreditsCommand(AbstractCommand):
@@ -26,7 +26,7 @@ class GiftCreditsCommand(AbstractCommand):
     def do_command(self, params: list, character: Character):
         irc = self.hurby.twitch_receiver.twitch_listener
         if len(params) < 2:
-            msg = utils.get_random_entry(self.error_less_params)
+            msg = hurby_utils.get_random_reply(self.error_less_params)
             irc.send_message(msg)
         elif character is not None:
             char_man = self.hurby.get_char_manager()
@@ -36,7 +36,7 @@ class GiftCreditsCommand(AbstractCommand):
                 try:
                     creds = int(params[1])
                     if character.credits < creds:
-                        msg = utils.get_random_entry(self.error_insufficient_credits)
+                        msg = hurby_utils.get_random_reply(self.error_insufficient_credits)
                         msg= msg.replace("$user_credits", str(character.credits))
                         irc.send_message(msg)
                     else:
@@ -44,16 +44,16 @@ class GiftCreditsCommand(AbstractCommand):
                         character.credits -= creds
                         receiving_char.save()
                         character.save()
-                        msg = utils.get_random_entry(self.answers)
+                        msg = hurby_utils.get_random_reply(self.answers)
                         msg = msg.replace("$user", character.twitchid)
                         msg = msg.replace("$recipient", receiving_char.twitchid)
                         msg = msg.replace("$credits", str(creds))
                         irc.send_message(msg)
                 except ValueError:
-                    msg = utils.get_random_entry(self.error_parse_credits)
+                    msg = hurby_utils.get_random_reply(self.error_parse_credits)
                     irc.send_message(msg)
             else:
-                msg = utils.get_random_entry(self.error_recipient)
+                msg = hurby_utils.get_random_reply(self.error_recipient)
                 irc.send_message(msg)
         else:
             logger.log(logger.INFO, "Exception: Issuing character is None")
