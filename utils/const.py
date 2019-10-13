@@ -32,6 +32,7 @@ class Const:
     FILE_CHAR_REF_TABLE = "reference_table.json"
 
     RUNNING = True
+    SUPPRESS_JSON_LOGGING = True
 
 
 CONST = Const()
