@@ -36,7 +36,7 @@ class CharacterManager:
         self.ref_table: CharacterReferenceTable = CharacterReferenceTable()
 
     def get_character(self, user_id: str, user_id_type: UserIDType, permission_level=PermissionLevels.EVERYBODY,
-                      update_perm_level=False):
+                      update_perm_level=False, command_issued=True):
         tmp_char = self._search_loaded_characters(user_id, user_id_type)
         if tmp_char is None:
             tmp_char = Character()
@@ -44,11 +44,13 @@ class CharacterManager:
                 json_file = self.ref_table.get_json_file_by_user_id(user_id)
                 tmp_char.load(json_file)
                 self._add_char_to_table(tmp_char)
-            else:
+            elif not command_issued:
                 tmp_char.init_default_character(user_id, permission_level, user_id_type)
                 tmp_char.save()
                 self._add_char_to_table(tmp_char)
                 self._add_char_to_ref_table(tmp_char, user_id_type)
+            else:
+                return None
         if update_perm_level:
             logger.log(logger.DEV,
                        "CharacterManager: Updating permission level for " + user_id + " to: " + permission_level.value)
