@@ -1,17 +1,16 @@
 import os
-import sys
 
 
 class Const:
     USER_HOME = os.getenv("HOME")
+    DEVMODE = False
+    DIR_APP_DATA = ".z-ray/hurby"
 
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "dev":
+    if "HURBY_DEVMODE" in os.environ:
+        if int(os.environ["HURBY_DEVMODE"]) == 1:
             DIR_APP_DATA = ".z-ray/hurby/dev"
             DEVMODE = True
-    else:
-        DIR_APP_DATA = ".z-ray/hurby"
-        DEVMODE = False
+            print("Running in devmode: "+ str(DEVMODE))
 
     DIR_APP_DATA_ABSOLUTE = USER_HOME + "/" + DIR_APP_DATA
     DIR_CONF = "config"
