@@ -36,8 +36,9 @@ class TwitchConfig:
     def load_cmds(self):
         self.cmds = [None] * len(self.onlyfiles)
         for i in range(0, len(self.onlyfiles)):
-            cmd_json = json_loader.load_json(TwitchConfig.CMD_PATH + self.onlyfiles[i])
-            self.cmds[i] = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby)
+            if self.onlyfiles[i].endswith(".json"):
+                cmd_json = json_loader.load_json(TwitchConfig.CMD_PATH + self.onlyfiles[i])
+                self.cmds[i] = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby)
         logger.log(logger.INFO, str(len(self.cmds)) + " commands loaded")
 
     def get_cmds(self) -> list:
