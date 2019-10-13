@@ -19,9 +19,9 @@ class Hurby:
         return self.char_manager
 
     def load_modules(self):
-        if self.botConfig.modules[BotConfig.MODULE_MINIGAME] == "enabled":
+        if self.botConfig.modules[BotConfig.MODULE_MINIGAME]:
             logger.log(logger.INFO, "Module Mini games: enabled")
-        if self.botConfig.modules[BotConfig.MODULE_TWITCH] == "enabled":
+        if self.botConfig.modules[BotConfig.MODULE_TWITCH]:
             logger.log(logger.INFO, "Module Twitch: enabled")
             self.twitch_receiver = TwitchReceiver(self)
 
