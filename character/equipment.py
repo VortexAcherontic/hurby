@@ -30,21 +30,21 @@ class PlayerEquipment:
             else:
                 logger.log(logger.WARN, "Slot : " + SLOTS["slot"] + " not existing in JSON for: " + character_id)
 
-    def get_atk_value_sum(self):
+    def get_atk_value_sum(self) -> float:
         summarized = 0
         for i in self.equipped:
             if hasattr(self.equipped[i], "damage"):
                 summarized += self.equipped[i].damage
         return summarized
 
-    def get_def_value_sum(self):
+    def get_def_value_sum(self) -> float:
         summarized = 0
         for i in self.equipped:
             if hasattr(self.equipped[i], "defense"):
                 summarized += self.equipped[i].defense
         return summarized
 
-    def unequip_item(self, identifier: int):
+    def unequip_item(self, identifier: int) -> bool:
         if self._has_item(identifier):
             item: BaseItem = self.item_man.get_item_by_id(identifier)
             if item.use_all_slots:
@@ -68,7 +68,7 @@ class PlayerEquipment:
                         return False
         return False
 
-    def equip_item(self, identifier: int):
+    def equip_item(self, identifier: int) -> bool:
         item = self.item_man.get_item_by_id(identifier)
         if self._has_free_slot(item):
             if item.use_all_slots:
@@ -81,7 +81,7 @@ class PlayerEquipment:
             return True
         return False
 
-    def use_item(self, identifier: int):
+    def use_item(self, identifier: int) -> bool:
         if self._has_item(identifier):
             for s in self.equipped:
                 i: BaseItem = self.equipped[s]
@@ -91,7 +91,7 @@ class PlayerEquipment:
                         return True
         return False
 
-    def _has_free_slot(self, item: BaseItem):
+    def _has_free_slot(self, item: BaseItem) -> bool:
         use_all = item.use_all_slots
         slots = item.slots
         if use_all:
@@ -108,7 +108,7 @@ class PlayerEquipment:
                 if self.equipped[slots[s]] is None:
                     return True
 
-    def _has_item(self, identifier: int):
+    def _has_item(self, identifier: int) -> bool:
         for s in self.equipped:
             if self.equipped[s] is not None:
                 item: BaseItem = self.equipped[s]
@@ -117,7 +117,7 @@ class PlayerEquipment:
         return False
 
     @staticmethod
-    def _init_empty_equip():
+    def _init_empty_equip() -> dict:
         empty_equip = {}
         for s in SLOTS:
             empty_equip[s] = None

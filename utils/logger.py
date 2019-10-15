@@ -20,7 +20,7 @@ def _print_log(msg: str, log_type):
         if CONST.DEVMODE:
             print("[" + log_type + "]: " + msg)
     elif log_type == JSON:
-        if not CONST.SUPPRESS_JSON_LOGGING:
+        if not CONST.SUPPRESS_JSON_LOGGING or CONST.DEVMODE:
             print("[" + log_type + "]: " + msg)
     else:
         print("[" + log_type + "]: " + msg)
