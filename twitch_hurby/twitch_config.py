@@ -4,7 +4,7 @@ from os.path import isfile, join
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import cmd_loader, event_loader
 from twitch_hurby.cmd.event_thread import EventThread
-from utils import logger, json_loader
+from utils import logger, json_loader, hurby_utils
 from utils.const import CONST
 
 
@@ -18,7 +18,7 @@ class TwitchConfig:
         self.hurby = hurby
         config_file = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_CONF_TWITCH
         twitch_json = json_loader.load_json(config_file)
-        self.onlyfiles = [f for f in listdir(TwitchConfig.CMD_PATH) if isfile(join(TwitchConfig.CMD_PATH, f))]
+        self.onlyfiles = hurby_utils.get_all_files_in_path(TwitchConfig.CMD_PATH)
         self.cmds = [None] * len(self.onlyfiles)
         self.oauth_token = twitch_json["oauth_token"]
         self.channel_name = twitch_json["channel_name"]
@@ -47,7 +47,7 @@ class TwitchConfig:
 
     def load_events(self):
         if self.hurby.get_bot_config().modules[BotConfig.MODULE_EVENTS]:
-            onlyfiles_events = [f for f in listdir(TwitchConfig.EVENT_PATH) if isfile(join(TwitchConfig.EVENT_PATH, f))]
+            onlyfiles_events = hurby_utils.get_all_files_in_path(TwitchConfig.EVENT_PATH)
             events = [None] * len(onlyfiles_events)
             for i in range(0, len(onlyfiles_events)):
                 if onlyfiles_events[i].endswith(".json"):
