@@ -19,9 +19,9 @@ class EventThread(HurbyThread):
         max_min = bot_cfg.event_cooldown_max_min
         sleep_time = random.randint(min_min, max_min)
         while CONST.RUNNING:
-            logger.log(logger.DEV, "Event Thread sleep for " + str(sleep_time) + " mins")
+            logger.log(logger.INFO, "Event Thread sleep for " + str(sleep_time) + " mins")
             time.sleep(sleep_time * 60)
-            logger.log(logger.DEV, "Tick event")
+            logger.log(logger.INFO, "Tick event")
             rnd_event = None
             while rnd_event is None:
                 rnd_event = self.events[random.randint(0, len(self.events) - 1)]
