@@ -10,11 +10,17 @@ class ItemManager:
         self.items = [BaseItem] * 0
         self._load_all_items()
 
-    def get_item_by_id(self, identifier: int):
+    def get_item_by_id(self, identifier: int) -> BaseItem:
         for i in self.items:
             if i.verify_id(identifier):
                 return i
         return None
+
+    def dose_item_id_exists(self, identifier) -> bool:
+        for i in self.items:
+            if i.verify_id(identifier):
+                return True
+        return False
 
     def _load_all_items(self):
         all_item_files = hurby_utils.get_all_files_in_path(ITEM_DIR)

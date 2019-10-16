@@ -30,16 +30,17 @@ def _is_chars_in_user_ids(user_ids: [str], char: Character, user_id_type: UserID
 
 class CharacterManager:
 
-    def __init__(self):
+    def __init__(self, hurby):
         self.chars: list[Character] = None
         self.black_list: Blacklist = Blacklist()
         self.ref_table: CharacterReferenceTable = CharacterReferenceTable()
+        self.hurby = hurby
 
     def get_character(self, user_id: str, user_id_type: UserIDType, permission_level=PermissionLevels.EVERYBODY,
                       update_perm_level=False, command_issued=True):
         tmp_char = self._search_loaded_characters(user_id, user_id_type)
         if tmp_char is None:
-            tmp_char = Character()
+            tmp_char = Character(self.hurby)
             if self._is_in_reference_table(user_id):
                 json_file = self.ref_table.get_json_file_by_user_id(user_id)
                 tmp_char.load(json_file)

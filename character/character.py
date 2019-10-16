@@ -1,5 +1,7 @@
 import uuid
 
+from character.equipment import PlayerEquipment
+from character.inventory import PlayerInventory
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from utils import hurby_utils, logger, json_loader
@@ -21,7 +23,7 @@ def _fix_array_ception(array):
 
 class Character:
 
-    def __init__(self):
+    def __init__(self, hurby):
         self.credits: int = None
         self.endurance: int = None
         self.endurance_max: int = None
@@ -36,6 +38,9 @@ class Character:
         self.perm = PermissionLevels.EVERYBODY
         self.last_seen = None
         self.is_supporter = False
+        self.equipment: PlayerEquipment = PlayerEquipment(None, None, None)
+        self.inventory: PlayerInventory = PlayerInventory(None)
+        self.hurby = hurby
 
     def init_default_character(self, user_id: str, permission_level: PermissionLevels, user_id_type: UserIDType):
         logger.log(logger.INFO, "New character: " + user_id)
@@ -100,11 +105,14 @@ class Character:
         self.youtubeid = json["youtubeid"]
         self.twitterid = json["twitterid"]
         self.mails = json["mail"]
-        self.inventory = json["inventory"]
         self.perm = PermissionLevels[json["permission_level"].upper()]
         self.is_supporter = json["is_supporter"]
         self.mails = _fix_array_ception(self.mails)
         self.inventory = _fix_array_ception(self.inventory)
+        if "equipment" in json:
+            self.equipment = PlayerEquipment(json["equipment"], self.uuid, self.hurby.item_manager)
+        if "inventory" in json:
+            self.inventory = PlayerInventory(json["inventory"])
 
     def save(self):
         data = self._convert_to_json()
@@ -129,8 +137,9 @@ class Character:
             "youtubeid": self.youtubeid,
             "twitterid": self.twitterid,
             "mail": self.mails,
-            "inventory": self.inventory,
             "permission_level": self.perm.value,
-            "is_supporter": self.is_supporter
+            "is_supporter": self.is_supporter,
+            "inventory": self.inventory.to_dict(),
+            "equipment": self.equipment.to_dict()
         }
         return text

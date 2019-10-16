@@ -11,14 +11,11 @@ class Hurby:
 
     def __init__(self):
         self.botConfig = BotConfig()
-        self.char_manager = CharacterManager()
+        self.char_manager: CharacterManager = CharacterManager(self)
         self.twitch_receiver = None
         self.load_modules()
         self.loots = Loots(self.char_manager, self.twitch_receiver)
         self.item_manager = ItemManager()
-
-    def get_char_manager(self) -> CharacterManager:
-        return self.char_manager
 
     def load_modules(self):
         if self.botConfig.modules[BotConfig.MODULE_MINIGAME]:
