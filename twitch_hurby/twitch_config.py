@@ -1,6 +1,3 @@
-from os import listdir
-from os.path import isfile, join
-
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import cmd_loader, event_loader
 from twitch_hurby.cmd.event_thread import EventThread

@@ -3,7 +3,7 @@ import time
 
 from character.character import Character
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
-from utils import hurby_utils, logger
+from utils import hurby_utils
 
 
 class EventRob:

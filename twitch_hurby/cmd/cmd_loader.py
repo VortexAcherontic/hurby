@@ -1,5 +1,3 @@
-from samba.dcerpc.dfs import Add
-
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import simple_response
 from twitch_hurby.cmd.actions.add_credits import AddCreditsCommand
