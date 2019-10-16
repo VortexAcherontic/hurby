@@ -31,8 +31,6 @@ class TwitchConfig:
         logger.log(logger.INFO, "Cron jobs: " + str(self.enable_cron_jobs))
         logger.log(logger.INFO, self.cron_jobs)
         self.bot_username = self.hurby.get_bot_config().botname
-        self.load_cmds()
-        self.load_events()
 
     def load_cmds(self):
         self.cmds = [None] * len(self.onlyfiles)
