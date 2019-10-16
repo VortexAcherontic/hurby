@@ -7,7 +7,7 @@ from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 
 class HelpCommand(AbstractCommand):
     def __init__(self, json_data, hurby):
-        AbstractCommand.__init__(self, json_data)
+        AbstractCommand.__init__(self, json_data, hurby)
         self.hurby = hurby
         self.introduction = json_data["introduction"]
         self.cmd_error = json_data["cmd_error"]

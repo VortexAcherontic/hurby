@@ -8,6 +8,7 @@ from twitch_hurby.cmd.actions.raid_command import RaidCommand
 from twitch_hurby.cmd.actions.search_command import SearchCommand
 from twitch_hurby.cmd.actions.set_credits_command import SetCreditsCommand
 from twitch_hurby.cmd.actions.shutdown_command import ShutdownCommand
+from twitch_hurby.cmd.actions.spawn_item import SpawnItemCommand
 from twitch_hurby.cmd.actions.whisper_command import WhisperCommand
 from twitch_hurby.cmd.enums.cmd_types import CMDType
 from utils import logger
@@ -46,6 +47,8 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
                 return GiftCreditsCommand(json_data, hurby)
             if logic_trigger == "$add_credits":
                 return AddCreditsCommand(json_data, hurby)
+            if logic_trigger == "$spawn_item":
+                return SpawnItemCommand(json_data, hurby)
 
     else:
         logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])

@@ -14,7 +14,7 @@ def _insufficient_credits(char: Character, credits_spend: int):
 
 class RaidCommand(AbstractCommand):
     def __init__(self, json_data, hurby):
-        AbstractCommand.__init__(self, json_data)
+        AbstractCommand.__init__(self, json_data, hurby)
         self.cooldown = json_data["cooldown_min"]
         self.countdown = json_data["countdown_min"]
         self.in_preparation = False
@@ -27,7 +27,6 @@ class RaidCommand(AbstractCommand):
         self.reply_fail = json_data["reply_fail"]
         self.raid_ready = json_data["raid_ready"]
         self.participants: [Character] = None
-        self.hurby = hurby
         self.credits_spend = None
         self.response_10_sec = json_data["response_10_sec"]
         self.insufficient_credits = json_data["insufficient_credits"]
@@ -47,7 +46,6 @@ class RaidCommand(AbstractCommand):
         if self._input_valid(params) and character is not None:
             credit_spend = params[0]
             msg = ""
-            irc = self.hurby.twitch_receiver.twitch_listener
             if self._invokable():
                 if not self._participating(character):
                     if not _insufficient_credits(character, int(credit_spend)):
@@ -74,14 +72,13 @@ class RaidCommand(AbstractCommand):
                     msg = self.already_participating[random.randint(0, len(self.already_participating) - 1)]
             else:
                 msg = self.raid_in_cooldown[random.randint(0, len(self.raid_in_cooldown) - 1)]
-            irc.send_message(msg)
+            self.irc.send_message(msg)
 
     def _input_valid(self, params: list):
-        irc = self.hurby.twitch_receiver.twitch_listener
         msg = ""
         if len(params) < 1:
             msg = self.raid_error_no_credits[random.randint(0, len(self.raid_error_no_credits) - 1)]
-            irc.send_message(msg)
+            self.irc.send_message(msg)
             return False
         else:
             try:
@@ -90,7 +87,7 @@ class RaidCommand(AbstractCommand):
                     return False
             except ValueError:
                 msg = self.raid_error_parse_credits[random.randint(0, len(self.raid_error_parse_credits) - 1)]
-                irc.send_message(msg)
+                self.irc.send_message(msg)
                 return False
         return True
 
@@ -110,7 +107,7 @@ class RaidCommand(AbstractCommand):
             return True
 
 
-# This threads takes care about the preperation time and will invoke the RaidThread after it is finished
+# This threads takes care about the preparation time and will invoke the RaidThread after it is finished
 class RaidCountdownThread(HurbyThread):
     def __init__(self, root_cmd: RaidCommand):
         HurbyThread.__init__(self)

@@ -8,12 +8,14 @@ from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 
 class AbstractCommand:
 
-    def __init__(self, cmd_json: dict):
+    def __init__(self, cmd_json: dict, hurby):
         self.trigger = cmd_json["cmd"]
         self.cmd_type: CMDType = CMDType(cmd_json["type"])
         self.realm: CMDResponseRealms = CMDResponseRealms(cmd_json["realm"])
         self.reply = cmd_json["reply"]
         self.permission_level = PermissionLevels(cmd_json["perm"])
+        self.hurby = hurby
+        self.irc = hurby.twitch_receiver.twitch_listener
         if "description" in cmd_json:
             self.description: str = cmd_json["description"]
         else:

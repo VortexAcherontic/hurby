@@ -8,17 +8,15 @@ from utils import logger
 
 class SetCreditsCommand(AbstractCommand):
     def __init__(self, json_data, hurby):
-        AbstractCommand.__init__(self, json_data)
+        AbstractCommand.__init__(self, json_data, hurby)
         self.error_less_params = json_data["error_less_params"]
-        self.hurby = hurby
 
     def do_command(self, params: list, character: Character):
-        irc = self.hurby.twitch_receiver.twitch_listener
         if len(params) < 2:
             msg = self.error_less_params[random.randint(0, len(self.error_less_params) - 1)]
-            irc.send_message(msg)
+            self.irc.send_message(msg)
         elif character is not None:
-            char_man = self.hurby.get_char_manager()
+            char_man = self.hurby.char_manager
             receiving_char_name = params[0].lower()
             receiving_char = char_man.get_character(receiving_char_name, UserIDType.TWITCH)
             if receiving_char is not None:

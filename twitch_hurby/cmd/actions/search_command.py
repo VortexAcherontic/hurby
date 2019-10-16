@@ -8,8 +8,7 @@ from utils import logger
 
 class SearchCommand(AbstractCommand):
     def __init__(self, json_data, hurby):
-        AbstractCommand.__init__(self, json_data)
-        self.hurby = hurby
+        AbstractCommand.__init__(self, json_data, hurby)
 
     def do_command(self, params: list, character: Character):
         search_string = params[0]
@@ -18,6 +17,5 @@ class SearchCommand(AbstractCommand):
         r = urllib.request.urlopen(url)
         string_data = r.read().decode('utf-8')
         json_data = json.loads(string_data)
-        irc = self.hurby.twitch_receiver.twitch_listener
         logger.log(logger.INFO, "Result: " + json_data["AbstractText"])
-        irc.send_message(json_data["AbstractText"])
+        self.irc.send_message(json_data["AbstractText"])

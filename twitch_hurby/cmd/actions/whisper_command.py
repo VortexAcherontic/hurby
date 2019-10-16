@@ -6,14 +6,8 @@ from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 
 
 class WhisperCommand(AbstractCommand):
-    def __init__(self, json_data):
-        trigger = json_data["cmd"]
-        cmd_type = CMDType(json_data["type"])
-        cmd_realm = CMDResponseRealms(json_data["realm"])
-        cmd_perm = PermissionLevels(json_data["perm"])
-        replies = json_data["reply"]
-        description = json_data["description"]
-        AbstractCommand.__init__(self, trigger, cmd_type, cmd_realm, replies, cmd_perm, description)
+    def __init__(self, json_data, hurby):
+        AbstractCommand.__init__(self, json_data, hurby)
 
     def do_command(self, params: list, character: Character):
         pass

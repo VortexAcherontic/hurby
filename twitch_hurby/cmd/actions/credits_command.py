@@ -6,7 +6,7 @@ from twitch_hurby.cmd.abstract_command import AbstractCommand
 
 class CreditsCommand(AbstractCommand):
     def __init__(self, json_data, hurby):
-        AbstractCommand.__init__(self, json_data)
+        AbstractCommand.__init__(self, json_data, hurby)
         self.hurby = hurby
         self.answers = json_data["answers"]
 

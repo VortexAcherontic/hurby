@@ -1,12 +1,11 @@
 from character.character import Character
 from character.user_id_types import UserIDType
-from hurby import Hurby
 from twitch_hurby.cmd.abstract_command import AbstractCommand
 
 
 class SpawnItemCommand(AbstractCommand):
-    def __init__(self, json_data, hurby: Hurby):
-        AbstractCommand.__init__(self, json_data)
+    def __init__(self, json_data, hurby):
+        AbstractCommand.__init__(self, json_data, hurby)
         self.hurby = hurby
 
     def do_command(self, params: list, character: Character):

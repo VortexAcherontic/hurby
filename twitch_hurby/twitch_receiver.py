@@ -19,7 +19,7 @@ class TwitchReceiver:
         logger.log(logger.INFO, "Received cmd:\"" + cmd.cmd + "\"")
         logger.log(logger.INFO, "Params:")
         logger.log(logger.INFO, cmd.params)
-        twitch_cmds: AbstractCommand = self.twitch_conf.get_cmds()
+        twitch_cmds: list[AbstractCommand] = self.twitch_conf.get_cmds()
         for i in range(0, len(twitch_cmds)):
             if twitch_cmds[i] is not None:
                 tmp: AbstractCommand = twitch_cmds[i]
