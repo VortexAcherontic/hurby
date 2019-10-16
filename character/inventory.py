@@ -5,14 +5,18 @@ from items.base_item import BaseItem
 
 class PlayerInventory:
     def __init__(self, item_dict):
-        self._items = {}
+        self._items: dict[BaseItem] = {}
         if item_dict is not None:
             # This check is mandatory because the old framework used list instead of dict
             # If a list is detected it will be automatically overwritten by the empty dict _items
-            if item_dict is not list:
-                self._items: dict = item_dict
+            if item_dict is dict:
+                self._items = item_dict
+            elif item_dict is list:
+                pass
 
     def add_item(self, item: BaseItem):
+        if self._items is list:
+            self._items = {}
         free_slot = self._get_free_slot()
         self._items[free_slot] = item
 
@@ -35,7 +39,10 @@ class PlayerInventory:
         return self._items
 
     def to_dict(self):
-        return self._items
+        text = {}
+        for i in self._items:
+            text[i] = self._items[i].to_dict()
+        return text
 
     def _get_free_slot(self) -> int:
         for i in range(0, len(self._items) - 1):

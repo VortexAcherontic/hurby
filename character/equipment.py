@@ -27,11 +27,14 @@ class PlayerEquipment:
             self.item_man = item_manager
             for slot in SLOTS:
                 if SLOTS[slot] in equip_json:
-                    # Receiving the items id from the player equip dict to check if the item exists or not
-                    tmp_item = self.item_man.dose_item_id_exists(equip_json[SLOTS[slot]].id)
-                    if tmp_item is not None:
-                        # Creating the item with it's current stats which are only saved in the players inventory.
-                        self._equipped[slot] = BaseItem(equip_json[SLOTS[slot]])
+                    if equip_json[SLOTS[slot]] is not None:
+                        # Receiving the items id from the player equip dict to check if the item exists or not
+                        tmp_item = self.item_man.dose_item_id_exists(equip_json[SLOTS[slot]].id)
+                        if tmp_item is not None:
+                            # Creating the item with it's current stats which are only saved in the players inventory.
+                            self._equipped[slot] = BaseItem(equip_json[SLOTS[slot]])
+                    else:
+                        self._equipped[slot] = None
                 else:
                     logger.log(logger.WARN, "Slot : " + SLOTS[slot] + " not existing in JSON for: " + character_uuid)
 

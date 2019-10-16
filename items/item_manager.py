@@ -31,7 +31,7 @@ class ItemManager:
                     item: BaseItem = BaseItem(item_json)
                     if not self._check_for_duplicate_id(item.get_id()):
                         self.items.append(item)
-                        logger.log(logger.DEV, "Loaded item: " + item.name)
+                        logger.log(logger.DEV, "Loaded item: " + item.name+"("+str(item.get_id())+")")
                     else:
                         logger.log(logger.WARN, "Found conflicting ids, item "+item.name+" was not loaded")
 

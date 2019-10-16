@@ -27,6 +27,8 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
             if bot_config.modules[bot_config.MODULE_MINIGAME]:
                 if logic_trigger == "$raid":
                     return RaidCommand(json_data, hurby)
+                if logic_trigger == "$spawn_item":
+                    return SpawnItemCommand(json_data, hurby)
             else:
                 pass
                 # Logger.log(Logger.INFO, "Skip mini game: " + json["cmd"] + " mini games are disabled")
@@ -34,9 +36,9 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
             if logic_trigger == "$search":
                 return SearchCommand(json_data, hurby)
             if logic_trigger == "$whisper":
-                return WhisperCommand(json_data)
+                return WhisperCommand(json_data, hurby)
             if logic_trigger == "$shutdown":
-                return ShutdownCommand(json_data)
+                return ShutdownCommand(json_data, hurby)
             if logic_trigger == "$credits":
                 return CreditsCommand(json_data, hurby)
             if logic_trigger == "$set_credits":
@@ -47,8 +49,6 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
                 return GiftCreditsCommand(json_data, hurby)
             if logic_trigger == "$add_credits":
                 return AddCreditsCommand(json_data, hurby)
-            if logic_trigger == "$spawn_item":
-                return SpawnItemCommand(json_data, hurby)
 
     else:
         logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])
