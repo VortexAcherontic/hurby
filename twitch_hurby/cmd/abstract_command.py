@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from character.character import Character
 from twitch_hurby.cmd.enums.cmd_response_realms import CMDResponseRealms
 from twitch_hurby.cmd.enums.cmd_types import CMDType
@@ -30,5 +32,6 @@ class AbstractCommand:
     def check_trigger(self, trigger: str) -> bool:
         return self.trigger == trigger
 
+    @abstractmethod
     def do_command(self, params: list, character: Character):
         pass
