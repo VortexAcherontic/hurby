@@ -32,6 +32,9 @@ class BaseItem:
     def get_id(self) -> int:
         return self._id
 
+    def get_durability(self) -> int:
+        return self._durability
+
     def is_broken(self):
         return self._durability > 0
 

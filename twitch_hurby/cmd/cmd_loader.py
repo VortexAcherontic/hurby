@@ -4,6 +4,7 @@ from twitch_hurby.cmd.actions.add_credits import AddCreditsCommand
 from twitch_hurby.cmd.actions.credits_command import CreditsCommand
 from twitch_hurby.cmd.actions.gift_credits import GiftCreditsCommand
 from twitch_hurby.cmd.actions.help_command import HelpCommand
+from twitch_hurby.cmd.actions.items.inventory import InventoryCommand
 from twitch_hurby.cmd.actions.raid_command import RaidCommand
 from twitch_hurby.cmd.actions.search_command import SearchCommand
 from twitch_hurby.cmd.actions.set_credits_command import SetCreditsCommand
@@ -29,6 +30,8 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
                     return RaidCommand(json_data, hurby)
                 if logic_trigger == "$spawn_item":
                     return SpawnItemCommand(json_data, hurby)
+                if logic_trigger == "$inventory":
+                    return InventoryCommand(json_data, hurby)
             else:
                 pass
                 # Logger.log(Logger.INFO, "Skip mini game: " + json["cmd"] + " mini games are disabled")
