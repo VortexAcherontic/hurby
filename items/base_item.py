@@ -3,9 +3,11 @@ from math import ceil
 from items.base_ability import BaseAbility
 from items.base_stats import BaseStats
 
+KEY_ID = "id"
+KEY_DURABILITY = "durability"
 
 class BaseItem:
-    def __init__(self, item_json):
+    def __init__(self, item_json: dict):
         self._id = item_json["id"]
         self.name = item_json["name"]
         self.damage = item_json["damage"]
@@ -22,6 +24,10 @@ class BaseItem:
             self._durability = item_json["durability"]
         else:
             self._durability = self.durability_max
+
+    def set_changeable_params(self, param, value):
+        if param == "durability":
+            self._durability = value
 
     def get_id(self) -> int:
         return self._id
@@ -58,6 +64,13 @@ class BaseItem:
             "ability": self.ability.to_dict(),
             "item_broken_feedback": self.item_broken_feedback,
             "use_feedback": self.use_feedback,
+            "durability": self._durability
+        }
+        return this
+
+    def to_dict_only_reference(self):
+        this = {
+            "id": self._id,
             "durability": self._durability
         }
         return this

@@ -39,7 +39,7 @@ class Character:
         self.last_seen = None
         self.is_supporter = False
         self.equipment: PlayerEquipment = PlayerEquipment(None, None, None)
-        self.inventory: PlayerInventory = PlayerInventory(None)
+        self.inventory: PlayerInventory = PlayerInventory(None, hurby)
         self.hurby = hurby
 
     def init_default_character(self, user_id: str, permission_level: PermissionLevels, user_id_type: UserIDType):
@@ -47,7 +47,7 @@ class Character:
         self.credits = 100
         self.endurance = 100
         self.endurance_max = 100
-        self.inventory = [None]
+        self.inventory = PlayerInventory(None, self.hurby)
         self.mails = [None]
         self.twitchid = None
         self.twitterid = None
@@ -112,7 +112,7 @@ class Character:
         if "equipment" in json:
             self.equipment = PlayerEquipment(json["equipment"], self.uuid, self.hurby.item_manager)
         if "inventory" in json:
-            self.inventory = PlayerInventory(json["inventory"])
+            self.inventory = PlayerInventory(json["inventory"], self.hurby)
 
     def save(self):
         data = self._convert_to_json()
