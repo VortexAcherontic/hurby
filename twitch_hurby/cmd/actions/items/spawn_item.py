@@ -1,5 +1,3 @@
-from orca import logger
-
 from character.character import Character
 from character.user_id_types import UserIDType
 from items.base_item import BaseItem
