@@ -1,3 +1,5 @@
+from random import random
+
 from items.base_item import BaseItem
 from utils import hurby_utils, json_loader, logger
 from utils.const import CONST
@@ -10,11 +12,15 @@ class ItemManager:
         self.items = [BaseItem] * 0
         self._load_all_items()
 
-    def get_item_by_id(self, identifier: int) -> BaseItem:
+    def get_item_by_id(self, identifier) -> BaseItem:
         for i in self.items:
             if i.verify_id(identifier):
                 return i
         return None
+
+    def get_random_item(self) -> BaseItem:
+        rnd_id = random.randint(0, len(self.items) - 1)
+        return self.items[rnd_id]
 
     def dose_item_id_exists(self, identifier) -> bool:
         for i in self.items:
@@ -31,9 +37,9 @@ class ItemManager:
                     item: BaseItem = BaseItem(item_json)
                     if not self._check_for_duplicate_id(item.get_id()):
                         self.items.append(item)
-                        logger.log(logger.DEV, "Loaded item: " + item.name+"("+str(item.get_id())+")")
+                        logger.log(logger.DEV, "Loaded item: " + item.name + "(" + str(item.get_id()) + ")")
                     else:
-                        logger.log(logger.WARN, "Found conflicting ids, item "+item.name+" was not loaded")
+                        logger.log(logger.WARN, "Found conflicting ids, item " + item.name + " was not loaded")
 
     def _check_for_duplicate_id(self, identifier: int) -> bool:
         for i in self.items:

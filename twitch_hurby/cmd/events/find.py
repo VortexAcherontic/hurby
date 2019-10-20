@@ -1,7 +1,15 @@
 import random
 
 from character.character import Character
+from items.base_item import BaseItem
 from utils import hurby_utils
+
+
+def _value_of_items(items) -> int:
+    summarize = 0
+    for i in items:
+        summarize += i.value
+    return summarize
 
 
 class EventFind:
@@ -19,17 +27,23 @@ class EventFind:
     def issue_event(self):
         all_chars = self.hurby.char_manager.chars
         lucky_one: Character = all_chars[random.randint(0, len(all_chars) - 1)]
+        min_value = self.credit_find_min
+        max_value = self.credit_find_max
+        found_value = random.randint(min_value, max_value)
+
         while lucky_one is None:
             lucky_one: Character = all_chars[random.randint(0, len(all_chars) - 1)]
         if (random.random() > 0.5) & self.find_items:
-            pass
+            items = [BaseItem]
+            items_value = _value_of_items(items)
+            while items_value > found_value:
+                rnd_item: BaseItem = self.hurby.item_manager.get_random_item
+                tmp_sum = items_value + rnd_item.value
+                if tmp_sum <= found_value:
+                    items.append(rnd_item)
         else:
-            min_cred = self.credit_find_min
-            max_cred = self.credit_find_max
-            found_creds = random.randint(min_cred, max_cred)
-            lucky_one.credits += found_creds
+            lucky_one.credits += found_value
             lucky_one.save()
-
             msg = hurby_utils.get_random_reply(self.event_end)
             msg = msg.replace("$user", lucky_one.twitchid)
             cred_repl = hurby_utils.get_random_reply(self.loot_credits)
