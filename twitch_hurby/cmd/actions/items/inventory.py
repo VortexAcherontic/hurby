@@ -1,8 +1,6 @@
 from orca import logger
 
 from character.character import Character
-from character.inventory import PlayerInventory
-from character.user_id_types import UserIDType
 from items.base_item import BaseItem
 from twitch_hurby.cmd.abstract_command import AbstractCommand
 from utils import hurby_utils, logger

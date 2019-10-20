@@ -4,8 +4,6 @@ from items.item_manager import ItemManager
 from twitch_hurby.minigame.loots import Loots
 from twitch_hurby.twitch_receiver import TwitchReceiver
 
-from utils import logger
-
 
 class Hurby:
 

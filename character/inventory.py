@@ -1,5 +1,4 @@
 from builtins import int
-from operator import inv
 
 from items import base_item
 from items.base_item import BaseItem
