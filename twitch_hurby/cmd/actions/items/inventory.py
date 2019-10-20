@@ -1,5 +1,3 @@
-from orca import logger
-
 from character.character import Character
 from items.base_item import BaseItem
 from twitch_hurby.cmd.abstract_command import AbstractCommand
