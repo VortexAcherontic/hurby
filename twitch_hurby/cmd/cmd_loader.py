@@ -8,7 +8,7 @@ from twitch_hurby.cmd.actions.raid_command import RaidCommand
 from twitch_hurby.cmd.actions.search_command import SearchCommand
 from twitch_hurby.cmd.actions.set_credits_command import SetCreditsCommand
 from twitch_hurby.cmd.actions.shutdown_command import ShutdownCommand
-from twitch_hurby.cmd.actions.spawn_item import SpawnItemCommand
+from twitch_hurby.cmd.actions.items.spawn_item import SpawnItemCommand
 from twitch_hurby.cmd.actions.whisper_command import WhisperCommand
 from twitch_hurby.cmd.enums.cmd_types import CMDType
 from utils import logger
