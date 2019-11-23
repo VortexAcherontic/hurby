@@ -1,3 +1,5 @@
+from decorator import append
+
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import cmd_loader, event_loader
 from twitch_hurby.cmd.event_thread import EventThread
@@ -33,21 +35,21 @@ class TwitchConfig:
         self.bot_username = self.hurby.get_bot_config().botname
 
     def load_cmds(self):
-        self.cmds = [None] * len(self.onlyfiles)
+        self.cmds = [None] * 0
         for i in range(0, len(self.onlyfiles)):
             if self.onlyfiles[i].endswith(".json"):
                 cmd_json = json_loader.load_json(TwitchConfig.CMD_PATH + self.onlyfiles[i])
-                self.cmds[i] = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby)
+                self.cmds.append(cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby))
         logger.log(logger.INFO, str(len(self.cmds)) + " commands loaded")
 
     def load_events(self):
         if self.hurby.get_bot_config().modules[BotConfig.MODULE_EVENTS]:
             onlyfiles_events = hurby_utils.get_all_files_in_path(TwitchConfig.EVENT_PATH)
-            events = [None] * len(onlyfiles_events)
+            events = [None] * 0
             for i in range(0, len(onlyfiles_events)):
                 if onlyfiles_events[i].endswith(".json"):
                     event_json = json_loader.load_json(TwitchConfig.EVENT_PATH + onlyfiles_events[i])
-                    events[i] = event_loader.create_event(event_json, self.hurby)
+                    events.append(event_loader.create_event(event_json, self.hurby))
             event_thread = EventThread(self.hurby, events)
             event_thread.start()
 
