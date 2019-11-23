@@ -47,7 +47,7 @@ class EventFind:
             msg = hurby_utils.get_random_reply(self.event_end)
             msg = msg.replace("$user", lucky_one.twitchid)
             cred_repl = hurby_utils.get_random_reply(self.loot_credits)
-            cred_repl = cred_repl.replace("$amount", str(found_creds))
+            cred_repl = cred_repl.replace("$amount", str(found_value))
             msg = msg.replace("$loot", cred_repl)
             irc = self.hurby.twitch_receiver.twitch_listener
             irc.send_message(msg)
