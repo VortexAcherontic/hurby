@@ -42,11 +42,16 @@ class ReadChat(HurbyThread):
 
                 if line[1] == 'PRIVMSG':
                     sender = irc_chat_extractor.extract_sender(line[0])
-                    char = self.irc_connector.hurby.char_manager.get_character(sender, UserIDType.TWITCH, True, False)
                     message = irc_chat_extractor.extract_message(line)
                     if message.startswith("!"):
+                        char = self.irc_connector.hurby.char_manager.get_character(sender, UserIDType.TWITCH,
+                                                                                   update_perm_level=False,
+                                                                                   command_issued=True)
                         cmd = irc_chat_extractor.extract_command(message)
                         self.receiver.do_command(cmd, char, self.irc_connector)
                     elif "loots.com" in message:
+                        char = self.irc_connector.hurby.char_manager.get_character(sender, UserIDType.TWITCH,
+                                                                                   update_perm_level=False,
+                                                                                   command_issued=True)
                         logger.log(logger.DEV, "ReadChat: Issuing Loots credits " + char.twitchid)
                         self.hurby.loots.spend_credits(char)
