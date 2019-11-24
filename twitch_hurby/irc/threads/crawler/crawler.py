@@ -1,6 +1,8 @@
 import json
 import time
-import urllib.request
+import urllib
+
+import requests
 
 from character.character_manager import CharacterManager
 from character.user_id_types import UserIDType
@@ -32,11 +34,12 @@ class Crawler(HurbyThread):
         credit_thread.start()
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
-            self.crawl_chatters(True)
+            self._crawl_chatters(True)
+            self._crawl_subscribers()
             time.sleep(self.tick * 60)
         logger.log(logger.INFO, "Stopped Twitch Crawler")
 
-    def crawl_chatters(self, force_re_fetch: bool):
+    def _crawl_chatters(self, force_re_fetch: bool):
         logger.log(logger.INFO, "Crawling chatters ... Force fetch: " + str(force_re_fetch))
         streamer = self.twitch_conf.streamer
         url = "https://tmi.twitch.tv/group/user/" + streamer + "/chatters"
@@ -82,6 +85,30 @@ class Crawler(HurbyThread):
 
     def _is_subscriber(self, user_id):
         pass
+
+    def _crawl_subscribers(self):
+        subscriptions = [None] * 0
+        offset = 0
+        subscriber_json = self._get_subscriber_response(offset)
+        while len(subscriptions) < subscriber_json["_total"]:
+            subscriber_json = self._get_subscriber_response(offset)
+            subscriptions.append(subscriber_json["subscriptions"])
+            offset += 100
+        logger.log(logger.DEV, "Fetched " + str(len(subscriptions)) + " subscribers")
+
+    def _get_subscriber_response(self, offset):
+        streamer = self.twitch_conf.streamer
+        client_id = self.twitch_conf.client_id
+        oauth = self.twitch_conf.oauth_token.split(":")[1]
+        headers = {
+            "Client-ID": client_id,
+            "Authorization": "OAuth " + oauth,
+            "content-type": "application/json"
+        }
+        params = {"limit": "100", "offset": str(offset)}
+        url = "http://api.twitch.tv/kraken/channels/" + streamer + "/subscriptions"
+        r = requests.get(url, params=params, headers=headers)
+        return r.json()
 
 
 class CreditSpendThread(HurbyThread):
