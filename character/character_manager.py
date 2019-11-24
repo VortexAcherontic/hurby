@@ -66,6 +66,7 @@ class CharacterManager:
             for tmp in self.chars:
                 if not _is_chars_in_user_ids(user_ids, tmp, id_type):
                     logger.log(logger.DEV, "User offline, unloading: " + str(tmp.twitchid))
+                    tmp.update_watchtime()
                     tmp.save()
                     self.chars.remove(tmp)
 

@@ -1,4 +1,7 @@
+import time
 import uuid
+from datetime import datetime
+from math import ceil
 
 from character.equipment import PlayerEquipment
 from character.inventory import PlayerInventory
@@ -40,6 +43,8 @@ class Character:
         self.is_supporter = False
         self.equipment: PlayerEquipment = PlayerEquipment(None, None, None)
         self.inventory: PlayerInventory = PlayerInventory(None, hurby)
+        self.first_seen = datetime.now()
+        self.watchtime_min = 0
         self.hurby = hurby
 
     def init_default_character(self, user_id: str, permission_level: PermissionLevels, user_id_type: UserIDType):
@@ -57,8 +62,10 @@ class Character:
         self.uuid = str(uuid.uuid4())
         self.perm = permission_level
         self.is_supporter = False
+        self.first_seen = datetime.now()
         if user_id_type == UserIDType.TWITCH:
             self.twitchid = user_id
+        self.watchtime_min = 0
 
     def add_credits(self, cred: int):
         logger.log(logger.DEV, "Adding: " + str(cred) + "to " + str(self.twitchid))
@@ -113,6 +120,18 @@ class Character:
             self.equipment = PlayerEquipment(json["equipment"], self.uuid, self.hurby.item_manager)
         if "inventory" in json:
             self.inventory = PlayerInventory(json["inventory"], self.hurby)
+        if "watchtime_min" in json:
+            self.watchtime_min = json["watchtime_min"]
+
+    def update_watchtime(self):
+        unload_date = datetime.now()
+        fmt = '%Y-%m-%d %H:%M:%S.%f'
+        d1 = datetime.strptime(str(self.first_seen), fmt)
+        d2 = datetime.strptime(str(unload_date), fmt)
+        d1_ts = time.mktime(d1.timetuple())
+        d2_ts = time.mktime(d2.timetuple())
+        self.watchtime_min += ceil(((d2_ts - d1_ts) / 60))
+        logger.log(logger.DEV, "Watchtime of " + self.uuid + "is now " + str(self.watchtime_min) + " min")
 
     def save(self):
         data = self._convert_to_json()
@@ -140,6 +159,7 @@ class Character:
             "permission_level": self.perm.value,
             "is_supporter": self.is_supporter,
             "inventory": self.inventory.to_dict(),
-            "equipment": self.equipment.to_dict()
+            "equipment": self.equipment.to_dict(),
+            "watchtime_min": self.watchtime_min
         }
         return text
