@@ -1,8 +1,11 @@
-from decorator import append
+import time
+
+import requests
 
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import cmd_loader, event_loader
 from twitch_hurby.cmd.event_thread import EventThread
+from twitch_hurby.twitch_scopes import TwitchScopes
 from utils import logger, json_loader, hurby_utils
 from utils.const import CONST
 
@@ -23,6 +26,8 @@ class TwitchConfig:
         self.channel_name = twitch_json["channel_name"]
         self.streamer = twitch_json["streamer"]
         self.client_id = twitch_json["client_id"]
+        self.client_secret = twitch_json["client_secret"]
+        self.redirect_url = twitch_json["redirect_url"]
         self.enable_cron_jobs = twitch_json["enable_cron_jobs"]
         self.cron_job_time = twitch_json["cron_job_time"]
         self.cron_jobs = twitch_json["cron_jobs"]
@@ -30,9 +35,18 @@ class TwitchConfig:
         self.credit_increase_base = twitch_json["credit_increase_base"]
         self.credit_increase_supporter = twitch_json["credit_increase_supporter"]
         self.spend_time = twitch_json["spend_time"]
+        self.bot_scopes = twitch_json["bot_scopes"]
         logger.log(logger.INFO, "Cron jobs: " + str(self.enable_cron_jobs))
         logger.log(logger.INFO, self.cron_jobs)
         self.bot_username = self.hurby.get_bot_config().botname
+        self.twitch_scopes = TwitchScopes()
+        self.access_token = ""
+        self.expires_in = 0
+        self.token_type = ""
+        self.token_request_time = 0
+
+    def init(self):
+        self._authorize()
 
     def load_cmds(self):
         self.cmds = [None] * 0
@@ -55,3 +69,19 @@ class TwitchConfig:
 
     def get_cmds(self) -> list:
         return self.cmds
+
+    def _authorize(self):
+        url = "https://id.twitch.tv/oauth2/token" \
+              "?client_id="+self.client_id+"" \
+              "&client_secret="+self.client_secret+"" \
+              "&grant_type=client_credentials" \
+              "&scope="+self.twitch_scopes.get_url_scope_request(self.bot_scopes)
+
+        r = requests.post(url)
+        self.token_request_time = time.time()
+        response_json = r.json()
+        self.access_token = response_json["access_token"]
+        self.expires_in = response_json["expires_in"]
+        self.token_type = response_json["token_type"]
+
+
