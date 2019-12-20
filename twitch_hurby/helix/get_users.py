@@ -1,4 +1,4 @@
-import requests
+from twitch_hurby.helix import do_bearer_requests
 
 
 def get_users_by_user_name(users: list, access_token) -> dict:
@@ -6,5 +6,4 @@ def get_users_by_user_name(users: list, access_token) -> dict:
     for i in users:
         url = url + "login=" + i + "&"
 
-    r = requests.get(url, headers={"Authorization": "Bearer "+access_token})
-    return r.json()
+    return do_bearer_requests.get(url, access_token).json()
