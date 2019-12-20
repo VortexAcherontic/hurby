@@ -18,7 +18,7 @@ class EventThread(HurbyThread):
         bot_cfg = self.hurby.get_bot_config()
         min_min = bot_cfg.event_cooldown_min_min
         max_min = bot_cfg.event_cooldown_max_min
-        if "HURBY_DEVMODE" in os.environ and int(os.environ["HURBY_DEVMODE"]) == 1:
+        if int(os.environ["HURBY_DEVMODE"]) == 1:
             sleep_time = 1
         else:
             sleep_time = random.randint(min_min, max_min)

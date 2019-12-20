@@ -1,6 +1,6 @@
 import json
 import time
-import urllib
+import urllib.request
 
 import requests
 
@@ -39,7 +39,7 @@ class Crawler(HurbyThread):
             time.sleep(self.tick * 60)
         logger.log(logger.INFO, "Stopped Twitch Crawler")
 
-    def _crawl_chatters(self, force_re_fetch: bool):
+    def crawl_chatters(self, force_re_fetch: bool):
         logger.log(logger.INFO, "Crawling chatters ... Force fetch: " + str(force_re_fetch))
         streamer = self.twitch_conf.streamer
         url = "https://tmi.twitch.tv/group/user/" + streamer + "/chatters"
@@ -120,7 +120,6 @@ class Crawler(HurbyThread):
         }
         response = requests.get('https://api.twitch.tv/kraken/channel', headers=headers)
         return response.json()["_id"]
-
 
 class CreditSpendThread(HurbyThread):
     def __init__(self, crawler: Crawler):
