@@ -35,7 +35,7 @@ class Crawler(HurbyThread):
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
             self._crawl_chatters(True)
-            self._crawl_subscribers()
+            #self._crawl_subscribers()
             time.sleep(self.tick * 60)
         logger.log(logger.INFO, "Stopped Twitch Crawler")
 
