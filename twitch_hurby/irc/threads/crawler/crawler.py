@@ -35,7 +35,7 @@ class Crawler(HurbyThread):
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
             self._crawl_chatters(True)
-            self._crawl_subscribers()
+            #self._crawl_subscribers()
             time.sleep(self.tick * 60)
         logger.log(logger.INFO, "Stopped Twitch Crawler")
 
@@ -98,17 +98,28 @@ class Crawler(HurbyThread):
 
     def _get_subscriber_response(self, offset):
         streamer = self.twitch_conf.streamer
+        #channel_id = self._resolve_channel_id()
         client_id = self.twitch_conf.client_id
         oauth = self.twitch_conf.oauth_token.split(":")[1]
         headers = {
+            "Accept": "application/vnd.twitchtv.v5+json",
             "Client-ID": client_id,
             "Authorization": "OAuth " + oauth,
             "content-type": "application/json"
         }
         params = {"limit": "100", "offset": str(offset)}
-        url = "http://api.twitch.tv/kraken/channels/" + streamer + "/subscriptions"
+        url = "https://api.twitch.tv/kraken/channels/" + streamer + "/subscriptions"
         r = requests.get(url, params=params, headers=headers)
         return r.json()
+
+    def _resolve_channel_id(self):
+        headers = {
+            'Accept': 'application/vnd.twitchtv.v5+json',
+            'Client-ID': self.twitch_conf.client_id,
+            'Authorization': 'OAuth ' + self.twitch_conf.oauth_token.split(":")[1],
+        }
+        response = requests.get('https://api.twitch.tv/kraken/channel', headers=headers)
+        return response.json()["_id"]
 
 
 class CreditSpendThread(HurbyThread):
