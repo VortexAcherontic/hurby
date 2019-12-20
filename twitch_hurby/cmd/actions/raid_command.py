@@ -5,7 +5,7 @@ import time
 from character.character import Character
 from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
-from utils import logger
+from utils import logger, hurby_utils
 
 
 def _insufficient_credits(char: Character, credits_spend: int):
@@ -26,6 +26,7 @@ class RaidCommand(AbstractCommand):
         self.reply_success = json_data["reply_success"]
         self.reply_fail = json_data["reply_fail"]
         self.raid_ready = json_data["raid_ready"]
+        self.min_credits = json_data["min_credits"]
         self.participants: [Character] = None
         self.credits_spend = None
         self.response_10_sec = json_data["response_10_sec"]
@@ -40,6 +41,7 @@ class RaidCommand(AbstractCommand):
         self.win_template = json_data["win_template"]
         self.min_participants = json_data["min_participants"]
         self.insufficient_participants = json_data["insufficient_participants"]
+        self.insufficient_credits_spend = json_data["insufficient_credits_spend"]
         self.overall_credits_spend = 0
 
     def do_command(self, params: list, character: Character):
@@ -49,21 +51,26 @@ class RaidCommand(AbstractCommand):
             if self._invokable():
                 if not self._participating(character):
                     if not _insufficient_credits(character, int(credit_spend)):
-                        character.credits -= int(credit_spend)
-                        character.save()
-                        if self.in_preparation:
-                            self.participants.append(character)
-                            self.credits_spend.append(credit_spend)
-                            msg = self.reply_join[random.randint(0, len(self.reply_join) - 1)]
+                        if self._spend_min_credits(credit_spend):
+                            character.credits -= int(credit_spend)
+                            character.save()
+                            if self.in_preparation:
+                                self.participants.append(character)
+                                self.credits_spend.append(credit_spend)
+                                msg = self.reply_join[random.randint(0, len(self.reply_join) - 1)]
+                            else:
+                                msg = self.reply_start[random.randint(0, len(self.reply_join) - 1)]
+                                self.participants = [character]
+                                self.credits_spend = [credit_spend]
+                                countdown_thread = RaidCountdownThread(self)
+                                countdown_thread.start()
+                            self.overall_credits_spend += int(credit_spend)
+                            msg = msg.replace("$user_id", character.twitchid)
+                            msg = msg.replace("$credits_spend", str(credit_spend))
                         else:
-                            msg = self.reply_start[random.randint(0, len(self.reply_join) - 1)]
-                            self.participants = [character]
-                            self.credits_spend = [credit_spend]
-                            countdown_thread = RaidCountdownThread(self)
-                            countdown_thread.start()
-                        self.overall_credits_spend += int(credit_spend)
-                        msg = msg.replace("$user_id", character.twitchid)
-                        msg = msg.replace("$credits_spend", str(credit_spend))
+                            msg = hurby_utils.get_random_reply(self.insufficient_credits_spend)
+                            msg = msg.replace("$min_credits", str(self.min_credits))
+                            msg = msg.replace("$user_id", character.twitchid)
                     else:
                         msg = self.insufficient_credits[random.randint(0, len(self.insufficient_credits) - 1)]
                         msg = msg.replace("$user_credits", str(character.credits))
@@ -73,6 +80,9 @@ class RaidCommand(AbstractCommand):
             else:
                 msg = self.raid_in_cooldown[random.randint(0, len(self.raid_in_cooldown) - 1)]
             self.irc.send_message(msg)
+
+    def _spend_min_credits(self, credits_spend) -> bool:
+        return int(credits_spend) >= self.min_credits
 
     def _input_valid(self, params: list):
         msg = ""
