@@ -1,6 +1,5 @@
 import json
 import time
-import urllib
 
 import requests
 
@@ -44,9 +43,8 @@ class Crawler(HurbyThread):
         streamer = self.twitch_conf.streamer
         url = "https://tmi.twitch.tv/group/user/" + streamer + "/chatters"
         if force_re_fetch:
-            r = urllib.request.urlopen(url)
-            string_data = r.read().decode('utf-8')
-            self.crawl_cache = json.loads(string_data)
+            r = requests.get(url)
+            self.crawl_cache = r.json()
 
         mods = _get_chatters_by_type(self.crawl_cache, ChatterType.MODERATOR.value)
         broadcaster = _get_chatters_by_type(self.crawl_cache, ChatterType.BROADCASTER.value)
