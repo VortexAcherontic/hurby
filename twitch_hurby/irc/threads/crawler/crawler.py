@@ -5,6 +5,7 @@ import requests
 from character.character_manager import CharacterManager
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
+from twitch_hurby.helix import get_users, get_broadcaster_subscriptions
 from twitch_hurby.irc.threads.crawler.chatter_types import ChatterType
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
 from twitch_hurby.twitch_config import TwitchConfig
@@ -33,7 +34,7 @@ class Crawler(HurbyThread):
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
             self._crawl_chatters(True)
-            # self._crawl_subscribers()
+            self._crawl_subscribers()
             time.sleep(self.tick * 60)
         logger.log(logger.INFO, "Stopped Twitch Crawler")
 
@@ -84,30 +85,13 @@ class Crawler(HurbyThread):
         pass
 
     def _crawl_subscribers(self):
-        subscriptions = [None] * 0
-        offset = 0
-        subscriber_json = self._get_subscriber_response(offset)
-        while len(subscriptions) < subscriber_json["_total"]:
-            subscriber_json = self._get_subscriber_response(offset)
-            subscriptions.append(subscriber_json["subscriptions"])
-            offset += 100
-        logger.log(logger.DEV, "Fetched " + str(len(subscriptions)) + " subscribers")
-
-    def _get_subscriber_response(self, offset):
         streamer = self.twitch_conf.streamer
-        # channel_id = self._resolve_channel_id()
-        client_id = self.twitch_conf.client_id
-        oauth = self.twitch_conf.oauth_token.split(":")[1]
-        headers = {
-            "Accept": "application/vnd.twitchtv.v5+json",
-            "Client-ID": client_id,
-            "Authorization": "OAuth " + oauth,
-            "content-type": "application/json"
-        }
-        params = {"limit": "100", "offset": str(offset)}
-        url = "https://api.twitch.tv/kraken/channels/" + streamer + "/subscriptions"
-        r = requests.get(url, params=params, headers=headers)
-        return r.json()
+        bearer_token = self.twitch_conf.access_token
+        users_json = get_users.get_users_by_user_name([streamer], bearer_token)
+        streamer_id = users_json["data"][0]["id"]
+        subscribers = get_broadcaster_subscriptions.get_subscriptions(streamer_id, bearer_token)
+        if True:
+            pass
 
     def _resolve_channel_id(self):
         headers = {
