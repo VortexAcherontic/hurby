@@ -10,6 +10,7 @@ class TwitchReceiver:
     def __init__(self, hurby):
         self.hurby = hurby
         self.twitch_conf = TwitchConfig(self.hurby)
+        self.twitch_conf.init()
         self.helix = None
         self.twitch_listener = None
         self.connect_twitch_irc()
