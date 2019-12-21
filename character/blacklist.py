@@ -1,7 +1,8 @@
 from character import blacklist_crawler
 from character.user_id_types import UserIDType
-from utils import json_loader
+from utils import json_loader, logger
 from utils.const import CONST
+from utils.time_measure import TimeMeasure
 
 
 class Blacklist:
@@ -10,11 +11,19 @@ class Blacklist:
 
     def __init__(self, hurby):
         self.hurby = hurby
-        blacklist_json = json_loader.load_json(Blacklist.BLACKLIST_FILE)
-        self.twitch_names = blacklist_json["twitch_names"]
-        self.twitch_ids = blacklist_json["twitch_ids"]
-        self.youtube_ids = blacklist_json["youtube_ids"]
-        self.mails = blacklist_json["mails"]
+        self.twitch_names = []
+        self.twitch_ids = []
+        self.youtube_ids = []
+        self.mails = []
+        try:
+            f = open(Blacklist.BLACKLIST_FILE)
+            blacklist_json = json_loader.load_json(Blacklist.BLACKLIST_FILE)
+            self.twitch_names = blacklist_json["twitch_names"]
+            self.twitch_ids = blacklist_json["twitch_ids"]
+            self.youtube_ids = blacklist_json["youtube_ids"]
+            self.mails = blacklist_json["mails"]
+        except IOError:
+            self._save()
 
     def init(self):
         self._update_from_external()
@@ -38,6 +47,7 @@ class Blacklist:
         return False
 
     def _update_from_external(self):
+        tm = TimeMeasure()
         bots = blacklist_crawler.get_twitch_bot_names()
         for bot_name in bots["names"]:
             if not self.is_name_blacklisted(bot_name, UserIDType.TWITCH):
@@ -47,6 +57,8 @@ class Blacklist:
                 self.twitch_ids.append(bot_id)
         self._save()
         self._clear_blacklisted_character_files()
+        end = tm.end()
+        logger.log(logger.DEV, "Parsing external Blacklist took: " + end + "s")
 
     def _clear_blacklisted_character_files(self):
         for name in self.twitch_names:
