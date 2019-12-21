@@ -8,12 +8,15 @@ class Blacklist:
     DIR_CHARACTER = CONST.DIR_APP_DATA_ABSOLUTE + "/characters"
     BLACKLIST_FILE = DIR_CHARACTER + "/" + CONST.FILE_BLACKLIST
 
-    def __init__(self):
+    def __init__(self, hurby):
+        self.hurby = hurby
         blacklist_json = json_loader.load_json(Blacklist.BLACKLIST_FILE)
         self.twitch_names = blacklist_json["twitch_names"]
         self.twitch_ids = blacklist_json["twitch_ids"]
         self.youtube_ids = blacklist_json["youtube_ids"]
         self.mails = blacklist_json["mails"]
+
+    def init(self):
         self._update_from_external()
 
     def is_name_blacklisted(self, user_name, user_id_type: UserIDType):
@@ -43,6 +46,11 @@ class Blacklist:
             if not self.is_id_blacklisted(bot_id, UserIDType.TWITCH):
                 self.twitch_ids.append(bot_id)
         self._save()
+        self._clear_blacklisted_character_files()
+
+    def _clear_blacklisted_character_files(self):
+        for name in self.twitch_names:
+            self.hurby.char_manager.delete_character(name, UserIDType.TWITCH)
 
     def _save(self):
         blacklist_dict = {

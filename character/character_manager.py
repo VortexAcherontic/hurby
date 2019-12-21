@@ -1,9 +1,12 @@
+import os
+
 from character.blacklist import Blacklist
 from character.character import Character
 from character.character_reference_table import CharacterReferenceTable
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from utils import logger
+from utils.const import CONST
 
 
 def _is_chars_in_user_ids(user_ids: [str], char: Character, user_id_type: UserIDType):
@@ -32,34 +35,44 @@ class CharacterManager:
 
     def __init__(self, hurby):
         self.chars: list[Character] = None
-        self.black_list: Blacklist = Blacklist()
+        self.black_list: Blacklist = Blacklist(hurby)
         self.ref_table: CharacterReferenceTable = CharacterReferenceTable()
         self.hurby = hurby
 
     def get_character(self, user_id: str, user_id_type: UserIDType, permission_level=PermissionLevels.EVERYBODY,
                       update_perm_level=False, command_issued=True):
-        tmp_char = self._search_loaded_characters(user_id, user_id_type)
-        if tmp_char is None:
-            tmp_char = Character(self.hurby)
-            if self._is_in_reference_table(user_id):
-                json_file = self.ref_table.get_json_file_by_user_id(user_id)
-                tmp_char.load(json_file)
-                self._add_char_to_table(tmp_char)
-            elif not command_issued:
-                tmp_char.init_default_character(user_id, permission_level, user_id_type)
+        if not self.black_list.is_name_blacklisted(user_id, user_id_type):
+            tmp_char = self._search_loaded_characters(user_id, user_id_type)
+            if tmp_char is None:
+                tmp_char = Character(self.hurby)
+                if self._is_in_reference_table(user_id):
+                    json_file = self.ref_table.get_json_file_by_user_id(user_id)
+                    tmp_char.load(json_file)
+                    self._add_char_to_table(tmp_char)
+                elif not command_issued:
+                    tmp_char.init_default_character(user_id, permission_level, user_id_type)
+                    tmp_char.save()
+                    self._add_char_to_table(tmp_char)
+                    self._add_char_to_ref_table(tmp_char, user_id_type)
+                else:
+                    return None
+            if update_perm_level:
+                logger.log(logger.DEV, "Updating permission level for " + user_id + " to: " + permission_level.value)
+                tmp_char.set_permission_level(permission_level)
                 tmp_char.save()
-                self._add_char_to_table(tmp_char)
-                self._add_char_to_ref_table(tmp_char, user_id_type)
-            else:
-                return None
-        if update_perm_level:
-            logger.log(logger.DEV, "Updating permission level for " + user_id + " to: " + permission_level.value)
-            tmp_char.set_permission_level(permission_level)
-            tmp_char.save()
-        return tmp_char
+            return tmp_char
+        return None
 
     def get_characters(self):
         return self.chars
+
+    def delete_character(self, user_name, user_id_type):
+        if user_id_type is UserIDType.TWITCH:
+            file_name = self.ref_table.get_json_file_by_user_id(user_name)
+            if file_name is not None:
+                absolute_file_name = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + file_name
+                self.ref_table.remove_from_table(user_name, user_id_type)
+                os.remove(absolute_file_name)
 
     def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
         if self.chars is not None:

@@ -1,5 +1,6 @@
 import json
 
+from character.user_id_types import UserIDType
 from utils import json_loader, logger
 from utils.const import CONST
 
@@ -25,6 +26,12 @@ class CharacterReferenceTable:
             self.map = {}
         self.map[user_id] = uudi + ".json"
         self.save()
+
+    def remove_from_table(self, user_name, user_id_type):
+        if user_id_type == UserIDType.TWITCH:
+            if user_name in self.map:
+                del self.map[user_name]
+                self.save()
 
     def save(self):
         logger.log(logger.INFO, self.map)
