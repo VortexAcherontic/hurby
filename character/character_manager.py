@@ -1,6 +1,6 @@
 import os
 
-from character.blacklist import Blacklist
+from character.blacklist.blacklist import Blacklist
 from character.character import Character
 from character.character_reference_table import CharacterReferenceTable
 from character.user_id_types import UserIDType

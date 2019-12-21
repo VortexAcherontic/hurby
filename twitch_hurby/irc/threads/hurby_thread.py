@@ -1,4 +1,5 @@
 import threading
+from abc import abstractmethod
 
 
 class HurbyThread(threading.Thread):
@@ -11,3 +12,7 @@ class HurbyThread(threading.Thread):
 
     def stopped(self):
         return self._stop_event.is_set()
+
+    @abstractmethod
+    def run(self):
+        pass

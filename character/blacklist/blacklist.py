@@ -1,8 +1,7 @@
-from character import blacklist_crawler
+from character.blacklist.blacklist_updater import BlacklistUpdater
 from character.user_id_types import UserIDType
 from utils import json_loader, logger
 from utils.const import CONST
-from utils.time_measure import TimeMeasure
 
 
 class Blacklist:
@@ -10,6 +9,7 @@ class Blacklist:
     BLACKLIST_FILE = DIR_CHARACTER + "/" + CONST.FILE_BLACKLIST
 
     def __init__(self, hurby):
+        self.blacklist_updater = BlacklistUpdater(self)
         self.hurby = hurby
         self.twitch_names = []
         self.twitch_ids = []
@@ -23,10 +23,12 @@ class Blacklist:
             self.youtube_ids = blacklist_json["youtube_ids"]
             self.mails = blacklist_json["mails"]
         except IOError:
-            self._save()
+            self.save()
 
     def init(self):
-        self._update_from_external()
+        logger.log(logger.DEV, "Start BlacklistUpdater Thread")
+        self.blacklist_updater.start()
+        logger.log(logger.DEV, "Started BlacklistUpdater Thread, now running...")
 
     def is_name_blacklisted(self, user_name, user_id_type: UserIDType):
         if user_id_type == UserIDType.TWITCH:
@@ -46,25 +48,11 @@ class Blacklist:
             pass
         return False
 
-    def _update_from_external(self):
-        tm = TimeMeasure()
-        bots = blacklist_crawler.get_twitch_bot_names()
-        for bot_name in bots["names"]:
-            if not self.is_name_blacklisted(bot_name, UserIDType.TWITCH):
-                self.twitch_names.append(bot_name)
-        for bot_id in bots["ids"]:
-            if not self.is_id_blacklisted(bot_id, UserIDType.TWITCH):
-                self.twitch_ids.append(bot_id)
-        self._save()
-        self._clear_blacklisted_character_files()
-        end = tm.end()
-        logger.log(logger.DEV, "Parsing external Blacklist took: " + end + "s")
-
-    def _clear_blacklisted_character_files(self):
+    def clear_blacklisted_character_files(self):
         for name in self.twitch_names:
             self.hurby.char_manager.delete_character(name, UserIDType.TWITCH)
 
-    def _save(self):
+    def save(self):
         blacklist_dict = {
             "twitch_names": self.twitch_names,
             "twitch_ids": self.twitch_ids,
