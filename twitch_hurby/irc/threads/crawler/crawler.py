@@ -87,14 +87,14 @@ class Crawler(HurbyThread):
 
     def _crawl_subscribers(self):
         streamer = self.twitch_conf.streamer
-        bearer_token = self.twitch_conf.access_token
-        users_json = get_users.get_users_by_user_name([streamer], bearer_token)
+        users_json = get_users.get_users_by_user_name([streamer], self.twitch_conf)
         streamer_id = users_json["data"][0]["id"]
-        subscribers = get_broadcaster_subscriptions.get_subscriptions(streamer_id, bearer_token)
+        subscribers = get_broadcaster_subscriptions.get_subscriptions(streamer_id, self.twitch_conf)
         for sub in subscribers["data"]:
             tmpchar: Character = self.char_man.get_character(sub["user_name"].lower(), UserIDType.TWITCH)
-            tmpchar.is_supporter = True
-            tmpchar.save()
+            if tmpchar is not None:
+                tmpchar.is_supporter = True
+                tmpchar.save()
 
     def _resolve_channel_id(self):
         headers = {
