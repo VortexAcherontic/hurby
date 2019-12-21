@@ -2,6 +2,7 @@ import time
 
 import requests
 
+from character.character import Character
 from character.character_manager import CharacterManager
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
@@ -90,8 +91,10 @@ class Crawler(HurbyThread):
         users_json = get_users.get_users_by_user_name([streamer], bearer_token)
         streamer_id = users_json["data"][0]["id"]
         subscribers = get_broadcaster_subscriptions.get_subscriptions(streamer_id, bearer_token)
-        if True:
-            pass
+        for sub in subscribers["data"]:
+            tmpchar: Character = self.char_man.get_character(sub["user_name"].lower(), UserIDType.TWITCH)
+            tmpchar.is_supporter = True
+            tmpchar.save()
 
     def _resolve_channel_id(self):
         headers = {
