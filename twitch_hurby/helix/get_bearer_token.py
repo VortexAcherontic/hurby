@@ -54,7 +54,6 @@ def _request_bearer_token_first_time(twitch_config):
 
 def _refresh_token(twitch_config):
     url = "https://id.twitch.tv/oauth2/token" \
-          "--data-urlencode" \
           "?grant_type=refresh_token" \
           "&refresh_token=" + twitch_config.refresh_token + \
           "&client_id=" + twitch_config.client_id + \

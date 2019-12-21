@@ -1,9 +1,10 @@
-from twitch_hurby.helix import do_bearer_requests
+from twitch_hurby.helix import do_helix_requests
+from twitch_hurby.twitch_config import TwitchConfig
 
 
-def get_users_by_user_name(users: list, access_token) -> dict:
+def get_users_by_user_name(users: list, twitch_config: TwitchConfig) -> dict:
     url = "https://api.twitch.tv/helix/users?"
     for i in users:
         url = url + "login=" + i + "&"
 
-    return do_bearer_requests.get(url, access_token).json()
+    return do_helix_requests.get(url, twitch_config).json()
