@@ -11,6 +11,7 @@ class Blacklist:
     def __init__(self, hurby):
         self.blacklist_updater = BlacklistUpdater(self)
         self.hurby = hurby
+        self.updater_threads = 4
         self.twitch_names = []
         self.twitch_ids = []
         self.youtube_ids = []
@@ -22,6 +23,7 @@ class Blacklist:
             self.twitch_ids = blacklist_json["twitch_ids"]
             self.youtube_ids = blacklist_json["youtube_ids"]
             self.mails = blacklist_json["mails"]
+            self.updater_threads = blacklist_json["updater_threads"]
         except IOError:
             self.save()
 
@@ -55,6 +57,7 @@ class Blacklist:
     def save(self):
         logger.log(logger.DEV, "Saving Blacklist")
         blacklist_dict = {
+            "updater_threads": self.updater_threads,
             "twitch_names": self.twitch_names,
             "twitch_ids": self.twitch_ids,
             "youtube_ids": self.youtube_ids,
