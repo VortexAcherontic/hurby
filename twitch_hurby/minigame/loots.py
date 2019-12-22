@@ -34,4 +34,4 @@ class Loots:
         msg: str = hurby_utils.get_random_reply(self.thank_you)
         msg = msg.replace("$spend_credits", str(spend_credits))
         logger.log(logger.DEV, msg)
-        self.twitch_receiver.twitch_listener.send_message(msg)
+        self.twitch_receiver.send_message(msg)
