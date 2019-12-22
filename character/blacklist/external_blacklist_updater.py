@@ -25,6 +25,7 @@ class BlacklistUpdater(HurbyThread):
 
         self.blacklist.twitch_names = hurby_utils.remove_doubles_from_list(self.blacklist.twitch_names)
         self.blacklist.twitch_ids = hurby_utils.remove_doubles_from_list(self.blacklist.twitch_ids)
+        self.blacklist.external_ban_list_updated_now()
         self.blacklist.save()
         self.blacklist.clear_blacklisted_character_files()
         blacklist_crawler.delete_tmp_file()
