@@ -33,14 +33,10 @@ class IRCConnector:
     def join_channel(self, channel: str):
         self.connection.send(bytes('JOIN %s\r\n' % channel, 'UTF-8'))
 
-    def cap(self):
-        self.connection.send(bytes('CAP REQ :twitch.tv/commands', 'UTF-8'))
-
     def start(self, channel: str):
         self.channel = channel
         self.connect()
         self.join_channel(self.channel)
-        # self.cap()
         self.thread = ReadChat(self, self.tick, self.receiver, self.hurby)
         self.cron_jobs_thread = CronJobs(self.twitch_conf, self.receiver, self)
         self.crawler_thread = Crawler(self.twitch_conf, self.hurby.char_manager)
