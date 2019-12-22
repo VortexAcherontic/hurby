@@ -21,7 +21,7 @@ class TwitchConfig:
         self.onlyfiles = hurby_utils.get_all_files_in_path(TwitchConfig.CMD_PATH)
         self.cmds = [None] * len(self.onlyfiles)
         self.oauth_token = twitch_json["oauth_token"]
-        self.channel_name = twitch_json["channel_name"]
+        self.channel_names = twitch_json["channel_names"]
         self.authorization_code = twitch_json["authorization_code"]
         self.streamer = twitch_json["streamer"]
         self.client_id = twitch_json["client_id"]
@@ -69,7 +69,7 @@ class TwitchConfig:
     def save(self):
         config_dict = {
             "oauth_token": self.oauth_token,
-            "channel_name": self.channel_name,
+            "channel_names": self.channel_names,
             "streamer": self.streamer,
             "client_id": self.client_id,
             "client_secret": self.client_secret,

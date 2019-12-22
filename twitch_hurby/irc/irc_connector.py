@@ -33,8 +33,8 @@ class IRCConnector:
     def join_channel(self, channel: str):
         self.connection.send(bytes('JOIN %s\r\n' % channel, 'UTF-8'))
 
-    def start(self, channel: str):
-        self.channel = channel
+    def start(self, channels: list):
+        self.channel = channels[0]
         self.connect()
         self.join_channel(self.channel)
         self.thread = ReadChat(self, self.tick, self.receiver, self.hurby)
