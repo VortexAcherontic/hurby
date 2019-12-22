@@ -18,3 +18,7 @@ def get_random_reply(responses: list) -> str:
 
 def get_all_files_in_path(path: str):
     return [f for f in listdir(path) if isfile(join(path, f))]
+
+
+def remove_doubles_from_list(my_list: list):
+    return list(dict.fromkeys(my_list))
