@@ -24,3 +24,19 @@ A full lsit of Features will be provided when they are available.
     - Raids (A mini game to achive more credits, an fictional currency)
   - Blacklist (Users unable to issuing commands)
 - Character Framework (used for internal bot functionality)
+
+## Support this project
+There are several ways you can support this project. Some have direct impact on  
+the project some affecting the project 2nd hand.  
+
+### Creating Feature requests/Bug reports
+By creating bug reports or making feature requests you do support the projects devlopment  
+and future
+
+### Patreon
+You can support Z-Ray Entertainment on [Patreon](https://www.patreon.com/zrayentertainment). By this you support every project we're  
+working on including Hurby as well as our live streams on [Twitch](https://www.twitch.tv/couchrebellen).
+
+### Twitch
+On Twitch you can follow us or subscribe to our live Streaming channel [CouchRebellen](https://www.twitch.tv/couchrebellen)  
+to support the live stream and also the development of this Projects
