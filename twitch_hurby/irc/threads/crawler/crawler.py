@@ -61,7 +61,7 @@ class Crawler(HurbyThread):
             self._init_character(i, ChatterType.VIEWER)
         for i in vips:
             self._init_character(i, ChatterType.VIP)
-        self.char_man.unload_offline_characters(all_chatters, UserIDType.TWITCH)
+        self.char_man.unload_offline_characters(self.twitch_conf.channel_names, UserIDType.TWITCH)
 
     def _init_character(self, name: str, chatter_type: ChatterType):
         try:
@@ -87,7 +87,7 @@ class Crawler(HurbyThread):
             if tmpchar is not None:
                 tmpchar.is_supporter = True
                 tmpchar.save()
-                self.char_man.unload_offline_characters(list(tmpchar.twitchid), UserIDType.TWITCH)
+                self.char_man.unload_offline_characters(self.twitch_conf.channel_names, UserIDType.TWITCH)
 
     def _resolve_channel_id(self):
         headers = {

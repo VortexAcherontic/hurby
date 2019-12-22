@@ -10,28 +10,6 @@ from utils import logger
 from utils.const import CONST
 
 
-def _is_chars_in_user_ids(user_ids: [str], char: Character, user_id_type: UserIDType):
-    for x in user_ids:
-        if user_id_type == UserIDType.TWITCH:
-            if char.twitchid == x:
-                return True
-        elif user_id_type == UserIDType.TWITTER:
-            pass
-        elif user_id_type == UserIDType.PATREON:
-            pass
-        elif user_id_type == UserIDType.YOUTUBE:
-            pass
-        elif user_id_type == UserIDType.STEAM:
-            pass
-        elif user_id_type == UserIDType.TELEGRAM:
-            pass
-        elif user_id_type == UserIDType.DISCORD:
-            pass
-        else:
-            return False
-    return False
-
-
 class CharacterManager:
 
     def __init__(self, hurby):
@@ -75,16 +53,22 @@ class CharacterManager:
                 self.ref_table.remove_from_table(user_name, user_id_type)
                 os.remove(absolute_file_name)
 
-    def unload_offline_characters(self, channels: list):
-        get_all_chatters_as_list(channels)
+    def unload_offline_characters(self, channels: list, user_id_type: UserIDType):
+        all_alive_chatters = get_all_chatters_as_list(channels)
+        if all_alive_chatters is not None:
+            for char in self.chars:
+                char_offline = True
+                for alive in all_alive_chatters:
+                    if alive == char.twitchid:
+                        char_offline = False
+                if char_offline:
+                    self._unload_character(char)
 
-        if self.chars is not None:
-            for tmp in self.chars:
-                if not _is_chars_in_user_ids(user_ids, tmp, id_type):
-                    logger.log(logger.DEV, "User offline, unloading: " + str(tmp.twitchid))
-                    tmp.update_watchtime()
-                    tmp.save()
-                    self.chars.remove(tmp)
+    def _unload_character(self, character: Character):
+        logger.log(logger.DEV, "User offline, unloading: " + str(character.twitchid))
+        character.update_watchtime()
+        character.save()
+        self.chars.remove(character)
 
     def _add_char_to_table(self, char: Character):
         if self.chars is None:
