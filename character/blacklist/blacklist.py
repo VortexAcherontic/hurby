@@ -1,4 +1,4 @@
-from character.blacklist.blacklist_updater import BlacklistUpdater
+from character.blacklist.external_blacklist_updater import BlacklistUpdater
 from character.user_id_types import UserIDType
 from utils import json_loader, logger
 from utils.const import CONST
