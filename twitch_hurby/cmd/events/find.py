@@ -26,7 +26,7 @@ class EventFind:
 
     def issue_event(self):
         all_chars = self.hurby.char_manager.chars
-        if all_chars is not None:
+        if all_chars is not None and len(all_chars) > 0:
             lucky_one: Character = all_chars[random.randint(0, len(all_chars) - 1)]
             min_value = self.credit_find_min
             max_value = self.credit_find_max

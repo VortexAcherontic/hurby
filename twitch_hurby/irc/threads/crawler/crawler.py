@@ -95,6 +95,7 @@ class Crawler(HurbyThread):
             if tmpchar is not None:
                 tmpchar.is_supporter = True
                 tmpchar.save()
+                self.char_man.unload_offline_characters(list(tmpchar.twitchid), UserIDType.TWITCH)
 
     def _resolve_channel_id(self):
         headers = {
