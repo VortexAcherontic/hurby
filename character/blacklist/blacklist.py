@@ -15,6 +15,7 @@ class Blacklist:
         self.hurby = hurby
         self.last_external_banlist_update = 0
         self.update_external_banlist_every_days = 7
+        self.external_banlist_json = "https://raw.githubusercontent.com/tarumes/twitch-ban-list/master/public_ban.json"
         self.twitch_names = []
         self.twitch_ids = []
         self.youtube_ids = []
@@ -28,6 +29,7 @@ class Blacklist:
             self.mails = blacklist_json["mails"]
             self.last_external_banlist_update = blacklist_json["last_external_banlist_update"]
             self.update_external_banlist_every_days = blacklist_json["update_external_banlist_every_days"]
+            self.external_banlist_json = blacklist_json["external_banlist_json"]
         except IOError:
             self.save()
 
@@ -61,6 +63,7 @@ class Blacklist:
         blacklist_dict = {
             "last_external_banlist_update": self.last_external_banlist_update,
             "update_external_banlist_every_days": self.update_external_banlist_every_days,
+            "external_banlist_json":self.external_banlist_json,
             "twitch_names": self.twitch_names,
             "twitch_ids": self.twitch_ids,
             "youtube_ids": self.youtube_ids,
