@@ -38,24 +38,25 @@ class RobThread(HurbyThread):
     def run(self):
         time.sleep(self.countdown)
         all_chars = self.root_event.hurby.char_manager.chars
-        victim: Character = all_chars[random.randint(0, len(all_chars) - 1)]
-        if victim is not None:
-            if (random.random() > 0.5) & self.root_event.stealt_items:
-                pass
-            else:
-                min_cred = self.root_event.credit_steal_min
-                max_cred = self.root_event.credit_steal_max
-                stolen_creds = random.randint(min_cred, max_cred)
-                if victim.credits >= stolen_creds:
-                    victim.credits -= stolen_creds
+        if all_chars is not None and len(all_chars) > 0:
+            victim: Character = all_chars[random.randint(0, len(all_chars) - 1)]
+            if victim is not None:
+                if (random.random() > 0.5) & self.root_event.stealt_items:
+                    pass
                 else:
-                    stolen_creds = victim.credits
-                    victim.credits = 0
-                victim.save()
-                msg = hurby_utils.get_random_reply(self.root_event.event_end)
-                msg = msg.replace("$victim", victim.twitchid)
-                cred_repl = hurby_utils.get_random_reply(self.root_event.loot_credits)
-                cred_repl = cred_repl.replace("$amount", str(stolen_creds))
-                msg = msg.replace("$loot", cred_repl)
-                irc = self.root_event.hurby.twitch_receiver.twitch_listener
-                irc.send_message(msg)
+                    min_cred = self.root_event.credit_steal_min
+                    max_cred = self.root_event.credit_steal_max
+                    stolen_creds = random.randint(min_cred, max_cred)
+                    if victim.credits >= stolen_creds:
+                        victim.credits -= stolen_creds
+                    else:
+                        stolen_creds = victim.credits
+                        victim.credits = 0
+                    victim.save()
+                    msg = hurby_utils.get_random_reply(self.root_event.event_end)
+                    msg = msg.replace("$victim", victim.twitchid)
+                    cred_repl = hurby_utils.get_random_reply(self.root_event.loot_credits)
+                    cred_repl = cred_repl.replace("$amount", str(stolen_creds))
+                    msg = msg.replace("$loot", cred_repl)
+                    irc = self.root_event.hurby.twitch_receiver.twitch_listener
+                    irc.send_message(msg)
