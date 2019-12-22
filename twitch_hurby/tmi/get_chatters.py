@@ -28,7 +28,7 @@ def get_chatters_for_channels(channels: list) -> dict:
     return dict_chatters
 
 
-def get_all_as_list(channels: list) -> list:
+def get_all_chatters_as_list(channels: list) -> list:
     all_chatters = []
     chatter_dict = get_chatters_for_channels(channels)
     for chatter_type in chatter_dict:

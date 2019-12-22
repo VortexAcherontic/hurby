@@ -5,6 +5,7 @@ from character.character import Character
 from character.character_reference_table import CharacterReferenceTable
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
+from twitch_hurby.tmi.get_chatters import get_all_chatters_as_list
 from utils import logger
 from utils.const import CONST
 
@@ -74,7 +75,9 @@ class CharacterManager:
                 self.ref_table.remove_from_table(user_name, user_id_type)
                 os.remove(absolute_file_name)
 
-    def unload_offline_characters(self, user_ids: list, id_type: UserIDType):
+    def unload_offline_characters(self, channels: list):
+        get_all_chatters_as_list(channels)
+
         if self.chars is not None:
             for tmp in self.chars:
                 if not _is_chars_in_user_ids(user_ids, tmp, id_type):

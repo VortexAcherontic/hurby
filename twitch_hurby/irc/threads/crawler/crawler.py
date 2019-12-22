@@ -9,7 +9,7 @@ from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from twitch_hurby.helix import get_users, get_broadcaster_subscriptions
 from twitch_hurby.irc.threads.crawler.chatter_types import ChatterType
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
-from twitch_hurby.tmi.get_chatters import get_chatters_for_channels, get_all_as_list
+from twitch_hurby.tmi.get_chatters import get_chatters_for_channels, get_all_chatters_as_list
 from twitch_hurby.twitch_config import TwitchConfig
 from utils import logger
 from utils.const import CONST
@@ -46,7 +46,7 @@ class Crawler(HurbyThread):
         staff = chatters_dict[ChatterType.STAFF]
         viewer = chatters_dict[ChatterType.VIEWER]
         vips = chatters_dict[ChatterType.VIP]
-        all_chatters = get_all_as_list(self.twitch_conf.channel_names)
+        all_chatters = get_all_chatters_as_list(self.twitch_conf.channel_names)
         for i in mods:
             self._init_character(i, ChatterType.MODERATOR)
         for i in broadcaster:
