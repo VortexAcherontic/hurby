@@ -9,13 +9,10 @@ from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from twitch_hurby.helix import get_users, get_broadcaster_subscriptions
 from twitch_hurby.irc.threads.crawler.chatter_types import ChatterType
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
+from twitch_hurby.tmi.get_chatters import get_chatters_for_channels, get_all_as_list
 from twitch_hurby.twitch_config import TwitchConfig
 from utils import logger
 from utils.const import CONST
-
-
-def _get_chatters_by_type(json_data, chatter_type: str):
-    return json_data["chatters"][chatter_type]
 
 
 class Crawler(HurbyThread):
@@ -25,7 +22,6 @@ class Crawler(HurbyThread):
         self.char_man = char_manager
         self.tick = twitch_config.crawler_time
         self.spend_time = twitch_config.spend_time
-        self.crawl_cache = None
         self.credit_increase_base = twitch_config.credit_increase_base
         self.credit_increase_supporter = twitch_config.credit_increase_supporter
 
@@ -41,20 +37,16 @@ class Crawler(HurbyThread):
 
     def _crawl_chatters(self, force_re_fetch: bool):
         logger.log(logger.INFO, "Crawling chatters ... Force fetch: " + str(force_re_fetch))
-        streamer = self.twitch_conf.streamer
-        url = "https://tmi.twitch.tv/group/user/" + streamer + "/chatters"
-        if force_re_fetch:
-            r = requests.get(url)
-            self.crawl_cache = r.json()
+        chatters_dict = get_chatters_for_channels(self.twitch_conf.channel_names)
 
-        mods = _get_chatters_by_type(self.crawl_cache, ChatterType.MODERATOR.value)
-        broadcaster = _get_chatters_by_type(self.crawl_cache, ChatterType.BROADCASTER.value)
-        admins = _get_chatters_by_type(self.crawl_cache, ChatterType.ADMINS.value)
-        global_mods = _get_chatters_by_type(self.crawl_cache, ChatterType.GLOBAL_MODERATORS.value)
-        staff = _get_chatters_by_type(self.crawl_cache, ChatterType.STAFF.value)
-        viewer = _get_chatters_by_type(self.crawl_cache, ChatterType.VIEWER.value)
-        vips = _get_chatters_by_type(self.crawl_cache, ChatterType.VIP.value)
-        all_chatters = mods + broadcaster + admins + global_mods + staff + viewer + vips
+        mods = chatters_dict[ChatterType.MODERATOR]
+        broadcaster = chatters_dict[ChatterType.BROADCASTER]
+        admins = chatters_dict[ChatterType.ADMINS]
+        global_mods = chatters_dict[ChatterType.GLOBAL_MODERATORS]
+        staff = chatters_dict[ChatterType.STAFF]
+        viewer = chatters_dict[ChatterType.VIEWER]
+        vips = chatters_dict[ChatterType.VIP]
+        all_chatters = get_all_as_list(self.twitch_conf.channel_names)
         for i in mods:
             self._init_character(i, ChatterType.MODERATOR)
         for i in broadcaster:
