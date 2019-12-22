@@ -34,18 +34,14 @@ class Blacklist:
 
     def is_name_blacklisted(self, user_name, user_id_type: UserIDType):
         if user_id_type == UserIDType.TWITCH:
-            for i in self.twitch_names:
-                if i == user_name:
-                    return True
+            return user_name in self.twitch_names
         if user_id_type == UserIDType.YOUTUBE:
             pass
         return False
 
     def is_id_blacklisted(self, user_id, user_id_type: UserIDType):
         if user_id_type == UserIDType.TWITCH:
-            for i in self.twitch_ids:
-                if i == user_id:
-                    return True
+            return user_id in self.twitch_ids
         if user_id_type == UserIDType.YOUTUBE:
             pass
         return False
