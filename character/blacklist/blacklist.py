@@ -53,6 +53,7 @@ class Blacklist:
             self.hurby.char_manager.delete_character(name, UserIDType.TWITCH)
 
     def save(self):
+        logger.log(logger.DEV, "Saving Blacklist")
         blacklist_dict = {
             "twitch_names": self.twitch_names,
             "twitch_ids": self.twitch_ids,
