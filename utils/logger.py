@@ -27,13 +27,14 @@ def _print_log(msg: str, log_type):
     if log_type == DEV:
         if CONST.DEVMODE:
             print(text)
-            _append_to_log_file(text)
     elif log_type == JSON:
         if not CONST.SUPPRESS_JSON_LOGGING or CONST.DEVMODE:
             print(text)
-    else:
+    elif log_type == ERR or log_type == FATAL or log_type == WARN:
         print(text)
         _append_to_log_file(text)
+    else:
+        print(text)
 
 
 def _append_to_log_file(msg: str):
