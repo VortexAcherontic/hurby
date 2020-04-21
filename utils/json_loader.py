@@ -4,11 +4,14 @@ from utils import logger
 
 
 def load_json(file: str) -> dict:
-    with open(file) as f:
-        logger.log(logger.JSON, "Loading JSON: " + file)
-        d = json.load(f)
-        f.close()
-    return d
+    try:
+        with open(file) as f:
+            logger.log(logger.JSON, "Loading JSON: " + file)
+            d = json.load(f)
+            f.close()
+        return d
+    except json.decoder.JSONDecodeError as e:
+        logger.log(logger.ERR, "Could not decode json file: "+file)
 
 
 def save_json(file: str, data):

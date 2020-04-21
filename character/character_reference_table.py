@@ -46,5 +46,15 @@ class CharacterReferenceTable:
                 return False
         return False
 
+    def check_uuid(self, uuid):
+        if self.map is not None:
+            for ref in self.map:
+                if self.map[ref] == uuid:
+                    return True
+        return False
+
+    def get_reference_table(self):
+        return self.map
+
     def _load_table(self):
         self.map = json_loader.load_json(CharacterReferenceTable.REF_TABLE_FILE)

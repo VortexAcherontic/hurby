@@ -6,14 +6,14 @@ from character.character_reference_table import CharacterReferenceTable
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from twitch_hurby.tmi.get_chatters import get_all_chatters_as_list
-from utils import logger
+from utils import logger, hurby_utils, json_loader
 from utils.const import CONST
 
 
 class CharacterManager:
 
     def __init__(self, hurby):
-        self.chars: list[Character] = None
+        self.chars: list = [None]
         self.black_list: Blacklist = Blacklist(hurby)
         self.ref_table: CharacterReferenceTable = CharacterReferenceTable()
         self.hurby = hurby
@@ -57,18 +57,20 @@ class CharacterManager:
         all_alive_chatters = get_all_chatters_as_list(channels)
         if all_alive_chatters is not None:
             for char in self.chars:
-                char_offline = True
-                for alive in all_alive_chatters:
-                    if alive == char.twitchid:
-                        char_offline = False
-                if char_offline:
-                    self._unload_character(char)
+                if char is not None:
+                    char_offline = True
+                    for alive in all_alive_chatters:
+                        if alive == char.twitchid:
+                            char_offline = False
+                    if char_offline:
+                        self._unload_character(char)
 
     def _unload_character(self, character: Character):
         logger.log(logger.DEV, "User offline, unloading: " + str(character.twitchid))
         character.update_watchtime()
         character.save()
         self.chars.remove(character)
+        self._find_unused_character_files()
 
     def _add_char_to_table(self, char: Character):
         if self.chars is None:
@@ -101,3 +103,14 @@ class CharacterManager:
     def _add_char_to_ref_table(self, character: Character, user_id_type: UserIDType):
         if user_id_type == UserIDType.TWITCH:
             self.ref_table.add_to_ref_table(character.twitchid, character.uuid)
+
+    def _find_unused_character_files(self):
+        char_files = hurby_utils.get_all_files_in_path(CONST.DIR_CHARACTERS_ABSOLUTE)
+        for file in char_files:
+            uuid = file.split(".")[0]
+            if not self.ref_table.check_uuid(uuid):
+                file_cont = json_loader.load_json(CONST.DIR_CHARACTERS_ABSOLUTE + "/" + file)
+                try:
+                    logger.log(logger.WARN, ["User "+file_cont["twitchid"]+" for uuid " + uuid + " does not exist!"])
+                except KeyError or TypeError as e:
+                    logger.log(logger.ERR, "File: "+file+" could not be verified for existing user")
