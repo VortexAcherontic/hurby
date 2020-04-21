@@ -5,15 +5,15 @@ from utils import logger
 
 
 def get_bearer_access_token(twitch_config):
-    if twitch_config.access_token is "":
-        if twitch_config.authorization_code is not "":
+    if twitch_config.access_token == "":
+        if twitch_config.authorization_code != "":
             _request_bearer_token_first_time(twitch_config)
         else:
             logger.log(logger.ERR, "No authorization code is given, please call the following url in your browser:\n"
                        + _get_auth_code_url(twitch_config) + "\n"
                        + "and put the value of the code= parameter inside the bot config.")
             exit(0)
-    elif twitch_config.refresh_token is not "":
+    elif twitch_config.refresh_token != "":
         if not validate_token.is_token_valid(twitch_config.access_token):
             logger.log(logger.INFO, "Bearer Access token expired, requesting new token pair")
             _refresh_token(twitch_config)
