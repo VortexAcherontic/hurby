@@ -107,10 +107,15 @@ class CharacterManager:
     def _find_unused_character_files(self):
         char_files = hurby_utils.get_all_files_in_path(CONST.DIR_CHARACTERS_ABSOLUTE)
         for file in char_files:
-            uuid = file.split(".")[0]
-            if not self.ref_table.check_uuid(uuid):
+            if not self.ref_table.check_uuid_file(file):
                 file_cont = json_loader.load_json(CONST.DIR_CHARACTERS_ABSOLUTE + "/" + file)
                 try:
-                    logger.log(logger.WARN, ["User "+file_cont["twitchid"]+" for uuid " + uuid + " does not exist!"])
-                except KeyError or TypeError as e:
-                    logger.log(logger.ERR, "File: "+file+" could not be verified for existing user")
+                    logger.log(logger.WARN,
+                               ["User " + file_cont["twitchid"] + " for uuid " + str(file) + " does not exist!" +
+                                " File removed!"])
+                    os.remove(CONST.DIR_CHARACTERS_ABSOLUTE + "/" + file)
+
+                except KeyError as e:
+                    logger.log(logger.ERR, "File: " + file + " could not be verified for existing user")
+                except TypeError as e:
+                    logger.log(logger.ERR, ["File: " + file + " could not be verified for existing user\n", str(e)])

@@ -46,7 +46,7 @@ class CharacterReferenceTable:
                 return False
         return False
 
-    def check_uuid(self, uuid):
+    def check_uuid_file(self, uuid):
         if self.map is not None:
             for ref in self.map:
                 if self.map[ref] == uuid:
