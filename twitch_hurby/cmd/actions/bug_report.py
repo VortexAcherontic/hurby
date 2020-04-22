@@ -29,24 +29,32 @@ class BugReportCommand(AbstractCommand):
             cur_answer = ""
             if self._can_submit_issue(character):
                 cur_answer = self.answers[random.randint(0, len(self.answers) - 1)]
-                cur_answer = cur_answer.replace("$user", character.twitchid)
                 self._send_mail(params)
                 fmt = '%Y-%m-%d %H:%M:%S.%f'
                 self.last_report_times[character.twitchid] = datetime.strptime(str(datetime.now()), fmt)
+            else:
+                cur_answer = self.to_many_requests[random.randint(0, len(self.to_many_requests) - 1)]
+            cur_answer = cur_answer.replace("$user", character.twitchid)
+            cur_answer = cur_answer.replace("$remaining_time", str(self._get_remaining_report_time(character)))
             irc.send_message(cur_answer)
 
-    def _can_submit_issue(self, character: Character):
+    def _get_remaining_report_time(self, character: Character):
         fmt = '%Y-%m-%d %H:%M:%S.%f'
+        report_time = datetime.now()
         if character.twitchid in self.last_report_times:
-            report_time = datetime.now()
             d1 = datetime.strptime(str(self.last_report_times[character.twitchid]), fmt)
             d2 = datetime.strptime(str(report_time), fmt)
             d1_ts = time.mktime(d1.timetuple())
             d2_ts = time.mktime(d2.timetuple())
             time_past = ceil(((d2_ts - d1_ts) / 60))
-            return time_past >= self.time_between_reports_in_min
+            return self.time_between_reports_in_min - time_past
         else:
-            return True
+            date = datetime.strptime(str(report_time), fmt)
+            self.last_report_times[character.twitchid] = date
+            return 0
+
+    def _can_submit_issue(self, character: Character):
+        return self._get_remaining_report_time(character) <= 0
 
     def _send_mail(self, params: list):
         msg = ""
