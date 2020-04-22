@@ -3,7 +3,6 @@ import smtplib
 import time
 from datetime import datetime
 from math import ceil
-from smtplib import SMTPException
 
 from character.character import Character
 from twitch_hurby.cmd.abstract_command import AbstractCommand
@@ -49,24 +48,27 @@ class BugReportCommand(AbstractCommand):
         else:
             return True
 
-    def _send_mail(self, params):
-        message = ""
+    def _send_mail(self, params: list):
+        msg = ""
         for p in params:
-            message += p + "\n"
+            msg += p + "\n"
         server = smtplib.SMTP_SSL(self.smpt_host, self.smpt_port)
+        server.login(self.sender_mail, self.sender_password)
+        body = self._build_mail(self.sender_mail, self.report_mail, "Hurby Bug Report", msg)
         try:
-            server.ehlo()
-            server.starttls()
-            server.login(self.sender_mail, self.sender_password)
-            mail = '\r\n'.join(['To: %s' % self.report_mail,
-                                'From: %s' % self.sender_mail,
-                                'Subject: %s' % "Hurby Bug report",
-                                '', message])
-            server.sendmail(
-                self.sender_mail,
-                self.report_mail,
-                mail)
-        except SMTPException as e:
-            logger.log(logger.ERR, ["Could not send bug report", str(e)])
-        finally:
-            server.quit()
+            server.sendmail(self.sender_mail, [self.report_mail], body)
+            logger.log(logger.INFO, "Bug report Mail send")
+        except Exception as e:
+            logger.log(logger.WARN, ["Bug report Mail could not be send", str(e)])
+        server.quit()
+
+    def _build_mail(self, sender, receiver, subject, message):
+        return '\r\n'.join(["To: %s" % receiver,
+                            "From: %s" % sender,
+                            "Subject: %s" % subject,
+                            "MIME-Version: 1.0",
+                            "Content-Type: text/plain; charset=utf-8; format=flowed",
+                            "Content-Transfer-Encoding: 7bit",
+                            "Content-Language: en-GB",
+                            "",
+                            message])
