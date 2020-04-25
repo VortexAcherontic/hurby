@@ -9,7 +9,7 @@ from utils import logger, hurby_utils
 
 
 def _insufficient_credits(char: Character, credits_spend: int):
-    return char.credits < credits_spend
+    return char.get_credits() < credits_spend
 
 
 class RaidCommand(AbstractCommand):
@@ -52,14 +52,13 @@ class RaidCommand(AbstractCommand):
                 if not self._participating(character):
                     if not _insufficient_credits(character, int(credit_spend)):
                         if self._spend_min_credits(credit_spend):
-                            character.credits -= int(credit_spend)
-                            character.save()
+                            character.remove_credits(int(credit_spend))
                             if self.in_preparation:
                                 self.participants.append(character)
                                 self.credits_spend.append(credit_spend)
-                                msg = self.reply_join[random.randint(0, len(self.reply_join) - 1)]
+                                msg = hurby_utils.get_random_reply(self.reply_join)
                             else:
-                                msg = self.reply_start[random.randint(0, len(self.reply_join) - 1)]
+                                msg = hurby_utils.get_random_reply(self.reply_join)
                                 self.participants = [character]
                                 self.credits_spend = [credit_spend]
                                 countdown_thread = RaidCountdownThread(self)
@@ -72,13 +71,13 @@ class RaidCommand(AbstractCommand):
                             msg = msg.replace("$min_credits", str(self.min_credits))
                             msg = msg.replace("$user_id", character.twitchid)
                     else:
-                        msg = self.insufficient_credits[random.randint(0, len(self.insufficient_credits) - 1)]
-                        msg = msg.replace("$user_credits", str(character.credits))
+                        msg = hurby_utils.get_random_reply(self.insufficient_credits_spend)
+                        msg = msg.replace("$user_credits", str(character.get_credits))
                         logger.log(logger.INFO, msg)
                 else:
-                    msg = self.already_participating[random.randint(0, len(self.already_participating) - 1)]
+                    msg = hurby_utils.get_random_reply(self.already_participating)
             else:
-                msg = self.raid_in_cooldown[random.randint(0, len(self.raid_in_cooldown) - 1)]
+                msg = hurby_utils.get_random_reply(self.raid_in_cooldown)
             self.irc.send_message(msg)
 
     def _spend_min_credits(self, credits_spend) -> bool:
@@ -87,7 +86,7 @@ class RaidCommand(AbstractCommand):
     def _input_valid(self, params: list):
         msg = ""
         if len(params) < 1:
-            msg = self.raid_error_no_credits[random.randint(0, len(self.raid_error_no_credits) - 1)]
+            msg = hurby_utils.get_random_reply(self.raid_error_no_credits)
             self.irc.send_message(msg)
             return False
         else:
@@ -96,7 +95,7 @@ class RaidCommand(AbstractCommand):
                 if test < 0:
                     return False
             except ValueError:
-                msg = self.raid_error_parse_credits[random.randint(0, len(self.raid_error_parse_credits) - 1)]
+                msg = hurby_utils.get_random_reply(self.raid_error_parse_credits)
                 self.irc.send_message(msg)
                 return False
         return True
@@ -135,7 +134,7 @@ class RaidCountdownThread(HurbyThread):
             self.countdown -= 1
             logger.log(logger.DEV, "Raid in: " + str(self.countdown) + " Seconds")
             if self.countdown == 10:
-                self.irc.send_message(self.response_10[random.randint(0, len(self.response_10) - 1)])
+                self.irc.send_message(hurby_utils.get_random_reply(self.response_10))
         self.root_cmd.in_preparation = False
         if len(self.root_cmd.participants) < self.root_cmd.min_participants:
             msg = self.root_cmd.insufficient_participants[

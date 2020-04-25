@@ -47,12 +47,11 @@ class RobThread(HurbyThread):
                     min_cred = self.root_event.credit_steal_min
                     max_cred = self.root_event.credit_steal_max
                     stolen_creds = random.randint(min_cred, max_cred)
-                    if victim.credits >= stolen_creds:
-                        victim.credits -= stolen_creds
+                    if victim.get_credits() >= stolen_creds:
+                        victim.remove_credits(stolen_creds)
                     else:
                         stolen_creds = victim.credits
                         victim.credits = 0
-                    victim.save()
                     msg = hurby_utils.get_random_reply(self.root_event.event_end)
                     msg = msg.replace("$victim", victim.twitchid)
                     cred_repl = hurby_utils.get_random_reply(self.root_event.loot_credits)

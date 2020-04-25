@@ -20,14 +20,17 @@ class AddCreditsCommand(AbstractCommand):
             if receiving_char is not None:
                 try:
                     add_cred = int(params[1])
-                    mem = receiving_char.credits
-                    receiving_char.credits += add_cred
-                    receiving_char.save()
+                    mem = receiving_char.get_credits()
+                    if add_cred < 0:
+                        receiving_char.remove_credits(add_cred*-1)
+                    else:
+                        receiving_char.add_credits(add_cred)
                     logger.log(logger.INFO, receiving_char.twitchid + " had " + str(mem) + " credits and now " + str(
-                        receiving_char.credits))
+                        receiving_char.get_credits()))
                 except ValueError:
-                    logger.log(logger.INFO, "Exception: Unable to set credits")
+                    logger.log(logger.WARN,
+                               "Exception: Unable to set credits please enter a number instead of: " + params[1])
             else:
-                logger.log(logger.INFO, "Exception: Receiving character is None: " + receiving_char_name)
+                logger.log(logger.WARN, "Exception: Receiving character is None: " + receiving_char_name)
         else:
-            logger.log(logger.INFO, "Exception: Issuing character is None")
+            logger.log(logger.WARN, "Exception: Issuing character is None")

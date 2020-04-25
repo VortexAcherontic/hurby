@@ -43,7 +43,7 @@ class EventFind:
                     if tmp_sum <= found_value:
                         items.append(rnd_item)
             else:
-                lucky_one.credits += found_value
+                lucky_one.add_credits(found_value)
                 lucky_one.save()
                 msg = hurby_utils.get_random_reply(self.event_end)
                 msg = msg.replace("$user", lucky_one.twitchid)

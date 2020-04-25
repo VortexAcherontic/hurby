@@ -4,6 +4,8 @@ from datetime import datetime
 from math import ceil
 
 from character.equipment import PlayerEquipment
+from character.exceptions.insufficient_credits_exception import InsufficientCreditsException
+from character.exceptions.less_than_zero_exception import LessThanZeroException
 from character.inventory import PlayerInventory
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
@@ -27,21 +29,21 @@ def _fix_array_ception(array):
 class Character:
 
     def __init__(self, hurby):
-        self.credits: int = None
-        self.endurance: int = None
-        self.endurance_max: int = None
-        self.inventory: list = None
-        self.mails: list[str] = None
-        self.twitchid: str = None
-        self.twitterid: str = None
-        self.discordid: str = None
-        self.youtubeid: str = None
+        self._credits: int = 0
+        self.endurance: int = 0
+        self.endurance_max: int = 0
+        self.inventory: list = [None]
+        self.mails: list[str] = [None]
+        self.twitchid: str = ""
+        self.twitterid: str = ""
+        self.discordid: str = ""
+        self.youtubeid: str = ""
         self.can_do_mini_game: bool = True
-        self.uuid: str = None
+        self.uuid: str = ""
         self.perm = PermissionLevels.EVERYBODY
         self.last_seen = None
         self.is_supporter = False
-        self.equipment: PlayerEquipment = PlayerEquipment(None, None, None)
+        self.equipment: PlayerEquipment = PlayerEquipment({}, "", None)
         self.inventory: PlayerInventory = PlayerInventory(None, hurby)
         self.first_seen = datetime.now()
         self.watchtime_min = 0
@@ -49,7 +51,7 @@ class Character:
 
     def init_default_character(self, user_id: str, permission_level: PermissionLevels, user_id_type: UserIDType):
         logger.log(logger.INFO, "New character: " + user_id)
-        self.credits = 100
+        self._credits = 100
         self.endurance = 100
         self.endurance_max = 100
         self.inventory = PlayerInventory(None, self.hurby)
@@ -67,9 +69,34 @@ class Character:
             self.twitchid = user_id
         self.watchtime_min = 0
 
+    def get_credits(self):
+        return self._credits
+
+    def remove_credits(self, cred: int):
+        test = int(cred)
+        if cred < 0:
+            raise LessThanZeroException("The specified value needs to be zero or positive")
+        elif self._credits < cred:
+            raise InsufficientCreditsException("Not enough credits to be removed", self._credits)
+        else:
+            self._credits -= cred
+            self.save()
+
     def add_credits(self, cred: int):
-        logger.log(logger.DEV, "Adding: " + str(cred) + "to " + str(self.twitchid))
-        self.credits += int(cred)
+        test = int(cred)
+        if cred < 0:
+            raise LessThanZeroException("The specified value needs to be zero or positive")
+        else:
+            self._credits += cred
+            self.save()
+
+    def set_credits(self, cred: int):
+        test = int(cred)
+        if cred < 0:
+            raise LessThanZeroException("The specified value needs to be zero or positive")
+        else:
+            self._credits = cred
+            self.save()
 
     def set_permission_level(self, level: PermissionLevels):
         self.perm = level
@@ -104,7 +131,7 @@ class Character:
 
     def parse_json(self, json):
         self.uuid = json["uuid"]
-        self.credits = json["credits"]
+        self._credits = json["credits"]
         self.endurance = json["endurance_cur"]
         self.endurance_max = json["endurance_max"]
         self.discordid = json["discordid"]
@@ -148,7 +175,7 @@ class Character:
     def _convert_to_json(self) -> dict:
         text = {
             "uuid": self.uuid,
-            "credits": self.credits,
+            "credits": self._credits,
             "endurance_cur": self.endurance,
             "endurance_max": self.endurance_max,
             "discordid": self.discordid,
