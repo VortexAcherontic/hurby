@@ -29,7 +29,7 @@ class BugReportCommand(AbstractCommand):
             cur_answer = ""
             if self._can_submit_issue(character):
                 cur_answer = self.answers[random.randint(0, len(self.answers) - 1)]
-                self._send_mail(params)
+                self._send_mail(params, character.twitchid)
                 fmt = '%Y-%m-%d %H:%M:%S.%f'
                 self.last_report_times[character.twitchid] = datetime.strptime(str(datetime.now()), fmt)
             else:
@@ -56,8 +56,8 @@ class BugReportCommand(AbstractCommand):
     def _can_submit_issue(self, character: Character):
         return self._get_remaining_report_time(character) <= 0
 
-    def _send_mail(self, params: list):
-        msg = ""
+    def _send_mail(self, params: list, username: str):
+        msg = "Reporter: " + username + "\n"
         for p in params:
             msg += p + "\n"
         server = smtplib.SMTP_SSL(self.smpt_host, self.smpt_port)
