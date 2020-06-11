@@ -32,7 +32,6 @@ class Character:
         self._credits: int = 0
         self.endurance: int = 0
         self.endurance_max: int = 0
-        self.inventory: list = [None]
         self.mails: list[str] = [None]
         self.twitchid: str = ""
         self.twitterid: str = ""
@@ -43,7 +42,7 @@ class Character:
         self.perm = PermissionLevels.EVERYBODY
         self.last_seen = None
         self.is_supporter = False
-        self.equipment: PlayerEquipment = PlayerEquipment({}, "", None)
+        self.equipment: PlayerEquipment = None
         self.inventory: PlayerInventory = PlayerInventory(None, hurby)
         self.first_seen = datetime.now()
         self.watchtime_min = 0
@@ -51,17 +50,18 @@ class Character:
 
     def init_default_character(self, user_id: str, permission_level: PermissionLevels, user_id_type: UserIDType):
         logger.log(logger.INFO, "New character: " + user_id)
+        self.uuid = str(uuid.uuid4())
         self._credits = 100
         self.endurance = 100
         self.endurance_max = 100
         self.inventory = PlayerInventory(None, self.hurby)
+        self.equipment: PlayerEquipment = PlayerEquipment({}, self.uuid, None)
         self.mails = [None]
         self.twitchid = None
         self.twitterid = None
         self.discordid = None
         self.youtubeid = None
         self.can_do_mini_game = True
-        self.uuid = str(uuid.uuid4())
         self.perm = permission_level
         self.is_supporter = False
         self.first_seen = datetime.now()
