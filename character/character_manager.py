@@ -106,16 +106,18 @@ class CharacterManager:
 
     def _find_unused_character_files(self):
         char_files = hurby_utils.get_all_files_in_path(CONST.DIR_CHARACTERS_ABSOLUTE)
+        excluded_files = [CONST.FILE_BLACKLIST, CONST.FILE_CHAR_REF_TABLE]
         for file in char_files:
-            if not self.ref_table.check_uuid_file(file):
-                file_cont = json_loader.load_json(CONST.DIR_CHARACTERS_ABSOLUTE + "/" + file)
-                try:
-                    logger.log(logger.WARN,
-                               ["User " + file_cont["twitchid"] + " for uuid " + str(file) + " does not exist!" +
-                                " File removed!"])
-                    os.remove(CONST.DIR_CHARACTERS_ABSOLUTE + "/" + file)
+            if file not in excluded_files:
+                if not self.ref_table.check_uuid_file(file):
+                    file_cont = json_loader.load_json(CONST.DIR_CHARACTERS_ABSOLUTE + "/" + file)
+                    try:
+                        logger.log(logger.WARN,
+                                   ["User " + file_cont["twitchid"] + " for uuid " + str(file) + " does not exist!" +
+                                    " File removed!"])
+                        os.remove(CONST.DIR_CHARACTERS_ABSOLUTE + "/" + file)
 
-                except KeyError as e:
-                    logger.log(logger.ERR, "File: " + file + " could not be verified for existing user")
-                except TypeError as e:
-                    logger.log(logger.ERR, ["File: " + file + " could not be verified for existing user\n", str(e)])
+                    except KeyError as e:
+                        logger.log(logger.ERR, ["File: " + file + " could not be verified for existing user\n", str(e)])
+                    except TypeError as e:
+                        logger.log(logger.ERR, ["File: " + file + " could not be verified for existing user\n", str(e)])
