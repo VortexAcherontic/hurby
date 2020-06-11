@@ -15,5 +15,5 @@ class CreditsCommand(AbstractCommand):
             irc = self.hurby.twitch_receiver.twitch_listener
             cur_answer = self.answers[random.randint(0, len(self.answers) - 1)]
             cur_answer = cur_answer.replace("$user_id", character.twitchid)
-            cur_answer = cur_answer.replace("$user_credits", str(character.credits))
+            cur_answer = cur_answer.replace("$user_credits", str(character.get_credits()))
             irc.send_message(cur_answer)
