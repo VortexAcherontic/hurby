@@ -47,7 +47,7 @@ class BugReportCommand(AbstractCommand):
             d1_ts = time.mktime(d1.timetuple())
             d2_ts = time.mktime(d2.timetuple())
             time_past = ceil(((d2_ts - d1_ts) / 60))
-            return self.time_between_reports_in_min - time_past
+            return int(self.time_between_reports_in_min) - time_past
         else:
             date = datetime.strptime(str(report_time), fmt)
             self.last_report_times[character.twitchid] = date
