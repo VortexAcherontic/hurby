@@ -73,29 +73,26 @@ class Character:
         return self._credits
 
     def remove_credits(self, cred: int):
-        test = int(cred)
-        if cred < 0:
+        if int(cred) < 0:
             raise LessThanZeroException("The specified value needs to be zero or positive")
-        elif self._credits < cred:
+        elif self._credits < int(cred):
             raise InsufficientCreditsException("Not enough credits to be removed", self._credits)
         else:
-            self._credits -= cred
+            self._credits -= int(cred)
             self.save()
 
     def add_credits(self, cred: int):
-        test = int(cred)
-        if cred < 0:
+        if int(cred) < 0:
             raise LessThanZeroException("The specified value needs to be zero or positive")
         else:
-            self._credits += cred
+            self._credits += int(cred)
             self.save()
 
     def set_credits(self, cred: int):
-        test = int(cred)
-        if cred < 0:
+        if int(cred) < 0:
             raise LessThanZeroException("The specified value needs to be zero or positive")
         else:
-            self._credits = cred
+            self._credits = int(cred)
             self.save()
 
     def set_permission_level(self, level: PermissionLevels):
