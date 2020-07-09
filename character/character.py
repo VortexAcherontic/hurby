@@ -42,7 +42,7 @@ class Character:
         self.perm = PermissionLevels.EVERYBODY
         self.last_seen = None
         self.is_supporter = False
-        self.equipment: PlayerEquipment = None
+        self.equipment: PlayerEquipment = PlayerEquipment({}, self.uuid, None)
         self.inventory: PlayerInventory = PlayerInventory(None, hurby)
         self.first_seen = datetime.now()
         self.watchtime_min = 0
@@ -54,8 +54,6 @@ class Character:
         self._credits = 100
         self.endurance = 100
         self.endurance_max = 100
-        self.inventory = PlayerInventory(None, self.hurby)
-        self.equipment: PlayerEquipment = PlayerEquipment({}, self.uuid, None)
         self.mails = [None]
         self.twitchid = None
         self.twitterid = None
