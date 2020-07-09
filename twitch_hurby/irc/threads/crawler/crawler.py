@@ -28,6 +28,8 @@ class Crawler(HurbyThread):
     def run(self):
         credit_thread = CreditSpendThread(self)
         credit_thread.start()
+        watchtime_thread = UpdateWatchTimeThread(self)
+        watchtime_thread.run()
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
             self._crawl_chatters(True)
@@ -119,3 +121,18 @@ class CreditSpendThread(HurbyThread):
                     c.save()
             else:
                 logger.log(logger.INFO, "No Chars :/")
+
+
+class UpdateWatchTimeThread(HurbyThread):
+    def __init__(self, crawler):
+        self.crawler = crawler
+
+    def run(self):
+        logger.log(logger.INFO, "Running watchtime thread...")
+        while CONST.RUNNING:
+            time.sleep(60)
+            logger.log(logger.INFO, "Add watchtime...")
+            if self.crawler.char_man.chars is not None:
+                for character in self.crawler.char_man.chars:
+                    if character is not None:
+                        character.update_watchtime()

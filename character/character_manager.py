@@ -67,7 +67,6 @@ class CharacterManager:
 
     def _unload_character(self, character: Character):
         logger.log(logger.DEV, "User offline, unloading: " + str(character.twitchid))
-        character.update_watchtime()
         character.save()
         self.chars.remove(character)
         self._find_unused_character_files()

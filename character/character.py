@@ -145,15 +145,10 @@ class Character:
         if "watchtime_min" in json:
             self.watchtime_min = json["watchtime_min"]
 
-    def update_watchtime(self):
-        unload_date = datetime.now()
-        fmt = '%Y-%m-%d %H:%M:%S.%f'
-        d1 = datetime.strptime(str(self.first_seen), fmt)
-        d2 = datetime.strptime(str(unload_date), fmt)
-        d1_ts = time.mktime(d1.timetuple())
-        d2_ts = time.mktime(d2.timetuple())
-        self.watchtime_min += ceil(((d2_ts - d1_ts) / 60))
+    def update_watchtime(self, minutes=1):
+        self.watchtime_min += minutes
         logger.log(logger.DEV, "Watchtime of " + self.uuid + "is now " + str(self.watchtime_min) + " min")
+        self.save()
 
     def save(self):
         data = self._convert_to_json()
