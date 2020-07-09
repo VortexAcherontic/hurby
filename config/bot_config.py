@@ -32,6 +32,7 @@ class BotConfig:
         self.unknown_cmd_response = bot_json["unknown_command_response"]
         self.event_cooldown_min_min = bot_json["event"]["cooldown_min_min"]
         self.event_cooldown_max_min = bot_json["event"]["cooldown_max_min"]
+        self.respond_on_unknown_command = bot_json["respond_on_unknown_command"]
 
     def get_unknown_cmd_response(self):
         return self.unknown_cmd_response[random.randint(0, len(self.unknown_cmd_response) - 1)]
