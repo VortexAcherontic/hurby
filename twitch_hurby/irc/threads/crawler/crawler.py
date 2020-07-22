@@ -114,11 +114,12 @@ class CreditSpendThread(HurbyThread):
             logger.log(logger.INFO, "Spending credits ...")
             if self.crawler.char_man.chars is not None:
                 for c in self.crawler.char_man.chars:
-                    if c.is_supporter:
-                        c.credits += self.crawler.credit_increase_supporter
-                    else:
-                        c.credits += self.crawler.credit_increase_base
-                    c.save()
+                    if c is not None:
+                        if c.is_supporter:
+                            c.credits += self.crawler.credit_increase_supporter
+                        else:
+                            c.credits += self.crawler.credit_increase_base
+                        c.save()
             else:
                 logger.log(logger.INFO, "No Chars :/")
 
