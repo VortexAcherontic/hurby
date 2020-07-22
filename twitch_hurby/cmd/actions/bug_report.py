@@ -57,14 +57,14 @@ class BugReportCommand(AbstractCommand):
         return self._get_remaining_report_time(character) <= 0
 
     def _send_mail(self, params: list, username: str):
-        msg = "Reporter: " + username + "\n"
+        msg = "Reporter: " + username + "<br/>"
         for p in params:
-            msg += p + "\n"
+            msg += p + " "
         server = smtplib.SMTP_SSL(self.smpt_host, self.smpt_port)
         server.login(self.sender_mail, self.sender_password)
         body = self._build_mail(self.sender_mail, self.report_mail, "Hurby Bug Report", msg)
         try:
-            server.sendmail(self.sender_mail, [self.report_mail], body)
+            server.sendmail(self.sender_mail, [self.report_mail], body.encode("utf-8"))
             logger.log(logger.INFO, "Bug report Mail send")
         except Exception as e:
             logger.log(logger.WARN, ["Bug report Mail could not be send", str(e)])
@@ -76,7 +76,8 @@ class BugReportCommand(AbstractCommand):
                             "Subject: %s" % subject,
                             "MIME-Version: 1.0",
                             "Content-Type: text/plain; charset=utf-8; format=flowed",
-                            "Content-Transfer-Encoding: 7bit",
-                            "Content-Language: en-GB",
+                            "Content-Transfer-Encoding: 8bit",
+                            "Content-Language: de-DE",
+                            "X-Mailer: Hurby",
                             "",
                             message])
