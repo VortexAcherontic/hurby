@@ -194,7 +194,7 @@ class RaidThread(HurbyThread):
                     won = True
             if won:
                 credits_won = math.ceil(spend + spend * 0.5)
-                char.credits += credits_won
+                char.add_credits(credits_won)
                 rewards[char.twitchid] = credits_won
                 char.save()
         if not bool(rewards):
@@ -224,7 +224,6 @@ class RaidCooldownThread(HurbyThread):
         self.root_cmd.participants = None
         self.root_cmd.credits_spend = None
         time.sleep(self.cooldown * 60)
-        irc = self.root_cmd.hurby.twitch_receiver.twitch_listener
         logger.log(logger.INFO, "Raid is ready")
         msg = self.raid_ready[random.randint(0, len(self.raid_ready) - 1)]
         self.irc.send_message(msg)
