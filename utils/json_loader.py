@@ -15,5 +15,5 @@ def load_json(file: str) -> dict:
 
 
 def save_json(file: str, data):
-    with open(file, 'w', encoding='utf-8') as outfile:
+    with open(file, 'w+', encoding='utf-8') as outfile:
         json.dump(data, outfile, ensure_ascii=False, indent=2)
