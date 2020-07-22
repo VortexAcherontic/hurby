@@ -56,7 +56,7 @@ class IRCConnector:
             self.send_message(msg)
 
     def send_whisper(self, user, msg):
-        output = "PRIVMSG " + self.channel + " :/w " + user + " " + msg + "\r\n"
+        output = "PRIVMSG " + self.channel + ": /w " + user + " " + msg + "\r\n"
         logger.log(logger.INFO, output)
         if not CONST.DEVMODE:
             self.connection.send(bytes(output, 'UTF-8'))
