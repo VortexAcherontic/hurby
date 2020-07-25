@@ -29,7 +29,7 @@ class Crawler(HurbyThread):
         credit_thread = CreditSpendThread(self)
         credit_thread.start()
         watchtime_thread = UpdateWatchTimeThread(self)
-        watchtime_thread.run()
+        watchtime_thread.start()
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
             self._crawl_chatters(True)
@@ -126,6 +126,7 @@ class CreditSpendThread(HurbyThread):
 
 class UpdateWatchTimeThread(HurbyThread):
     def __init__(self, crawler):
+        super().__init__()
         self.crawler = crawler
 
     def run(self):
