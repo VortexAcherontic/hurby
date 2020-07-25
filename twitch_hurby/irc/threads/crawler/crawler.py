@@ -7,9 +7,10 @@ from character.character_manager import CharacterManager
 from character.user_id_types import UserIDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 from twitch_hurby.helix import get_users, get_broadcaster_subscriptions
+from twitch_hurby.irc.threads.crawler import UpdateWatchTimeThread, CreditSpendThread
 from twitch_hurby.irc.threads.crawler.chatter_types import ChatterType
 from twitch_hurby.irc.threads.hurby_thread import HurbyThread
-from twitch_hurby.tmi.get_chatters import get_chatters_for_channels, get_all_chatters_as_list
+from twitch_hurby.tmi.get_chatters import get_chatters_for_channels
 from twitch_hurby.twitch_config import TwitchConfig
 from utils import logger
 from utils.const import CONST
@@ -26,9 +27,9 @@ class Crawler(HurbyThread):
         self.credit_increase_supporter = twitch_config.credit_increase_supporter
 
     def run(self):
-        credit_thread = CreditSpendThread(self)
+        credit_thread = CreditSpendThread.CreditSpendThread(self)
         credit_thread.start()
-        watchtime_thread = UpdateWatchTimeThread(self)
+        watchtime_thread = UpdateWatchTimeThread.UpdateWatchTimeThread(self)
         watchtime_thread.start()
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:
@@ -48,7 +49,6 @@ class Crawler(HurbyThread):
         staff = chatters_dict[ChatterType.STAFF]
         viewer = chatters_dict[ChatterType.VIEWER]
         vips = chatters_dict[ChatterType.VIP]
-        all_chatters = get_all_chatters_as_list(self.twitch_conf.channel_names)
         for i in mods:
             self._init_character(i, ChatterType.MODERATOR)
         for i in broadcaster:
@@ -99,42 +99,3 @@ class Crawler(HurbyThread):
         }
         response = requests.get('https://api.twitch.tv/kraken/channel', headers=headers)
         return response.json()["_id"]
-
-
-class CreditSpendThread(HurbyThread):
-    def __init__(self, crawler: Crawler):
-        HurbyThread.__init__(self)
-        self.crawler = crawler
-        self.spend_time = self.crawler.spend_time
-
-    def run(self):
-        logger.log(logger.INFO, "Running spend Thread...")
-        while CONST.RUNNING:
-            time.sleep(self.spend_time * 60)
-            logger.log(logger.INFO, "Spending credits ...")
-            if self.crawler.char_man.chars is not None:
-                for c in self.crawler.char_man.chars:
-                    if c is not None:
-                        if c.is_supporter:
-                            c.add_credits(self.crawler.credit_increase_supporter)
-                        else:
-                            c.add_credits(self.crawler.credit_increase_base)
-                        c.save()
-            else:
-                logger.log(logger.INFO, "No Chars :/")
-
-
-class UpdateWatchTimeThread(HurbyThread):
-    def __init__(self, crawler):
-        super().__init__()
-        self.crawler = crawler
-
-    def run(self):
-        logger.log(logger.INFO, "Running watchtime thread...")
-        while CONST.RUNNING:
-            time.sleep(60)
-            logger.log(logger.INFO, "Add watchtime...")
-            if self.crawler.char_man.chars is not None:
-                for character in self.crawler.char_man.chars:
-                    if character is not None:
-                        character.update_watchtime()
