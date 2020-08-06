@@ -12,6 +12,6 @@ try:
     hurby.char_manager.black_list.init()
     if hurby.botConfig.modules[BotConfig.MODULE_WEBSERVER]:
         logger.log(logger.INFO, "Starting flask server...")
-        run_flask()
+        run_flask(hurby)
 except Exception as e:
     logger.log(logger.FATAL, str(e))

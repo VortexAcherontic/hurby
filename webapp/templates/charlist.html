@@ -1,13 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Characters</h1>
-    <div>
-        <p>No characters available</p>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Characters</h1>
+
+{% if hasChars %}
+{% for c in characters %}
+<div class="col-1">
+    <div class="character">
+        <div>
+            <h3>UUID: {{c.uuid}}</h3>
+        </div>
+        <div>
+            <p><strong>TwitchID:</strong> {{c.twitchid}}</p>
+            <p><strong>Cookies:</strong> {{c.credits}}</p>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endfor %}
+{% else %}
+<div class="col-1">
+    <p>No characters available</p>
+</div>
+{% endif %}
+{% endblock %}

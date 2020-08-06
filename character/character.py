@@ -151,7 +151,7 @@ class Character:
         self.save()
 
     def save(self):
-        data = self._convert_to_json()
+        data = self.convert_to_json()
         file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + str(self.uuid) + ".json"
         logger.log(logger.DEV, "Saving character: " + self.uuid)
         json_loader.save_json(file, data)
@@ -162,7 +162,7 @@ class Character:
         self.parse_json(json_data)
         logger.log(logger.INFO, "Loaded character: twitchID: " + self.twitchid)
 
-    def _convert_to_json(self) -> dict:
+    def convert_to_json(self) -> dict:
         text = {
             "uuid": self.uuid,
             "credits": self._credits,

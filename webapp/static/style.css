@@ -1,4 +1,88 @@
 body{
-    background: grey;
-    color: white;
+    background: #fff;
+    color: #222;
+}
+
+p {
+    width: 100%;
+    display: block;
+}
+
+div.character {
+    border: 1px solid #000;
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 15px
+}
+
+div.character h3 {
+    padding: 0;
+    margin: 0;
+}
+
+div.character > div:last-of-type{
+    background: #fff;
+    padding: 4px 15px;
+}
+
+.wrapper {
+    background: linear-gradient(to right, #88a8f4, #ff8300);
+    margin: 0 10%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 4px 4px 10px #000;
+    border-radius: 20px;
+}
+
+.wrapper-content {
+    background: linear-gradient(to bottom, #ffe5d1, #ffebeb);
+    width: 100%;
+    padding: 1% 5%;
+    border-radius: 15px;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav ul li a,
+.main-nav ul li p {
+    padding: 0 4px;
+    margin: 0;
+}
+
+.col-1 {
+    display: flex;
+    width: 100%;
+}
+
+.col-2 {
+    display: flex;
+    width: 100%;
+}
+
+.col-2 div,
+.col-2 nav {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.align-right {
+    text-align: right;
+
+}
+
+.text-center {
+    text-align: center;
+    width: 100%;
+}
+
+.text-right {
+    text-align: right;
 }
