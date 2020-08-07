@@ -2,14 +2,30 @@
 
 {% block content %}
 {% if invalid %}
-<h2>Character: {{c.uuid}}</h2>
-<div>
-    <p><strong>UUID:</strong> </p>
-</div>
-{% else %}
 <h2>Error</h2>
 <div>
     <p>Invalid character</p>
+</div>
+{% else %}
+<h2>Character: {{c.uuid}}</h2>
+<div>
+    <p><strong>TwitchID:</strong> {{c.twitchid}}</p>
+    <p><strong>Cookies:</strong> {{c.credits}}</p>
+    <p><strong>Supporter:</strong> {{c.is_supporter}}</p>
+    <p><strong>Permission Level:</strong> {{c.permission_level}}</p>
+    <p><strong>Time watched: </strong>
+        {% if c.watchtime_min < 60 %}
+            {{c.watchtime_min}} minutes
+        {% else %}
+            {{(c.watchtime_min/60)|round}} hours
+        {% endif %}
+    </p>
+    <p><strong>E-Mails</strong></p>
+    <div>
+        {% for mail in c.mails %}
+        <p>{{mail}}</p>
+        {% endfor %}
+    </div>
 </div>
 {% endif %}
 
