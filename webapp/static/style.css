@@ -75,7 +75,7 @@ p {
 
 #main-nav > nav > ul > li {
     border: 1px solid #000;
-    padding: 4px;
+    padding: 7px;
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -163,4 +163,5 @@ div.character_view {
 
 .default-hover:hover {
     box-shadow: 4px 4px 15px #000;
+    z-index: 999;
 }
