@@ -7,7 +7,7 @@
     <p>Invalid character</p>
 </div>
 {% else %}
-<h2>Character: {{c.uuid}}</h2>
+<h2>Character Overview</h2>
 <div>
     <p><strong>TwitchID:</strong> {{c.twitchid}}</p>
     <p><strong>Cookies:</strong> {{c.credits}}</p>
@@ -26,6 +26,7 @@
         <p>{{mail}}</p>
         {% endfor %}
     </div>
+    <p><strong>UUID: </strong> {{c.uuid}}</p>
 </div>
 {% endif %}
 
