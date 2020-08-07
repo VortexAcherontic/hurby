@@ -35,10 +35,6 @@ p {
     width: 100%;
 }
 
-.character.supporter {
-    border: 4px #c8a900 solid;
-}
-
 .character div button {
     margin: 5px 4px;
 }
@@ -120,6 +116,11 @@ div.character_view {
 
 .default-border {
     border: 2px #b3b3b3 solid;
+    border-radius: 15px;
+}
+
+.default-supporter-border {
+    border: 4px #c8a900 solid;
     border-radius: 15px;
 }
 

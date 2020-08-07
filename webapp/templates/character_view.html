@@ -8,7 +8,7 @@
 </div>
 {% else %}
 <h2>Character Overview</h2>
-<div class="character_view default-border default-hover">
+<div class="character_view  {% if c.is_supporter %} default-supporter-border {% else %} default-border {% endif %} default-hover">
     <p><strong>TwitchID:</strong> {{c.twitchid}}</p>
     <p><strong>Cookies:</strong> {{c.credits}}</p>
     <p><strong>Supporter:</strong> {{c.is_supporter}}</p>
