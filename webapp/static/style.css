@@ -28,22 +28,15 @@ p {
 }
 
 .character {
-    border: 2px #b3b3b3 solid;
     width: 25%;
     padding: 10px 15px;
-    border-radius: 15px;
     margin: 4px 0px;
     display: flex;
     width: 100%;
-    transition: 0.5s;
 }
 
 .character.supporter {
     border: 4px #c8a900 solid;
-}
-
-.character:hover {
-    box-shadow: 4px 4px 15px #000;
 }
 
 .character div button {
@@ -119,4 +112,21 @@ p {
 
 .text-right {
     text-align: right;
+}
+
+div.character_view {
+    padding: 2px 10px;
+}
+
+.default-border {
+    border: 2px #b3b3b3 solid;
+    border-radius: 15px;
+}
+
+.default-hover {
+    transition: 0.5s;
+}
+
+.default-hover:hover {
+    box-shadow: 4px 4px 15px #000;
 }

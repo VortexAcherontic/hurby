@@ -8,7 +8,7 @@
     <div>
         <h3>Online Characters ({{range}}/{{all}})</h3>
         {% for c in characters %}
-        <div class="character {% if c.is_supporter %}supporter{% endif %}">
+        <div class="character {% if c.is_supporter %}supporter{% endif %} default-border default-hover">
             <a href="/characters/view/{{c.uuid}}">
                 <span><strong>TwitchID:</strong> {{c.twitchid}}</span>
             </a>

@@ -3,12 +3,12 @@
 {% block content %}
 {% if invalid %}
 <h2>Error</h2>
-<div>
+<div class="character_view">
     <p>Invalid character</p>
 </div>
 {% else %}
 <h2>Character Overview</h2>
-<div>
+<div class="character_view default-border default-hover">
     <p><strong>TwitchID:</strong> {{c.twitchid}}</p>
     <p><strong>Cookies:</strong> {{c.credits}}</p>
     <p><strong>Supporter:</strong> {{c.is_supporter}}</p>
@@ -16,8 +16,10 @@
     <p><strong>Time watched: </strong>
         {% if c.watchtime_min < 60 %}
             {{c.watchtime_min}} minutes
-        {% else %}
+        {% elif c.watchtime_min < (60*24) %}
             {{(c.watchtime_min/60)|round}} hours
+        {% else %}
+            {{(c.watchtime_min/60/24)|round}} days
         {% endif %}
     </p>
     <p><strong>E-Mails</strong></p>
