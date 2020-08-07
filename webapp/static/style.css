@@ -1,6 +1,15 @@
 body{
-    background: #fff;
+    background: #dbdbdb;
     color: #222;
+    text-shadow: 2px 2px 3px #979696;
+}
+
+a {
+    color: #f40;
+}
+
+a:visited {
+    color: #a40;
 }
 
 p {
@@ -8,21 +17,43 @@ p {
     display: block;
 }
 
-div.character {
-    border: 1px solid #000;
-    width: 100%;
+.char-container {
+    display: flex;
+}
+
+.char-container > div {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 1%;
+}
+
+.character {
+    border: 2px #b3b3b3 solid;
+    width: 25%;
     padding: 10px 15px;
-    border-radius: 15px
+    border-radius: 15px;
+    margin: 4px 0px;
+    display: flex;
+    width: 100%;
+    transition: 0.5s;
 }
 
-div.character h3 {
-    padding: 0;
-    margin: 0;
+.character.supporter {
+    border: 4px #c8a900 solid;
 }
 
-div.character > div:last-of-type{
-    background: #fff;
-    padding: 4px 15px;
+.character:hover {
+    box-shadow: 4px 4px 15px #000;
+}
+
+.character div button {
+    margin: 5px 4px;
+}
+
+.character > div:last-of-type {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
 }
 
 .wrapper {
@@ -38,7 +69,7 @@ div.character > div:last-of-type{
 }
 
 .wrapper-content {
-    background: linear-gradient(to bottom, #ffe5d1, #ffebeb);
+    background: #fff;
     width: 100%;
     padding: 1% 5%;
     border-radius: 15px;
@@ -71,6 +102,7 @@ div.character > div:last-of-type{
 .col-2 nav {
     flex-grow: 1;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .align-right {

@@ -12,15 +12,14 @@ def run_flask(hurby):
 
     @app.route("/characters")
     def characters():
-        hasChars=False
-        if hurby.char_manager.get_characters() is not None:
-            all_chars = []
-            for c in hurby.char_manager.get_characters():
-                if c is not None:
-                    all_chars.append(c.convert_to_json())
-            if len(all_chars) > 0:
-                hasChars=True
+        return exec_charlist(hurby)
 
-        return render_template("charlist.html", botname=hurby.botConfig.botname, characters=all_chars, hasChars=hasChars)
+    @app.route("/characters/view/<uuid>")
+    def characters_view(uuid):
+        return exec_charview(hurby, uuid)
 
     app.run(debug=True, host="0.0.0.0")
+
+
+from webapp.controller.charlist import exec_charlist
+from webapp.controller.charview import exec_charview

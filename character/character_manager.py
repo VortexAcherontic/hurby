@@ -26,8 +26,11 @@ class CharacterManager:
                 tmp_char = Character(self.hurby)
                 if self._is_in_reference_table(user_id):
                     json_file = self.ref_table.get_json_file_by_user_id(user_id)
-                    tmp_char.load(json_file)
-                    self._add_char_to_table(tmp_char)
+                    try:
+                        tmp_char.load(json_file)
+                        self._add_char_to_table(tmp_char)
+                    except FileNotFoundError:
+                        logger.log(logger.ERR, "File " + json_file + " not found for user: " + user_id)
                 elif not command_issued:
                     tmp_char.init_default_character(user_id, permission_level, user_id_type)
                     tmp_char.save()
@@ -40,6 +43,13 @@ class CharacterManager:
                 tmp_char.set_permission_level(permission_level)
                 tmp_char.save()
             return tmp_char
+        return None
+
+    def get_character_by_uuid(self, uuid: str):
+        for c in self.chars:
+            if c is not None:
+                if c.uuid == uuid:
+                    return c
         return None
 
     def get_characters(self):
