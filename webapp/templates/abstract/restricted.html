@@ -1,0 +1,11 @@
+{% extends "abstract/base.html" %}
+{% block content %}
+{% if true %}
+{% block restricted %}{% endblock %}
+{% else %}
+<h2>Access denied</h2>
+<div>
+    <p>You have no rights to view this page, please log in first</p>
+</div>
+{% endif %}
+{% endblock %}

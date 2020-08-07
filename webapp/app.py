@@ -18,6 +18,10 @@ def run_flask(hurby):
     def characters_view(uuid):
         return exec_charview(hurby, uuid)
 
+    @app.route("/restricted")
+    def restricted():
+        return render_template("abstract/restricted.html", botname=hurby.botConfig.botname)
+
     app.run(debug=True, host="0.0.0.0")
 
 
