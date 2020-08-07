@@ -1,6 +1,6 @@
 {% extends "abstract/base.html" %}
 {% block content %}
-{% if true %}
+{% if loggedin %}
 {% block restricted %}{% endblock %}
 {% else %}
 <h2>Access denied</h2>

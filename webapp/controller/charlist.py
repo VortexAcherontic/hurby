@@ -23,4 +23,4 @@ def exec_charlist(hurby):
             hasChars = True
 
     return render_template("restricted/charlist.html", botname=hurby.botConfig.botname, characters=all_chars,
-                           hasChars=hasChars, range=range, all=all)
+                           hasChars=hasChars, range=range, all=all, loggedin=True)
