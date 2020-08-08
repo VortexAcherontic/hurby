@@ -13,7 +13,7 @@ from utils.const import CONST
 class CharacterManager:
 
     def __init__(self, hurby):
-        self.chars: list = [None]
+        self.chars: list = []
         self.black_list: Blacklist = Blacklist(hurby)
         self.ref_table: CharacterReferenceTable = CharacterReferenceTable()
         self.hurby = hurby
@@ -82,10 +82,7 @@ class CharacterManager:
         self._find_unused_character_files()
 
     def _add_char_to_table(self, char: Character):
-        if self.chars is None:
-            self.chars = [char]
-        elif self.chars:
-            self.chars.append(char)
+        self.chars.append(char)
 
     def _search_loaded_characters(self, user_id: str, user_id_type: UserIDType):
         if self.chars is not None:
