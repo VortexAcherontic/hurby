@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 
+from webapp.controller.index import exec_index
+
 
 def run_flask(hurby):
     hurby = hurby
@@ -8,7 +10,7 @@ def run_flask(hurby):
     @app.route("/")
     @app.route("/index")
     def index():
-        return render_template("index.html", botname=hurby.botConfig.botname)
+        return exec_index(hurby)
 
     @app.route("/characters")
     def characters():
