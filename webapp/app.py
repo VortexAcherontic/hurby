@@ -31,7 +31,7 @@ def run_flask(hurby):
     def restricted():
         return render_template("abstract/restricted.html", botname=hurby.botConfig.botname)
 
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0", port=8080)
 
 
 from webapp.controller.charlist import exec_charlist

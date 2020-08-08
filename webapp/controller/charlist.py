@@ -18,7 +18,10 @@ def exec_charlist(hurby):
                 all_chars.append(c.convert_to_json())
         all = len(all_chars)
         all_chars = all_chars[offset:offset + page_size]
-        range = str(offset) + "-" + str(offset + page_size)
+        list_end = all
+        if all > page_size:
+            list_end = page_size
+        range = str(offset) + "-" + str(offset + list_end)
         if len(all_chars) > 0:
             hasChars = True
 

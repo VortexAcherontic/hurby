@@ -5,15 +5,20 @@
     <h2>Home</h2>
 </div>
 <h3>Stream Info:</h3>
-<div class="col-2">
+<div class="thin_line"><!-- empty --></div>
+<div class="col-2 stream_overview">
     <div>
+        <h4>Stream info:</h4>
+        <p><strong>Stream Title:</strong> {{data.stream_title}}</p>
         <p><strong>Streamer:</strong> {{data.streamer_name}}</p>
         <p><strong>Live:</strong> {{data.is_live}}</p>
-        <p><strong>Game:</strong> {{data.game_title}}</p>
+        <p><strong>Viewer Count:</strong> {{data.viewers}}</p>
+        <p><strong>Subscriber Count:</strong> {{data.subs}}</p>
     </div>
     <div>
-        <p><strong>Title:</strong> {{data.stream_title}}</p>
-        <p><strong>Viewer:</strong> {{data.viewers}}</p>
+        <h4>Game info:</h4>
+        <p><strong>Game Name:</strong> {{data.game_title}}</p>
+        <p><strong>Other Streamers:</strong> {{data.other_streams}}</p>
     </div>
 </div>
 {% endblock %}
