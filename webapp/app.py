@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+import os
+
+from flask import Flask, render_template, send_from_directory
 
 from webapp.controller.index import exec_index
 
@@ -6,6 +8,11 @@ from webapp.controller.index import exec_index
 def run_flask(hurby):
     hurby = hurby
     app = Flask(__name__)
+
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(os.path.join(app.root_path, 'static'),
+                                   'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
     @app.route("/")
     @app.route("/index")
