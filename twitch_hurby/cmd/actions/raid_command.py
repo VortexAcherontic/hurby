@@ -68,11 +68,14 @@ class RaidCommand(AbstractCommand):
                             msg = msg.replace("$credits_spend", str(credit_spend))
                         else:
                             msg = hurby_utils.get_random_reply(self.insufficient_credits_spend)
+                            msg = msg.replace("$user_credits", str(character.get_credits))
                             msg = msg.replace("$min_credits", str(self.min_credits))
                             msg = msg.replace("$user_id", character.twitchid)
                     else:
                         msg = hurby_utils.get_random_reply(self.insufficient_credits_spend)
                         msg = msg.replace("$user_credits", str(character.get_credits))
+                        msg = msg.replace("$min_credits", str(self.min_credits))
+                        msg = msg.replace("$user_id", character.twitchid)
                         logger.log(logger.INFO, msg)
                 else:
                     msg = hurby_utils.get_random_reply(self.already_participating)
