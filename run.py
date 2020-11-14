@@ -12,4 +12,5 @@ try:
     hurby.get_twitch_receiver().get_twitch_irc_connector().start(irc_channels)
     hurby.char_manager.black_list.init()
 except Exception as e:
-    logger.log(logger.FATAL, str(e)+"\n"+str(e.__traceback__.__str__()))
+    logger.log(logger.FATAL, str(e))
+    logger.log(logger.FATAL, print_exc(e))
