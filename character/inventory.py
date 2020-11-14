@@ -6,7 +6,7 @@ from items.base_item import BaseItem
 
 class PlayerInventory:
     def __init__(self, inv_dict, hurby):
-        self._items: dict[BaseItem] = {}
+        self._items: dict = {}
         self.hurby = hurby
         if inv_dict is not None and isinstance(inv_dict, dict):
             self._convert_inv_ref_dict_to_item(inv_dict)

@@ -36,7 +36,8 @@ class PlayerEquipment:
                     else:
                         self._equipped[slot] = None
                 else:
-                    logger.log(logger.WARN, "Slot : " + SLOTS[slot] + " not existing in JSON for: " + character_uuid)
+                    pass
+                    #logger.log(logger.WARN, "Slot : " + SLOTS[slot] + " not existing in JSON for: " + character_uuid)
 
     def get_atk_value_sum(self) -> float:
         summarized = 0
