@@ -97,7 +97,7 @@ class TwitchConfig:
 
 
 def _check_for_duplicate_trigger(cmds, cmd: AbstractCommand) -> bool:
-    if cmd is not None and cmd is not None:
+    if cmds is not None and cmd is not None:
         for c in cmds:
             if isinstance(cmd.trigger, list):
                 for t in cmd.trigger:
