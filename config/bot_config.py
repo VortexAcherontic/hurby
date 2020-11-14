@@ -19,6 +19,7 @@ class BotConfig:
         config_file = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_CONF_HURBY
         bot_json = json_loader.load_json(config_file)
         self.botname = bot_json["botname"]
+        self.commands_case_sensitive = bot_json["commands_case_sensitive"]
         CONST.SUPPRESS_JSON_LOGGING = bot_json["suppress_json_log"]
         self.modules = [None] * 9
         self.modules[BotConfig.MODULE_TWITCH] = bot_json["modules"]["twitch"]

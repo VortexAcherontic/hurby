@@ -34,10 +34,17 @@ class AbstractCommand:
     def check_trigger(self, trigger: str) -> bool:
         if isinstance(self.trigger, list):
             for t in self.trigger:
-                if t == trigger:
-                    return True
+                if self.hurby.botConfig.commands_case_sensitive:
+                    if t == trigger:
+                        return True
+                else:
+                    if t.lower() == trigger.lower():
+                        return True
         else:
-            return self.trigger == trigger
+            if self.hurby.botConfig.commands_case_sensitive:
+                return self.trigger == trigger
+            else:
+                return self.trigger.lower() == trigger.lower()
 
     @abstractmethod
     def do_command(self, params: list, character: Character):
