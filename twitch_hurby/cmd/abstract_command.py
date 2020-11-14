@@ -32,7 +32,12 @@ class AbstractCommand:
             return char.perm == PermissionLevels.ADMINISTRATOR
 
     def check_trigger(self, trigger: str) -> bool:
-        return self.trigger == trigger
+        if isinstance(self.trigger, list):
+            for t in self.trigger:
+                if t == trigger:
+                    return True
+        else:
+            return self.trigger == trigger
 
     @abstractmethod
     def do_command(self, params: list, character: Character):
