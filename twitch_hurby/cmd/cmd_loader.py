@@ -34,8 +34,7 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
                 if logic_trigger == "$inventory":
                     return InventoryCommand(json_data, hurby)
             else:
-                pass
-                # Logger.log(Logger.INFO, "Skip mini game: " + json["cmd"] + " mini games are disabled")
+                logger.log(logger.INFO, "Skip mini game: " + json_data["cmd"] + " mini games are disabled")
         else:
             if logic_trigger == "$search":
                 return SearchCommand(json_data, hurby)
@@ -55,6 +54,5 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
                 return AddCreditsCommand(json_data, hurby)
             if logic_trigger == "$bug_report":
                 return BugReportCommand(json_data, hurby)
-
     else:
         logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])

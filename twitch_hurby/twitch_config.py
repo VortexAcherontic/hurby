@@ -1,5 +1,6 @@
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import cmd_loader, event_loader
+from twitch_hurby.cmd.abstract_command import AbstractCommand
 from twitch_hurby.cmd.event_thread import EventThread
 from twitch_hurby.helix.get_bearer_token import get_bearer_access_token
 from twitch_hurby.helix.twitch_scopes import TwitchScopes
@@ -19,7 +20,7 @@ class TwitchConfig:
 
         twitch_json = json_loader.load_json(TwitchConfig.CONFIG_FILE)
         self.onlyfiles = hurby_utils.get_all_files_in_path(TwitchConfig.CMD_PATH)
-        self.cmds = [None] * len(self.onlyfiles)
+        self.cmds = [AbstractCommand] * len(self.onlyfiles)
         self.oauth_token = twitch_json["oauth_token"]
         self.channel_names = twitch_json["channel_names"]
         self.authorization_code = twitch_json["authorization_code"]
@@ -45,11 +46,13 @@ class TwitchConfig:
         self._authorize()
 
     def load_cmds(self):
-        self.cmds = [None] * 0
+        self.cmds = [AbstractCommand] * 0
         for i in range(0, len(self.onlyfiles)):
             if self.onlyfiles[i].endswith(".json"):
                 cmd_json = json_loader.load_json(TwitchConfig.CMD_PATH + self.onlyfiles[i])
-                self.cmds.append(cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby))
+                tmp_cmd = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby)
+                if not _check_for_duplicate_trigger(self.cmds, tmp_cmd):
+                    self.cmds.append(tmp_cmd)
         logger.log(logger.INFO, str(len(self.cmds)) + " commands loaded")
 
     def load_events(self):
@@ -91,3 +94,23 @@ class TwitchConfig:
 
     def _authorize(self):
         get_bearer_access_token(self)
+
+
+def _check_for_duplicate_trigger(cmds, cmd: AbstractCommand) -> bool:
+    if cmd is not None and cmd is not None:
+        for c in cmds:
+            if isinstance(cmd.trigger, list):
+                for t in cmd.trigger:
+                    if c.check_trigger(t):
+                        _log_duplicate_trigger(t)
+                        return True
+            else:
+                is_duplicate = c.check_trigger(cmd.trigger)
+                if is_duplicate:
+                    _log_duplicate_trigger(cmd.trigger)
+                return is_duplicate
+        return False
+
+
+def _log_duplicate_trigger(trigger):
+    logger.log(logger.WARN, "Duplicate trigger: " + trigger)
