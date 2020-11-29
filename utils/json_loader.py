@@ -19,14 +19,15 @@ def load_json(file: str) -> dict:
 
 
 def save_json(file: str, data):
-    shutil.copyfile(file, file + ".bak")
+    if os.path.isfile(file):
+        shutil.copyfile(file, file + ".bak")
     with open(file, 'w+', encoding='utf-8') as outfile:
         json.dump(data, outfile, ensure_ascii=False, indent=2)
-    os.remove(file+".bak")
+    os.remove(file + ".bak")
 
 
 def _restore_backup(file: str):
-    if os.path.isfile(file+".bak"):
-        shutil.move(file+".bak", file)
+    if os.path.isfile(file + ".bak"):
+        shutil.move(file + ".bak", file)
         return True
     return False
