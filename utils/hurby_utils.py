@@ -16,6 +16,10 @@ def get_random_reply(responses: list) -> str:
     return responses[random.randint(0, len(responses) - 1)]
 
 
+def get_random_in_range(start: int, end: int):
+    return random.randint(start, end)
+
+
 def get_all_files_in_path(path: str):
     return [f for f in listdir(path) if isfile(join(path, f))]
 
