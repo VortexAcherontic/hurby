@@ -18,6 +18,15 @@ class Lottery:
         self.lottery_title = json_data["lottery_title"]
         self.lottery_description = json_data["lottery_description"]
         self.max_participants = json_data["max_participants"]
+        self.subscribers_only = json_data["subscribers_only"]
+        self.followers_only = json_data["followers_only"]
+        self.consider_watch_time = json_data["consider_watch_time"]
+        self.consider_subscriber = json_data["consider_subscriber"]
+        self.consider_follower = json_data["consider_follower"]
+        self.extra_tickets_follower = json_data["extra_tickets_follower"]
+        self.extra_tickets_subscriber = json_data["extra_tickets_subscriber"]
+        self.extra_tickets_watch_time = json_data["extra_tickets_watch_time"]
+        self.watch_time_in_mins_for_extra_tickets = json_data["watch_time_in_mins_for_extra_tickets"]
         self.prices = _build_prices(json_data["prices"])
 
     def apply_for_lottery(self, character_uuid: UUID):
@@ -32,12 +41,16 @@ class Lottery:
         else:
             return self.participants_uuids == self.max_participants - 1
 
+    def has_prices(self):
+        return self._is_price_left()
+
     def draw_price(self):
         if self._is_price_left():
             price: LotteryPrice = self._random_price()
             while price.amount == 0:
                 price = self._random_price()
-            price.amount = price.amount - 1
+            if price.amount != -1:
+                price.amount = price.amount - 1
             return price
         return None
 
@@ -55,6 +68,8 @@ class Lottery:
     def _is_price_left(self):
         for p in self.prices:
             if p.amount > 0:
+                return True
+            elif p.amount == -1:
                 return True
         return False
 
