@@ -35,5 +35,7 @@ def is_permitted(permission_granted: PermissionLevels, permission_required: Perm
         return True
     elif permission_granted == PermissionLevels.MODERATOR:
         return permission_required == PermissionLevels.EVERYBODY or permission_required.MODERATOR
-    elif permission_granted == PermissionLevels.EVERYBODY:
-        return permission_required == PermissionLevels.EVERYBODY
+    elif permission_required == PermissionLevels.EVERYBODY:
+        return True
+    else:
+        return False
