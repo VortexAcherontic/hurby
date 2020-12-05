@@ -2,6 +2,8 @@ import random
 from os import listdir
 from os.path import isfile, join
 
+from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
+
 
 def append_element_to_array(array: list, ele):
     tmp = array
@@ -26,3 +28,12 @@ def get_all_files_in_path(path: str):
 
 def remove_doubles_from_list(my_list: list):
     return list(dict.fromkeys(my_list))
+
+
+def is_permitted(permission_granted: PermissionLevels, permission_required: PermissionLevels):
+    if permission_granted == PermissionLevels.ADMINISTRATOR:
+        return True
+    elif permission_granted == PermissionLevels.MODERATOR:
+        return permission_required == PermissionLevels.EVERYBODY or permission_required.MODERATOR
+    elif permission_granted == PermissionLevels.EVERYBODY:
+        return permission_required == PermissionLevels.EVERYBODY
