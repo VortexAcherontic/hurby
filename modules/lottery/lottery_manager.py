@@ -1,8 +1,8 @@
 from enum import Enum
 
 from character.character import Character
-from hurby import Hurby
 from modules.lottery.lottery import Lottery
+from utils import hurby_utils, json_loader
 from utils.const import CONST
 from utils.json_loader import load_json
 
@@ -15,11 +15,16 @@ class ParticipateStatus(Enum):
 
 
 def _load_lotteries():
-    return []
+    lottery_files = hurby_utils.get_all_files_in_path(CONST.DIR_LOTTERIES_ABSOLUTE)
+    lotteries = []
+    for file in lottery_files:
+        lottery_json = json_loader.load_json(CONST.DIR_LOTTERIES_ABSOLUTE + "/" + file)
+        lotteries.append(Lottery(lottery_json, file))
+    return lotteries
 
 
 class LotteryManager:
-    def __init__(self, hurby: Hurby):
+    def __init__(self, hurby):
         json_data = load_json(CONST.DIR_LOTTERIES_BASE_ABSOLUTE + "/" + CONST.FILE_CONF_LOTTERY)
         self.hurby = hurby
         self.participation_requires_tickets = json_data["participation_requires_tickets"]

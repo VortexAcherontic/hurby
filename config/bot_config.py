@@ -14,6 +14,7 @@ class BotConfig:
     MODULE_MINIGAME = 6
     MODULE_EVENTS = 7
     MODULE_WEBSERVER = 8
+    MODULE_LOTTERY = 9
 
     def __init__(self):
         config_file = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_CONF_HURBY
@@ -21,7 +22,7 @@ class BotConfig:
         self.botname = bot_json["botname"]
         self.commands_case_sensitive = bot_json["commands_case_sensitive"]
         CONST.SUPPRESS_JSON_LOGGING = bot_json["suppress_json_log"]
-        self.modules = [None] * 9
+        self.modules = [None] * 10
         self.modules[BotConfig.MODULE_TWITCH] = bot_json["modules"]["twitch"]
         self.modules[BotConfig.MODULE_TWITTER] = bot_json["modules"]["twitter"]
         self.modules[BotConfig.MODULE_YOUTUBE] = bot_json["modules"]["youtube"]
@@ -31,6 +32,7 @@ class BotConfig:
         self.modules[BotConfig.MODULE_MINIGAME] = bot_json["modules"]["minigame"]
         self.modules[BotConfig.MODULE_EVENTS] = bot_json["modules"]["events"]
         self.modules[BotConfig.MODULE_WEBSERVER] = bot_json["modules"]["webinterface"]
+        self.modules[BotConfig.MODULE_LOTTERY] = bot_json["modules"]["lottery"]
         self.bot_name_in_reply = bot_json["bot_name_in_reply"]
         self.unknown_cmd_response = bot_json["unknown_command_response"]
         self.event_cooldown_min_min = bot_json["event"]["cooldown_min_min"]

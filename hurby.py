@@ -1,6 +1,7 @@
 from character.character_manager import CharacterManager
 from config.bot_config import BotConfig
 from items.item_manager import ItemManager
+from modules.lottery.lottery_manager import LotteryManager
 from twitch_hurby.minigame.loots import Loots
 from twitch_hurby.twitch_receiver import TwitchReceiver
 
@@ -15,6 +16,8 @@ class Hurby:
             self.loots = Loots(self.char_manager, self.twitch_receiver.twitch_listener)
             self.twitch_receiver.twitch_conf.load_cmds()
             self.twitch_receiver.twitch_conf.load_events()
+        if self.botConfig.modules[BotConfig.MODULE_LOTTERY]:
+            self.lottery_manager = LotteryManager(self)
         self.item_manager = ItemManager()
 
     def get_twitch_receiver(self) -> TwitchReceiver:
