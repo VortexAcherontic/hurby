@@ -7,6 +7,7 @@ from twitch_hurby.cmd.actions.gift_credits import GiftCreditsCommand
 from twitch_hurby.cmd.actions.help_command import HelpCommand
 from twitch_hurby.cmd.actions.items.inventory import InventoryCommand
 from twitch_hurby.cmd.actions.items.spawn_item import SpawnItemCommand
+from twitch_hurby.cmd.actions.lottery import LotteryCommand
 from twitch_hurby.cmd.actions.raid_command import RaidCommand
 from twitch_hurby.cmd.actions.search_command import SearchCommand
 from twitch_hurby.cmd.actions.set_credits_command import SetCreditsCommand
@@ -54,5 +55,15 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
                 return AddCreditsCommand(json_data, hurby)
             if logic_trigger == "$bug_report":
                 return BugReportCommand(json_data, hurby)
+    elif cmd_type == CMDType.MULTI_ACTION:
+        logic_trigger = json_data["reply"]
+        if logic_trigger == "$lottery":
+            return LotteryCommand(json_data, hurby)
     else:
-        logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])
+        if isinstance(json_data["cmd"], list):
+            cmds = ""
+            for c in json_data["cmd"]:
+                cmds += c + " "
+            logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + cmds)
+        else:
+            logger.log(logger.INFO, "Unknown command type: " + json_data["type"] + " for command: " + json_data["cmd"])

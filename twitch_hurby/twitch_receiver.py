@@ -20,12 +20,12 @@ class TwitchReceiver:
         logger.log(logger.INFO, "Received cmd:\"" + cmd.cmd + "\"")
         logger.log(logger.INFO, "Params:")
         logger.log(logger.INFO, cmd.params)
-        twitch_cmds: list[AbstractCommand] = self.twitch_conf.get_cmds()
+        twitch_cmds = self.twitch_conf.get_cmds()
         for i in range(0, len(twitch_cmds)):
             if twitch_cmds[i] is not None:
                 tmp: AbstractCommand = twitch_cmds[i]
                 if tmp.check_trigger(cmd.cmd):
-                    if tmp.check_permissions(char):
+                    if tmp.check_permissions(char, cmd.params):
                         tmp.do_command(cmd.params, character=char)
                         return
                     elif char is not None:

@@ -43,13 +43,13 @@ class LotteryManager:
         self.winner_drawn_response_expose_winner_and_price_title = json_data[
             "winner_drawn_response_expose_winner_and_price_title"]
         self.winner_drawn_response_expose_price_title = json_data["winner_drawn_response_expose_price_title"]
-        self.lotteries = _load_lotteries()
+        self._lotteries = _load_lotteries()
 
     def try_participate(self, character: Character, lottery_id: int):
-        lottery: Lottery = self.lotteries[lottery_id]
+        lottery: Lottery = self._lotteries[lottery_id]
         if not lottery.is_full():
             if not self.participation_requires_tickets:
-                pass
+                lottery.apply_for_lottery(character.uuid)
             elif character.get_credits() >= self.ticket_price:
                 tickets = lottery.get_tickets_for_user(character.uuid)
                 if tickets != self.max_tickets:
@@ -62,3 +62,6 @@ class LotteryManager:
                 return ParticipateStatus.INSUFFICIENT_CREDITS
         else:
             return ParticipateStatus.IS_FULL
+
+    def get_amount_of_lotteries(self):
+        return len(self._lotteries)
