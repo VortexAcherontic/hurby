@@ -18,7 +18,8 @@ def _load_lotteries():
     lottery_files = hurby_utils.get_all_files_in_path(CONST.DIR_LOTTERIES_ABSOLUTE)
     lotteries = []
     for file in lottery_files:
-        lottery_json = json_loader.load_json(CONST.DIR_LOTTERIES_ABSOLUTE + "/" + file)
+        absolute_file = CONST.DIR_LOTTERIES_ABSOLUTE + "/" + file
+        lottery_json = json_loader.load_json(absolute_file)
         lotteries.append(Lottery(lottery_json, file))
     return lotteries
 
