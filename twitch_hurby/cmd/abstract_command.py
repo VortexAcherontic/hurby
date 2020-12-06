@@ -4,7 +4,6 @@ from character.character import Character
 from twitch_hurby.cmd.enums.cmd_response_realms import CMDResponseRealms
 from twitch_hurby.cmd.enums.cmd_types import CMDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
-from twitch_hurby.irc.irc_connector import IRCConnector
 from utils import hurby_utils
 
 
@@ -27,7 +26,7 @@ class AbstractCommand:
         elif self.cmd_type == CMDType.MULTI_ACTION:
             self.sub_commands = _load_subcommands(cmd_json["subcommands"])
         self.hurby = hurby
-        self.irc: IRCConnector = hurby.twitch_receiver.twitch_listener
+        self.irc = hurby.twitch_receiver.twitch_listener
         if "description" in cmd_json:
             self.description: str = cmd_json["description"]
         else:
