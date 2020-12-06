@@ -10,7 +10,7 @@ class Const:
         if int(os.environ["HURBY_DEVMODE"]) == 1:
             DIR_APP_DATA = ".z-ray/hurby/dev"
             DEVMODE = True
-            print("Running in devmode: "+ str(DEVMODE))
+            print("Running in devmode: " + str(DEVMODE))
 
     DIR_APP_DATA_ABSOLUTE = USER_HOME + "/" + DIR_APP_DATA
     DIR_CONF = "config"
@@ -18,12 +18,14 @@ class Const:
     DIR_TMP = "tmp"
     DIR_LOTTERIES_BASE = "lottery"
     DIR_LOTTERIES = "lotteries"
+    DIR_LOTTERIES_WINNERS = "winners"
 
     DIR_TMP_ABSOLUTE = DIR_APP_DATA_ABSOLUTE + "/" + DIR_TMP
     DIR_CONF_ABSOLUTE = DIR_APP_DATA_ABSOLUTE + "/" + DIR_CONF
     DIR_CHARACTERS_ABSOLUTE = DIR_APP_DATA_ABSOLUTE + "/" + DIR_CHARACTERS
     DIR_LOTTERIES_BASE_ABSOLUTE = DIR_CONF_ABSOLUTE + "/" + DIR_LOTTERIES_BASE
     DIR_LOTTERIES_ABSOLUTE = DIR_LOTTERIES_BASE_ABSOLUTE + "/" + DIR_LOTTERIES
+    DIR_LOTTERIES_WINNERS_ABSOLUTE = DIR_LOTTERIES_BASE_ABSOLUTE + "/" + DIR_LOTTERIES_WINNERS
 
     FILE_CONF_HURBY = "hurby_conf.json"
     FILE_CONF_TWITTER = "twitter_conf.json"
