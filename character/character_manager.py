@@ -39,7 +39,7 @@ class CharacterManager:
                 else:
                     return None
             if update_perm_level:
-                logger.log(logger.DEV, "Updating permission level for " + user_id + " to: " + permission_level.value)
+                #logger.log(logger.DEV, "Updating permission level for " + user_id + " to: " + permission_level.value)
                 tmp_char.set_permission_level(permission_level)
                 tmp_char.save()
             return tmp_char
