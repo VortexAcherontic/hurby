@@ -2,6 +2,7 @@ import random
 
 from character.character import Character
 from twitch_hurby.cmd.abstract_command import AbstractCommand
+from twitch_hurby.cmd.enums.cmd_types import CMDType
 from twitch_hurby.cmd.enums.permission_levels import PermissionLevels
 
 
@@ -18,7 +19,11 @@ class HelpCommand(AbstractCommand):
         if character is not None:
             if len(params) == 0:
                 for x in self.hurby.twitch_receiver.twitch_conf.get_cmds():
-                    if x is not None:
+                    printable_cmd_types = {
+                        CMDType.REPLY,
+                        CMDType.ACTION
+                    }
+                    if x is not None and x.cmd_type in printable_cmd_types:
                         if character.perm == PermissionLevels.EVERYBODY:
                             if x.permission_level == PermissionLevels.EVERYBODY:
                                 valid_cmds += str(x.trigger) + " "
