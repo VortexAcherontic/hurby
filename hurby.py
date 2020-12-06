@@ -11,13 +11,13 @@ class Hurby:
     def __init__(self):
         self.botConfig = BotConfig()
         self.char_manager: CharacterManager = CharacterManager(self)
+        if self.botConfig.modules[BotConfig.MODULE_LOTTERY]:
+            self.lottery_manager = LotteryManager(self)
         if self.botConfig.modules[BotConfig.MODULE_TWITCH]:
             self.twitch_receiver = TwitchReceiver(self)
             self.loots = Loots(self.char_manager, self.twitch_receiver.twitch_listener)
             self.twitch_receiver.twitch_conf.load_cmds()
             self.twitch_receiver.twitch_conf.load_events()
-        if self.botConfig.modules[BotConfig.MODULE_LOTTERY]:
-            self.lottery_manager = LotteryManager(self)
         self.item_manager = ItemManager()
 
     def get_twitch_receiver(self) -> TwitchReceiver:
