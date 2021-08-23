@@ -127,11 +127,14 @@ class LotteryCommand(AbstractCommand):
             message = hurby_utils.get_random_reply(self.lottery_manager.error_lottery_is_inactive)
         elif participate_status == ParticipateStatus.NO_ACTIVE_LOTTERY:
             message = hurby_utils.get_random_reply(self.lottery_manager.no_lotteries_response)
+        elif participate_status == ParticipateStatus.NOT_ENOUGH_WATCH_TIME:
+            message = hurby_utils.get_random_reply(self.lottery_manager.error_insufficient_watchtime_response)
         else:
             logger.log(logger.WARN, "Unknown ParticipateStatus: " + participate_status)
 
         message = message.replace("$user", user_name)
         message = message.replace("$ticket_price", str(self.lottery_manager.ticket_price))
+        message = message.replace("$watchtime", str(self.lottery_manager.min_watch_time_in_mins))
         self.irc.send_message(message)
 
     def _start_lottery(self, lottery_id):

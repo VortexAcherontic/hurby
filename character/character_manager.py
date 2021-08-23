@@ -31,13 +31,11 @@ class CharacterManager:
                         self._add_char_to_table(tmp_char)
                     except FileNotFoundError:
                         logger.log(logger.ERR, "File " + json_file + " not found for user: " + user_id)
-                elif not command_issued:
+                else :
                     tmp_char.init_default_character(user_id, permission_level, user_id_type)
                     tmp_char.save()
                     self._add_char_to_table(tmp_char)
                     self._add_char_to_ref_table(tmp_char, user_id_type)
-                else:
-                    return None
             if update_perm_level:
                 #logger.log(logger.DEV, "Updating permission level for " + user_id + " to: " + permission_level.value)
                 tmp_char.set_permission_level(permission_level)
