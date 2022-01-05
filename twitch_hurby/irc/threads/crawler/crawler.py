@@ -27,9 +27,9 @@ class Crawler(HurbyThread):
         self.credit_increase_supporter = twitch_config.credit_increase_supporter
 
     def run(self):
-        credit_thread = CreditSpendThread.CreditSpendThread(self)
+        credit_thread = CreditSpendThread.CreditSpendThread(self, self.twitch_conf)
         credit_thread.start()
-        watchtime_thread = UpdateWatchTimeThread.UpdateWatchTimeThread(self)
+        watchtime_thread = UpdateWatchTimeThread.UpdateWatchTimeThread(self, self.twitch_conf)
         watchtime_thread.start()
         logger.log(logger.INFO, "Running Twitch Crawler")
         while CONST.RUNNING:

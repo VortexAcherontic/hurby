@@ -16,6 +16,7 @@ class ParticipateStatus(Enum):
     MAX_TICKETS_REACHED = 3
     LOTTERY_INACTIVE = 4
     NO_ACTIVE_LOTTERY = 5
+    NOT_ENOUGH_WATCH_TIME = 6
 
 
 def _load_lotteries():
@@ -56,9 +57,13 @@ class LotteryManager:
         self.max_tickets = json_data["max_tickets"]
         self.ticket_price = json_data["ticket_price"]
         self.expose_winner = json_data["expose_winner"]
+        self.min_watch_time_in_mins = json_data["min_watch_time_in_mins"]
+        self.always_allow_supporters = json_data["always_allow_supporters"]
         self.expose_won_price_title = json_data["expose_won_price_title"]
+        self.only_draw_winner = json_data["only_draw_winner"]
         self.error_lottery_full_response = json_data["error_lottery_full_response"]
         self.error_insufficient_credits_response = json_data["error_insufficient_credits_response"]
+        self.error_insufficient_watchtime_response = json_data["error_insufficient_watchtime_response"]
         self.error_max_tickets_reached = json_data["error_max_tickets_reached"]
         self.error_max_participants_reached = json_data["error_max_participants_reached"]
         self.success_participate = json_data["success_participate"]
@@ -83,12 +88,22 @@ class LotteryManager:
             if lottery.is_active():
                 if not lottery.is_full():
                     if not self.participation_requires_tickets:
-                        lottery.apply_for_lottery(character.uuid)
-                    elif character.get_credits() >= self.ticket_price:
+                        if self.min_watch_time_in_mins > 0:
+                            if self._has_enough_watch_time(character) or character.is_supporter:
+                                lottery.apply_for_lottery(character.uuid)
+                                return ParticipateStatus.SUCCESS
+                            else:
+                                return ParticipateStatus.NOT_ENOUGH_WATCH_TIME
+                        else :
+                            lottery.apply_for_lottery(character.uuid)
+                    elif character.get_credits() >= self.ticket_price or character.is_supporter:
                         tickets = lottery.get_tickets_for_user(character.uuid)
                         if tickets != self.max_tickets:
-                            character.remove_credits(self.ticket_price)
-                            lottery.apply_for_lottery(character.uuid)
+                            if character.is_supporter:
+                                lottery.apply_for_lottery(character.uuid)
+                            else:
+                                character.remove_credits(self.ticket_price)
+                                lottery.apply_for_lottery(character.uuid)
                             return ParticipateStatus.SUCCESS
                         else:
                             return ParticipateStatus.MAX_TICKETS_REACHED
@@ -171,3 +186,6 @@ class LotteryManager:
             if lot.is_active():
                 return True
         return False
+
+    def _has_enough_watch_time(self, character: Character):
+        return character.watchtime_min >= self.min_watch_time_in_mins

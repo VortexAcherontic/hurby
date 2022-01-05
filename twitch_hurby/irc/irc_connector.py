@@ -1,5 +1,6 @@
 import socket
 
+from twitch_hurby.helix.is_streamer_live import is_stream_live
 from twitch_hurby.irc.threads.crawler.crawler import Crawler
 from twitch_hurby.irc.threads.cron_jobs import CronJobs
 from twitch_hurby.irc.threads.read_chat import ReadChat
@@ -45,15 +46,18 @@ class IRCConnector:
         self.crawler_thread.start()
 
     def send_message(self, msg):
-        try:
-            output = "PRIVMSG " + self.channel + " :" + msg + "\r\n"
-            logger.log(logger.INFO, output)
-            if not CONST.DEVMODE:
-                self.connection.send(bytes(output, 'UTF-8'))
-        except BrokenPipeError:
-            self.connect()
-            self.join_channel(self.channel)
-            self.send_message(msg)
+        if is_stream_live(self.twitch_conf.streamer, self.twitch_conf):
+            try:
+                output = "PRIVMSG " + self.channel + " :" + msg + "\r\n"
+                logger.log(logger.INFO, output)
+                if not CONST.DEVMODE:
+                    self.connection.send(bytes(output, 'UTF-8'))
+            except BrokenPipeError:
+                self.connect()
+                self.join_channel(self.channel)
+                self.send_message(msg)
+        else:
+            logger.log(logger.INFO, "Stream offline not chatting")
 
     def send_whisper(self, user, msg):
         output = "PRIVMSG " + self.channel + ": /w " + user + " " + msg + "\r\n"

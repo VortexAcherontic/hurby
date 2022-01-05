@@ -1,3 +1,4 @@
+from twitch_hurby.cmd.actions.watchtime_command import WatchtimeCommand
 from config.bot_config import BotConfig
 from twitch_hurby.cmd import simple_response
 from twitch_hurby.cmd.actions.add_credits import AddCreditsCommand
@@ -55,6 +56,8 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
                 return AddCreditsCommand(json_data, hurby)
             if logic_trigger == "$bug_report":
                 return BugReportCommand(json_data, hurby)
+            if logic_trigger == "$watchtime" :
+                return WatchtimeCommand(json_data, hurby)
     elif cmd_type == CMDType.MULTI_ACTION:
         logic_trigger = json_data["reply"]
         if logic_trigger == "$lottery":
