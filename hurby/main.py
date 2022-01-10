@@ -1,3 +1,4 @@
+from hurby.achievements.achievements_manager import AchievementManager
 from hurby.character.character_manager import CharacterManager
 from hurby.config.bot_config import BotConfig
 from hurby.items.item_manager import ItemManager
@@ -20,10 +21,5 @@ class HurbyMain:
             self.twitch_receiver.twitch_conf.load_cmds()
             self.twitch_receiver.twitch_conf.load_events()
         self.item_manager = ItemManager()
+        self.achievement_manager = AchievementManager(self)
         test_api(self)
-
-    def get_twitch_receiver(self) -> TwitchReceiver:
-        return self.twitch_receiver
-
-    def get_bot_config(self) -> BotConfig:
-        return self.botConfig

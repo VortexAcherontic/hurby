@@ -22,7 +22,6 @@ def create_cmd(json_data, bot_config: BotConfig, hurby):
     cmd_type = CMDType(json_data["type"])
 
     if cmd_type == CMDType.REPLY:
-        # Logger.log(Logger.INFO, "CMD: " + json["cmd"] + " is SimpleReply")
         simple_cmd = simple_response.SimpleResponse(json_data, hurby)
         return simple_cmd
     elif cmd_type == CMDType.ACTION:

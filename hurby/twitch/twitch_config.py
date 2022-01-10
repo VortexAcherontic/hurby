@@ -36,7 +36,7 @@ class TwitchConfig:
         self.credit_increase_supporter = twitch_json["credit_increase_supporter"]
         self.spend_time = twitch_json["spend_time"]
         self.bot_scopes = twitch_json["bot_scopes"]
-        self.bot_username = self.hurby.get_bot_config().botname
+        self.bot_username = self.hurby.botConfig.botname
         self.twitch_scopes = TwitchScopes()
         self.access_token = twitch_json["access_token"]
         self.expires_in = twitch_json["expires_in"]
@@ -50,13 +50,13 @@ class TwitchConfig:
         for i in range(0, len(self.onlyfiles)):
             if self.onlyfiles[i].endswith(".json"):
                 cmd_json = json_loader.load_json(TwitchConfig.CMD_PATH + self.onlyfiles[i])
-                tmp_cmd = cmd_loader.create_cmd(cmd_json, self.hurby.get_bot_config(), self.hurby)
+                tmp_cmd = cmd_loader.create_cmd(cmd_json, self.hurby.botConfig, self.hurby)
                 if not _check_for_duplicate_trigger(self.cmds, tmp_cmd):
                     self.cmds.append(tmp_cmd)
         logger.log(logger.INFO, str(len(self.cmds)) + " commands loaded")
 
     def load_events(self):
-        if self.hurby.get_bot_config().modules[BotConfig.MODULE_EVENTS]:
+        if self.hurby.botConfig.modules[BotConfig.MODULE_EVENTS]:
             onlyfiles_events = hurby_utils.get_all_files_in_path(TwitchConfig.EVENT_PATH)
             events = [None] * 0
             for i in range(0, len(onlyfiles_events)):

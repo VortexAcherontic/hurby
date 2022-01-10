@@ -5,18 +5,17 @@ from setuptools import setup
 
 import hurby
 
-if sys.version_info < (3, 8):
-    sys.exit('Python >= 3.8 is required to run Hurby')
+if sys.version_info < (3, 10):
+    sys.exit('Python >= 3.10 is required to run Hurby')
 
 setup(
     name='hurby',
     version=hurby.__version__,
     license='GPL-3',
-    author='Imo Hester',
+    author='Imo "Vortex Acherontic" Hester',
     author_email='vortex@z-ray.de',
     packages=[
         'hurby',
-        'hurby.achivements',
         'hurby.character',
         'hurby.character.blacklist',
         'hurby.character.exceptions',
@@ -43,7 +42,8 @@ setup(
     data_files=[],
     zip_safe=False,
     install_requires=[
-        'flask'
+        'flask',
+        'requests'
     ],
     url='https://z-ray.de/software/hurby-twitch-und-social-media-bot/',
     description='Social Media Bot',

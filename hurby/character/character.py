@@ -1,6 +1,9 @@
 import uuid
 from datetime import datetime
 
+from hurby.achievements.hook import Hook
+from hurby.achievements.scope import Scope
+from hurby.achievements.type import Type
 from hurby.character.equipment import PlayerEquipment
 from hurby.character.exceptions.insufficient_credits_exception import InsufficientCreditsException
 from hurby.character.exceptions.less_than_zero_exception import LessThanZeroException
@@ -9,6 +12,7 @@ from hurby.character.user_id_types import UserIDType
 from hurby.twitch.cmd.enums.permission_levels import PermissionLevels
 from hurby.utils import json_loader, logger, hurby_utils
 from hurby.utils.const import CONST
+
 
 class Character:
 
@@ -31,6 +35,9 @@ class Character:
         self.first_seen = datetime.now()
         self.watchtime_min = 0
         self.hurby = hurby
+        self.msg_count = 0
+        self.achievements_gained = {}
+        self.achievement_manager = hurby.achievement_manager
 
     def init_default_character(self, user_id: str, permission_level: PermissionLevels, user_id_type: UserIDType):
         logger.log(logger.INFO, "New character: " + user_id)
@@ -126,23 +133,33 @@ class Character:
             self.inventory = PlayerInventory(json["inventory"], self.hurby)
         if "watchtime_min" in json:
             self.watchtime_min = json["watchtime_min"]
+        if "msg_count" in json:
+            self.msg_count = json["msg_count"]
+        if "achievements_gained" in json:
+            self.achievements_gained = json["achievements_gained"]
 
     def update_watchtime(self, minutes=1):
         self.watchtime_min += minutes
         logger.log(logger.DEV, "Watchtime of " + self.uuid + "is now " + str(self.watchtime_min) + " min")
+        self.achievement_manager.check(Hook.WATCH, Scope.CHARACTER, Type.WATCH_TIME, self, self.watchtime_min)
+        self.save()
+
+    def increase_msg_count_twitch(self):
+        self.msg_count += 1
+        self.achievement_manager.check(Hook.CHAT, Scope.CHARACTER, Type.MESSAGE_COUNT, self, self.msg_count)
         self.save()
 
     def save(self):
         data = self.convert_to_json()
         file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + str(self.uuid) + ".json"
-        #logger.log(logger.DEV, "Saving character: " + self.uuid)
+        # logger.log(logger.DEV, "Saving character: " + self.uuid)
         json_loader.save_json(file, data)
 
     def load(self, json_file_name):
         absolute_file = CONST.DIR_CHARACTERS_ABSOLUTE + "/" + json_file_name
         json_data = json_loader.load_json(absolute_file)
         self.parse_json(json_data)
-        #logger.log(logger.INFO, "Loaded character: twitchID: " + self.twitchid)
+        # logger.log(logger.INFO, "Loaded character: twitchID: " + self.twitchid)
 
     def convert_to_json(self) -> dict:
         text = {
@@ -159,6 +176,7 @@ class Character:
             "is_supporter": self.is_supporter,
             "inventory": self.inventory.to_dict(),
             "equipment": self.equipment.to_dict(),
-            "watchtime_min": self.watchtime_min
+            "watchtime_min": self.watchtime_min,
+            "achievements_gained": self.achievements_gained
         }
         return text

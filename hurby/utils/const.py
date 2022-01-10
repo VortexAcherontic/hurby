@@ -40,6 +40,7 @@ class Const:
     FILE_LOG = "hurby.log"
     FILE_BLACKLIST = "blacklist.json"
     FILE_CHAR_REF_TABLE = "reference_table.json"
+    FILE_ACHIEVEMENTS = "achievements.json"
 
     RUNNING = True
     SUPPRESS_JSON_LOGGING = True

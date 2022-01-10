@@ -15,7 +15,7 @@ class EventThread(HurbyThread):
 
     def run(self):
         logger.log(logger.DEV, "Started event thread...")
-        bot_cfg = self.hurby.get_bot_config()
+        bot_cfg = self.hurby.botConfig
         min_min = bot_cfg.event_cooldown_min_min
         max_min = bot_cfg.event_cooldown_max_min
         if int(os.environ["HURBY_DEVMODE"]) == 1:
