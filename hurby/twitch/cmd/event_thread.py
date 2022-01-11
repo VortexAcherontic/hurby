@@ -1,4 +1,3 @@
-import os
 import random
 import time
 
@@ -18,17 +17,12 @@ class EventThread(HurbyThread):
         bot_cfg = self.hurby.botConfig
         min_min = bot_cfg.event_cooldown_min_min
         max_min = bot_cfg.event_cooldown_max_min
-        if int(os.environ["HURBY_DEVMODE"]) == 1:
+        sleep_time = random.randint(min_min, max_min)
+        if CONST.DEVMODE:
             sleep_time = 1
-        else:
-            sleep_time = random.randint(min_min, max_min)
         while CONST.RUNNING:
             logger.log(logger.INFO, "Event Thread sleep for " + str(sleep_time) + " mins")
             time.sleep(sleep_time * 60)
             logger.log(logger.INFO, "Tick event")
             rnd_event = self.events[random.randint(0, len(self.events) - 1)]
             rnd_event.issue_event()
-            if int(os.environ["HURBY_DEVMODE"]) == 1:
-                sleep_time = 1
-            else:
-                sleep_time = random.randint(min_min, max_min)

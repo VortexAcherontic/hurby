@@ -5,6 +5,7 @@ from hurby.items.item_manager import ItemManager
 from hurby.modules.lottery.lottery_manager import LotteryManager
 from hurby.twitch.minigame.loots import Loots
 from hurby.twitch.twitch_receiver import TwitchReceiver
+from hurby.utils import logger
 from hurby.utils.api_test import test_api
 
 
@@ -22,4 +23,5 @@ class HurbyMain:
             self.twitch_receiver.twitch_conf.load_events()
         self.item_manager = ItemManager()
         self.achievement_manager = AchievementManager(self)
+        logger.init_logger(self)
         test_api(self)

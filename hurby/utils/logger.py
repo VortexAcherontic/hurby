@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 
 from hurby.utils.const import CONST
@@ -9,6 +8,11 @@ ERR = "ERROR"
 DEV = "DEV"
 JSON = "JSON"
 FATAL = "FATAL"
+__hurby = None
+
+
+def init_logger(hurby):
+    __hurby = hurby
 
 
 def log(log_type, msg):
@@ -39,7 +43,7 @@ def _print_log(msg: str, log_type):
 
 def _append_to_log_file(msg: str):
     log_file_path = CONST.DIR_APP_DATA_ABSOLUTE + "/" + CONST.FILE_LOG
-    if "HURBY_DEVMODE" in os.environ:
+    if CONST.DEVMODE:
         log_file = open(log_file_path, "a", encoding="utf-8")
-        log_file.write(msg+"\n")
+        log_file.write(msg + "\n")
         log_file.close()
