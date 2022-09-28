@@ -99,3 +99,6 @@ class Crawler(HurbyThread):
         }
         response = requests.get('https://api.twitch.tv/kraken/channel', headers=headers)
         return response.json()["_id"]
+
+    def _check_live_status(self):
+        pass
