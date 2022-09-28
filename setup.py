@@ -37,7 +37,11 @@ setup(
         'hurby.twitch.tmi',
         'hurby.utils',
     ],
-    scripts=['hurby/run.py'],
+    entry_points={
+        'console_scripts': [
+            'hurby = hurby.run',
+        ]
+    },
     data_files=[],
     zip_safe=False,
     install_requires=[
