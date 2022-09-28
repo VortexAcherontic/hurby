@@ -1,0 +1,70 @@
+import socket
+
+from hurby.twitch.helix.is_streamer_live import is_stream_live
+from hurby.twitch.irc.threads.crawler.crawler import Crawler
+from hurby.twitch.irc.threads.cron_jobs import CronJobs
+from hurby.twitch.irc.threads.read_chat import ReadChat
+from hurby.twitch.twitch_config import TwitchConfig
+from hurby.utils import logger
+from hurby.utils.const import CONST
+
+
+class IRCConnector:
+    def __init__(self, botname: str, botpassword: str, receiver, tick, twitch_conf: TwitchConfig, hurby):
+        self.host = TwitchConfig.HOST
+        self.port = TwitchConfig.PORT
+        self.twitch_conf = twitch_conf
+        self.username = botname
+        self.password = botpassword
+        self.connection = None
+        self.tick = tick
+        self.receiver = receiver
+        self.thread = None
+        self.cron_jobs_thread = None
+        self.crawler_thread = None
+        self.channel = None
+        self.hurby = hurby
+
+    def connect(self):
+        self.connection = socket.socket()
+        self.connection.connect((self.host, self.port))
+        self.connection.send(bytes('PASS %s\r\n' % self.password, 'UTF-8'))
+        self.connection.send(bytes('NICK %s\r\n' % self.username, 'UTF-8'))
+
+    def join_channel(self, channel: str):
+        self.connection.send(bytes('JOIN %s\r\n' % channel, 'UTF-8'))
+
+    def start(self, channels: list):
+        self.channel = "#"+channels[0]
+        self.connect()
+        self.join_channel(self.channel)
+        self.thread = ReadChat(self, self.tick, self.receiver, self.hurby)
+        self.cron_jobs_thread = CronJobs(self.twitch_conf, self.receiver, self)
+        self.crawler_thread = Crawler(self.twitch_conf, self.hurby.char_manager)
+        self.thread.start()
+        self.cron_jobs_thread.start()
+        self.crawler_thread.start()
+
+    def send_message(self, msg):
+        if is_stream_live(self.twitch_conf.streamer, self.twitch_conf):
+            try:
+                output = "PRIVMSG " + self.channel + " :" + msg + "\r\n"
+                logger.log(logger.INFO, output)
+                if not CONST.DEVMODE:
+                    self.connection.send(bytes(output, 'UTF-8'))
+            except BrokenPipeError:
+                self.connect()
+                self.join_channel(self.channel)
+                self.send_message(msg)
+        else:
+            logger.log(logger.INFO, "Stream offline not chatting")
+
+    def send_whisper(self, user, msg):
+        output = "PRIVMSG " + self.channel + ": /w " + user + " " + msg + "\r\n"
+        logger.log(logger.INFO, output)
+        if not CONST.DEVMODE:
+            self.connection.send(bytes(output, 'UTF-8'))
+
+    def ping_pong(self, msg: str):
+        output = "PONG " + msg + "\r\n"
+        self.connection.send(bytes(output, 'UTF-8'))
