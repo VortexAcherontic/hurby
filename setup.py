@@ -23,7 +23,6 @@ setup(
         'hurby.items',
         'hurby.modules',
         'hurby.modules.lottery',
-        'hurby.threadding',
         'hurby.twitch',
         'hurby.twitch.cmd',
         'hurby.twitch.cmd.actions',
@@ -38,7 +37,7 @@ setup(
         'hurby.twitch.tmi',
         'hurby.utils',
     ],
-    scripts=['bin/lutris'],
+    scripts=['hurby/run.py'],
     data_files=[],
     zip_safe=False,
     install_requires=[
