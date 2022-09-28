@@ -10,7 +10,7 @@ if sys.version_info < (3, 10):
 
 setup(
     name='hurby',
-    version=hurby.__version__,
+    version="0.0.1",
     license='GPL-3',
     author='Imo "Vortex Acherontic" Hester',
     author_email='vortex@z-ray.de',
