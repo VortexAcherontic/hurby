@@ -1,9 +1,9 @@
 import random
 import time
 
-from hurby.character.character import Character
-from hurby.twitch.irc.threads.hurby_thread import HurbyThread
-from hurby.utils import hurby_utils
+from character.character import Character
+from twitch.irc.threads.hurby_thread import HurbyThread
+from utils import hurby_utils
 
 
 class EventRob:

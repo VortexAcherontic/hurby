@@ -1,9 +1,9 @@
 import random
 
-from hurby.character.character import Character
-from hurby.twitch.cmd.abstract_command import AbstractCommand
-from hurby.twitch.cmd.enums.cmd_types import CMDType
-from hurby.twitch.cmd.enums.permission_levels import PermissionLevels
+from character.character import Character
+from twitch.cmd.abstract_command import AbstractCommand
+from twitch.cmd.enums.cmd_types import CMDType
+from twitch.cmd.enums.permission_levels import PermissionLevels
 
 
 class HelpCommand(AbstractCommand):

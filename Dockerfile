@@ -7,4 +7,4 @@ RUN pip3 install pipreqs
 RUN pipreqs .
 RUN pip3 install -r requirements.txt
 
-CMD [ "python", "hurby/run.py"]
+CMD [ "python", "hurby/__init__.py"]

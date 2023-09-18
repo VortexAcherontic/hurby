@@ -1,11 +1,11 @@
 import re
 import time
 
-from hurby.character.user_id_types import UserIDType
-from hurby.twitch.irc import irc_chat_extractor
-from hurby.twitch.irc.threads.hurby_thread import HurbyThread
-from hurby.utils import logger
-from hurby.utils.const import CONST
+from character.user_id_types import UserIDType
+from twitch.irc import irc_chat_extractor
+from twitch.irc.threads.hurby_thread import HurbyThread
+from utils import logger
+from utils.const import CONST
 
 
 class ReadChat(HurbyThread):

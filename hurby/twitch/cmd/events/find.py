@@ -1,8 +1,8 @@
 import random
 
-from hurby.character.character import Character
-from hurby.items.base_item import BaseItem
-from hurby.utils import hurby_utils
+from character.character import Character
+from items.base_item import BaseItem
+from utils import hurby_utils
 
 
 def _value_of_items(items) -> int:

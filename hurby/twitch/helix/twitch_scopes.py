@@ -1,4 +1,4 @@
-from hurby.utils import logger
+from utils import logger
 
 scopes = {
     "analytics:read:extensions": False,

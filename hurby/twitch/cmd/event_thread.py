@@ -1,9 +1,9 @@
 import random
 import time
 
-from hurby.twitch.irc.threads.hurby_thread import HurbyThread
-from hurby.utils import logger
-from hurby.utils.const import CONST
+from twitch.irc.threads.hurby_thread import HurbyThread
+from utils import logger
+from utils.const import CONST
 
 
 class EventThread(HurbyThread):

@@ -1,7 +1,7 @@
 from builtins import int
 
-from hurby.items import base_item
-from hurby.items.base_item import BaseItem
+from items import base_item
+from items.base_item import BaseItem
 
 
 class PlayerInventory:

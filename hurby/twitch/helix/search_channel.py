@@ -1,5 +1,5 @@
-from hurby.twitch.helix import do_helix_requests
-from hurby.twitch.twitch_config import TwitchConfig
+from twitch.helix import do_helix_requests
+from twitch.twitch_config import TwitchConfig
 
 
 def search_channel(twitch_config: TwitchConfig, channel_name: str) -> dict:

@@ -1,9 +1,9 @@
 import time
 
-from hurby.character.blacklist.external_blacklist_updater import BlacklistUpdater
-from hurby.character.user_id_types import UserIDType
-from hurby.utils import json_loader, logger
-from hurby.utils.const import CONST
+from character.blacklist.external_blacklist_updater import BlacklistUpdater
+from character.user_id_types import UserIDType
+from utils import json_loader, logger
+from utils.const import CONST
 
 
 class Blacklist:

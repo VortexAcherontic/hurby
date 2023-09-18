@@ -1,8 +1,8 @@
-from hurby.character.character import Character
-from hurby.modules.lottery import lottery_manager
-from hurby.modules.lottery.lottery_manager import LotteryManager, ParticipateStatus
-from hurby.twitch.cmd.abstract_command import AbstractCommand
-from hurby.utils import logger, hurby_utils
+from character.character import Character
+from modules.lottery import lottery_manager
+from modules.lottery.lottery_manager import LotteryManager, ParticipateStatus
+from twitch.cmd.abstract_command import AbstractCommand
+from utils import logger, hurby_utils
 
 
 class LotteryCommand(AbstractCommand):

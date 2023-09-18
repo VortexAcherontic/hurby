@@ -1,9 +1,9 @@
-from hurby.achievements.evaluation import Evaluation
-from hurby.achievements.hook import Hook
-from hurby.achievements.scope import Scope
-from hurby.achievements.type import Type
-from hurby.character.character import Character
-from hurby.utils import logger
+from achievements.evaluation import Evaluation
+from achievements.hook import Hook
+from achievements.scope import Scope
+from achievements.type import Type
+from character.character import Character
+from utils import logger
 
 
 class Achievement:

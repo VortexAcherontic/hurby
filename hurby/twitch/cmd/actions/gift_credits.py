@@ -1,8 +1,8 @@
-from hurby.character.character import Character
-from hurby.character.exceptions.less_than_zero_exception import LessThanZeroException
-from hurby.character.user_id_types import UserIDType
-from hurby.twitch.cmd.abstract_command import AbstractCommand
-from hurby.utils import logger, hurby_utils
+from character.character import Character
+from character.exceptions.less_than_zero_exception import LessThanZeroException
+from character.user_id_types import UserIDType
+from twitch.cmd.abstract_command import AbstractCommand
+from utils import logger, hurby_utils
 
 
 class GiftCreditsCommand(AbstractCommand):

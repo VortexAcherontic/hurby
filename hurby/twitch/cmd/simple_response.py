@@ -1,7 +1,7 @@
 import random
 
-from hurby.character.character import Character
-from hurby.twitch.cmd.abstract_command import AbstractCommand
+from character.character import Character
+from twitch.cmd.abstract_command import AbstractCommand
 
 
 class SimpleResponse(AbstractCommand):

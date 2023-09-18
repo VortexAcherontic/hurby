@@ -1,6 +1,6 @@
 import requests
 
-from hurby.twitch.irc.threads.crawler.chatter_types import ChatterType
+from twitch.irc.threads.crawler.chatter_types import ChatterType
 
 
 def get_chatters_for_channels(channels: list) -> dict:

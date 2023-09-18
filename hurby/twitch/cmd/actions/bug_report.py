@@ -4,9 +4,9 @@ import time
 from datetime import datetime
 from math import ceil
 
-from hurby.character.character import Character
-from hurby.twitch.cmd.abstract_command import AbstractCommand
-from hurby.utils import logger
+from character.character import Character
+from twitch.cmd.abstract_command import AbstractCommand
+from utils import logger
 
 
 class BugReportCommand(AbstractCommand):

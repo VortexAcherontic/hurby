@@ -2,7 +2,7 @@ import os
 
 import requests
 
-from hurby.utils import json_loader, const, logger
+from utils import json_loader, const, logger
 
 _TMP_FILE = "external-ban-list.json"
 _TMP_FILE_ABSOLUTE = const.CONST.DIR_TMP_ABSOLUTE + "/" + _TMP_FILE

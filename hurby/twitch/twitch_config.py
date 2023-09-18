@@ -1,11 +1,11 @@
-from hurby.config.bot_config import BotConfig
-from hurby.twitch.cmd import cmd_loader, event_loader
-from hurby.twitch.cmd.abstract_command import AbstractCommand
-from hurby.twitch.cmd.event_thread import EventThread
-from hurby.twitch.helix.get_bearer_token import get_bearer_access_token
-from hurby.twitch.helix.twitch_scopes import TwitchScopes
-from hurby.utils import json_loader, logger, hurby_utils
-from hurby.utils.const import CONST
+from config.bot_config import BotConfig
+from twitch.cmd import cmd_loader, event_loader
+from twitch.cmd.abstract_command import AbstractCommand
+from twitch.cmd.event_thread import EventThread
+from twitch.helix.get_bearer_token import get_bearer_access_token
+from twitch.helix.twitch_scopes import TwitchScopes
+from utils import json_loader, logger, hurby_utils
+from utils.const import CONST
 
 
 class TwitchConfig:

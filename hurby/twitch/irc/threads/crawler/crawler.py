@@ -2,18 +2,18 @@ import time
 
 import requests
 
-from hurby.character.character import Character
-from hurby.character.character_manager import CharacterManager
-from hurby.character.user_id_types import UserIDType
-from hurby.twitch.cmd.enums.permission_levels import PermissionLevels
-from hurby.twitch.helix import get_broadcaster_subscriptions, get_users
-from hurby.twitch.irc.threads.crawler import UpdateWatchTimeThread, CreditSpendThread
-from hurby.twitch.irc.threads.crawler.chatter_types import ChatterType
-from hurby.twitch.irc.threads.hurby_thread import HurbyThread
-from hurby.twitch.tmi.get_chatters import get_chatters_for_channels
-from hurby.twitch.twitch_config import TwitchConfig
-from hurby.utils import logger
-from hurby.utils.const import CONST
+from character.character import Character
+from character.character_manager import CharacterManager
+from character.user_id_types import UserIDType
+from twitch.cmd.enums.permission_levels import PermissionLevels
+from twitch.helix import get_broadcaster_subscriptions, get_users
+from twitch.irc.threads.crawler import UpdateWatchTimeThread, CreditSpendThread
+from twitch.irc.threads.crawler.chatter_types import ChatterType
+from twitch.irc.threads.hurby_thread import HurbyThread
+from twitch.tmi.get_chatters import get_chatters_for_channels
+from twitch.twitch_config import TwitchConfig
+from utils import logger
+from utils.const import CONST
 
 
 class Crawler(HurbyThread):

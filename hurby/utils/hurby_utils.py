@@ -2,7 +2,7 @@ import random
 from os import listdir
 from os.path import isfile, join
 
-from hurby.twitch.cmd.enums.permission_levels import PermissionLevels
+from twitch.cmd.enums.permission_levels import PermissionLevels
 
 
 def append_element_to_array(array: list, ele):

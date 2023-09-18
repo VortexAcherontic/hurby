@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from hurby.utils.const import CONST
+from utils.const import CONST
 
 INFO = "INFO"
 WARN = "WARNING"

@@ -1,5 +1,5 @@
-from hurby.twitch.helix import do_helix_requests
-from hurby.twitch.twitch_config import TwitchConfig
+from twitch.helix import do_helix_requests
+from twitch.twitch_config import TwitchConfig
 
 
 def is_stream_live(streamer_login: str, twitch_config: TwitchConfig):

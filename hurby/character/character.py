@@ -1,17 +1,17 @@
 import uuid
 from datetime import datetime
 
-from hurby.achievements.hook import Hook
-from hurby.achievements.scope import Scope
-from hurby.achievements.type import Type
-from hurby.character.equipment import PlayerEquipment
-from hurby.character.exceptions.insufficient_credits_exception import InsufficientCreditsException
-from hurby.character.exceptions.less_than_zero_exception import LessThanZeroException
-from hurby.character.inventory import PlayerInventory
-from hurby.character.user_id_types import UserIDType
-from hurby.twitch.cmd.enums.permission_levels import PermissionLevels
-from hurby.utils import json_loader, logger, hurby_utils
-from hurby.utils.const import CONST
+from achievements.hook import Hook
+from achievements.scope import Scope
+from achievements.type import Type
+from character.equipment import PlayerEquipment
+from character.exceptions.insufficient_credits_exception import InsufficientCreditsException
+from character.exceptions.less_than_zero_exception import LessThanZeroException
+from character.inventory import PlayerInventory
+from character.user_id_types import UserIDType
+from twitch.cmd.enums.permission_levels import PermissionLevels
+from utils import json_loader, logger, hurby_utils
+from utils.const import CONST
 
 
 class Character:

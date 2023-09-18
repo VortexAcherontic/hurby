@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from hurby.modules.lottery.price import LotteryPrice
-from hurby.utils import json_loader, hurby_utils
+from modules.lottery.price import LotteryPrice
+from utils import json_loader, hurby_utils
 
 
 def _build_prices(prices_json):

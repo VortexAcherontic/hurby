@@ -1,8 +1,8 @@
 import requests
 
-from hurby.twitch.helix.get_bearer_token import get_bearer_access_token
-from hurby.twitch.twitch_config import TwitchConfig
-from hurby.utils import logger
+from twitch.helix.get_bearer_token import get_bearer_access_token
+from twitch.twitch_config import TwitchConfig
+from utils import logger
 
 
 def get(url, twitch_config: TwitchConfig):

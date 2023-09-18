@@ -1,9 +1,9 @@
 import time
 
-from hurby.twitch.helix.is_streamer_live import is_stream_live
-from hurby.twitch.irc.threads.hurby_thread import HurbyThread
-from hurby.utils import logger
-from hurby.utils.const import CONST
+from twitch.helix.is_streamer_live import is_stream_live
+from twitch.irc.threads.hurby_thread import HurbyThread
+from utils import logger
+from utils.const import CONST
 
 
 class UpdateWatchTimeThread(HurbyThread):

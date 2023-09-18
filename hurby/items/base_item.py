@@ -1,7 +1,7 @@
 from math import ceil
 
-from hurby.items.base_ability import BaseAbility
-from hurby.items.base_stats import BaseStats
+from items.base_ability import BaseAbility
+from items.base_stats import BaseStats
 
 KEY_ID = "id"
 KEY_DURABILITY = "durability"

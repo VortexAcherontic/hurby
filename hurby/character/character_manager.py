@@ -1,13 +1,13 @@
 import os
 
-from hurby.character.blacklist.blacklist import Blacklist
-from hurby.character.character import Character
-from hurby.character.character_reference_table import CharacterReferenceTable
-from hurby.character.user_id_types import UserIDType
-from hurby.twitch.cmd.enums.permission_levels import PermissionLevels
-from hurby.twitch.tmi.get_chatters import get_all_chatters_as_list
-from hurby.utils import json_loader, logger, hurby_utils
-from hurby.utils.const import CONST
+from character.blacklist.blacklist import Blacklist
+from character.character import Character
+from character.character_reference_table import CharacterReferenceTable
+from character.user_id_types import UserIDType
+from twitch.cmd.enums.permission_levels import PermissionLevels
+from twitch.tmi.get_chatters import get_all_chatters_as_list
+from utils import json_loader, logger, hurby_utils
+from utils.const import CONST
 
 
 class CharacterManager:

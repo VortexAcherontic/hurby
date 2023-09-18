@@ -1,5 +1,5 @@
-from hurby.twitch.cmd.events.find import EventFind
-from hurby.twitch.cmd.events.rob import EventRob
+from twitch.cmd.events.find import EventFind
+from twitch.cmd.events.rob import EventRob
 
 
 def create_event(json_data, hurby):

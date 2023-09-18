@@ -1,9 +1,9 @@
 import time
 
-from hurby.character.blacklist import blacklist_crawler
-from hurby.twitch.irc.threads.hurby_thread import HurbyThread
-from hurby.utils import logger, hurby_utils
-from hurby.utils.time_measure import TimeMeasure
+from character.blacklist import blacklist_crawler
+from twitch.irc.threads.hurby_thread import HurbyThread
+from utils import logger, hurby_utils
+from utils.time_measure import TimeMeasure
 
 
 class BlacklistUpdater(HurbyThread):

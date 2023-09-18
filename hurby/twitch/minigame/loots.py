@@ -1,9 +1,9 @@
-from hurby.character.character import Character
-from hurby.character.character_manager import CharacterManager
-from hurby.twitch.cmd.enums.permission_levels import PermissionLevels
-from hurby.twitch.irc.irc_connector import IRCConnector
-from hurby.utils import json_loader, logger, hurby_utils
-from hurby.utils.const import CONST
+from character.character import Character
+from character.character_manager import CharacterManager
+from twitch.cmd.enums.permission_levels import PermissionLevels
+from twitch.irc.irc_connector import IRCConnector
+from utils import json_loader, logger, hurby_utils
+from utils.const import CONST
 
 
 class Loots:

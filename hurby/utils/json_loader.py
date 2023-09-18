@@ -2,7 +2,7 @@ import json
 import os
 import shutil
 
-from hurby.utils import logger
+from utils import logger
 
 
 def load_json(file: str) -> dict:

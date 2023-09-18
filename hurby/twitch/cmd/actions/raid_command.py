@@ -2,10 +2,10 @@ import math
 import random
 import time
 
-from hurby.character.character import Character
-from hurby.twitch.cmd.abstract_command import AbstractCommand
-from hurby.twitch.irc.threads.hurby_thread import HurbyThread
-from hurby.utils import logger, hurby_utils
+from character.character import Character
+from twitch.cmd.abstract_command import AbstractCommand
+from twitch.irc.threads.hurby_thread import HurbyThread
+from utils import logger, hurby_utils
 
 
 def _insufficient_credits(char: Character, credits_spend: int):

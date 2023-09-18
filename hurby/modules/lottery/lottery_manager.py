@@ -2,11 +2,11 @@ import errno
 import os
 from enum import Enum
 
-from hurby.character.character import Character
-from hurby.modules.lottery.lottery import Lottery
-from hurby.utils import json_loader, hurby_utils
-from hurby.utils.const import CONST
-from hurby.utils.json_loader import load_json
+from character.character import Character
+from modules.lottery.lottery import Lottery
+from utils import json_loader, hurby_utils
+from utils.const import CONST
+from utils.json_loader import load_json
 
 
 class ParticipateStatus(Enum):

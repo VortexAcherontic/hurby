@@ -1,7 +1,7 @@
 import requests
 
-from hurby.twitch.helix import validate_token
-from hurby.utils import logger
+from twitch.helix import validate_token
+from utils import logger
 
 
 def get_bearer_access_token(twitch_config):

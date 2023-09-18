@@ -1,8 +1,8 @@
 import json
 
-from hurby.character.user_id_types import UserIDType
-from hurby.utils import json_loader, logger
-from hurby.utils.const import CONST
+from character.user_id_types import UserIDType
+from utils import json_loader, logger
+from utils.const import CONST
 
 
 class CharacterReferenceTable:

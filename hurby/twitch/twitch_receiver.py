@@ -1,9 +1,9 @@
-from hurby.character.character import Character
-from hurby.twitch.cmd.abstract_command import AbstractCommand
-from hurby.twitch.irc.irc_cmd import IRCCommand
-from hurby.twitch.irc.irc_connector import IRCConnector
-from hurby.twitch.twitch_config import TwitchConfig
-from hurby.utils import logger
+from character.character import Character
+from twitch.cmd.abstract_command import AbstractCommand
+from twitch.irc.irc_cmd import IRCCommand
+from twitch.irc.irc_connector import IRCConnector
+from twitch.twitch_config import TwitchConfig
+from utils import logger
 
 
 class TwitchReceiver:

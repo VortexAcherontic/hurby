@@ -1,6 +1,6 @@
-from hurby.achievements.achievement import Achievement
-from hurby.utils import json_loader, logger
-from hurby.utils.const import Const as CONST
+from achievements.achievement import Achievement
+from utils import json_loader, logger
+from utils.const import Const as CONST
 
 absolute_file = CONST.DIR_CONF_ABSOLUTE + "/" + CONST.FILE_ACHIEVEMENTS
 json_data = json_loader.load_json(absolute_file)

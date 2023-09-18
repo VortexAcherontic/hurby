@@ -1,4 +1,4 @@
-from hurby.twitch.irc.irc_cmd import IRCCommand
+from twitch.irc.irc_cmd import IRCCommand
 
 
 def extract_sender(line):

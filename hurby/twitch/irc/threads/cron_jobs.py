@@ -1,10 +1,10 @@
 import time
 from random import randint
 
-from hurby.twitch.irc import irc_chat_extractor
-from hurby.twitch.irc.threads.hurby_thread import HurbyThread
-from hurby.utils import logger
-from hurby.utils.const import CONST
+from twitch.irc import irc_chat_extractor
+from twitch.irc.threads.hurby_thread import HurbyThread
+from utils import logger
+from utils.const import CONST
 
 
 class CronJobs(HurbyThread):

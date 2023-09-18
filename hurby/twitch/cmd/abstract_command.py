@@ -1,10 +1,10 @@
 from abc import abstractmethod
 
-from hurby.character.character import Character
-from hurby.twitch.cmd.enums.cmd_response_realms import CMDResponseRealms
-from hurby.twitch.cmd.enums.cmd_types import CMDType
-from hurby.twitch.cmd.enums.permission_levels import PermissionLevels
-from hurby.utils import hurby_utils
+from character.character import Character
+from twitch.cmd.enums.cmd_response_realms import CMDResponseRealms
+from twitch.cmd.enums.cmd_types import CMDType
+from twitch.cmd.enums.permission_levels import PermissionLevels
+from utils import hurby_utils
 
 
 def _load_subcommands(json_data):

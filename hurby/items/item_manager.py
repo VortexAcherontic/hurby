@@ -1,8 +1,8 @@
 from random import random
 
-from hurby.items.base_item import BaseItem
-from hurby.utils import json_loader, logger, hurby_utils
-from hurby.utils.const import CONST
+from items.base_item import BaseItem
+from utils import json_loader, logger, hurby_utils
+from utils.const import CONST
 
 ITEM_DIR = CONST.DIR_APP_DATA_ABSOLUTE + "/items/"
 

@@ -1,8 +1,8 @@
 import os
 import random
 
-from hurby.utils import json_loader
-from hurby.utils.const import CONST
+from utils import json_loader
+from utils.const import CONST
 
 
 class BotConfig:

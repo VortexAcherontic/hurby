@@ -1,6 +1,6 @@
-from hurby.items.base_item import BaseItem
-from hurby.items.item_manager import ItemManager
-from hurby.utils import logger
+from items.base_item import BaseItem
+from items.item_manager import ItemManager
+from utils import logger
 
 SLOTS = {
     "HEAD": "head",

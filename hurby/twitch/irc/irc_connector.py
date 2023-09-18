@@ -1,12 +1,12 @@
 import socket
 
-from hurby.twitch.helix.is_streamer_live import is_stream_live
-from hurby.twitch.irc.threads.crawler.crawler import Crawler
-from hurby.twitch.irc.threads.cron_jobs import CronJobs
-from hurby.twitch.irc.threads.read_chat import ReadChat
-from hurby.twitch.twitch_config import TwitchConfig
-from hurby.utils import logger
-from hurby.utils.const import CONST
+from twitch.helix.is_streamer_live import is_stream_live
+from twitch.irc.threads.crawler.crawler import Crawler
+from twitch.irc.threads.cron_jobs import CronJobs
+from twitch.irc.threads.read_chat import ReadChat
+from twitch.twitch_config import TwitchConfig
+from utils import logger
+from utils.const import CONST
 
 
 class IRCConnector:

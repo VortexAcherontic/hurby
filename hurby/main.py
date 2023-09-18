@@ -1,12 +1,12 @@
-from hurby.achievements.achievements_manager import AchievementManager
-from hurby.character.character_manager import CharacterManager
-from hurby.config.bot_config import BotConfig
-from hurby.items.item_manager import ItemManager
-from hurby.modules.lottery.lottery_manager import LotteryManager
-from hurby.twitch.minigame.loots import Loots
-from hurby.twitch.twitch_receiver import TwitchReceiver
-from hurby.utils import logger
-from hurby.utils.api_test import test_api
+from achievements.achievements_manager import AchievementManager
+from character.character_manager import CharacterManager
+from config.bot_config import BotConfig
+from items.item_manager import ItemManager
+from modules.lottery.lottery_manager import LotteryManager
+from twitch.minigame.loots import Loots
+from twitch.twitch_receiver import TwitchReceiver
+from utils import logger
+from utils.api_test import test_api
 
 
 class HurbyMain:
