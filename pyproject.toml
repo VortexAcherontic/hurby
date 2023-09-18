@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hurby_core"
+dynamic = ["version"]
+readme = "README.md"
+description = "Core component of Hurby, an extensible Twitch bot"
+license = { text = "GPL-3"}
+dependencies = [
+    "xdg; platform_system=='Linux'"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Z-Ray-Entertainment/hurby"
+"Bug Tracker" = "https://github.com/Z-Ray-Entertainment/hurby/issues"
+
+[project.scripts]
+hurby = "hurby:run"
+
+[tool.setuptools.dynamic]
+version = { attr = "hurby.VERSION" }
+
+[tool.setuptools]
+include-package-data = true
+platforms = ["Linux"]
