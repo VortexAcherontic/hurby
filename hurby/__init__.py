@@ -1,1 +1,6 @@
-__version__ = "0.0.1"
+VERSION = "2023.9.18"
+
+MODULES = {}
+
+def run():
+    pass
